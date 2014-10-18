@@ -19,9 +19,8 @@ public class WordSearchGenerator {
     private Node[][] wordSearch;
     private Random r = new Random();
 
-    public Node[][] getWordSearch(){
-        return wordSearch;
-    }
+    private Point randomPoint;
+    private Integer randomOrientation;
 
     public int buildFailures = 0;
 
@@ -36,6 +35,14 @@ public class WordSearchGenerator {
 
         this.wordSearch = new Node[nRow][nCol];
         initializeWordSearch();
+    }
+
+    public List<Point> getStartAndEndPointOfWord(){
+        List<Point> points = new ArrayList<Point>();
+        points.add(new Point(randomPoint.y, randomPoint.x));
+        Point endPoint = getEndPointRelativeToStartPoint(randomOrientation, randomPoint);
+        points.add(new Point(endPoint.y, endPoint.x));
+        return points;
     }
 
     public void build(){
@@ -115,9 +122,9 @@ public class WordSearchGenerator {
 
         // Choose random coordinate and orientation
         DistinctRandomGenerator rOrientation = new DistinctRandomGenerator(8);
-        Point randomPoint = new Point(r.nextInt(nRow), r.nextInt(nCol));
+        randomPoint = new Point(r.nextInt(nCol),r.nextInt(nRow));
 
-        Integer randomOrientation = (Integer) rOrientation.next();
+        randomOrientation = (Integer) rOrientation.next();
         while(!isValidOrientationForInsertion(randomOrientation, randomPoint)) {
             randomOrientation = (Integer) rOrientation.next();
             if(randomOrientation == null)
@@ -222,31 +229,63 @@ public class WordSearchGenerator {
         }
     }
 
+    private Point getEndPointRelativeToStartPoint(int orientation, Point p){
+        int l = word.length() - 1;
+        switch(orientation){
+            case RIGHT:
+                return new Point(p.x + l, p.y);
+
+            case RIGHTDOWN:
+                return new Point(p.x + l, p.y + l);
+
+            case DOWN:
+                return new Point(p.x, p.y + l);
+
+            case LEFTDOWN:
+                return new Point(p.x - l, p.y + l);
+
+            case LEFT:
+                return new Point(p.x - l, p.y);
+
+            case LEFTUP:
+                return new Point(p.x - l, p.y - l);
+
+            case UP:
+                return new Point(p.x, p.y - l);
+
+            case RIGHTUP:
+                return new Point(p.x + l, p.y - l);
+
+            default:
+                return null;
+        }
+    }
+
     private boolean isValidOrientationForInsertion(int orientation, Point p){
         switch(orientation){
             case RIGHT:
-                return lookRight(p, word.length()-1) != null ? true: false;
+                return lookRight(p, word.length()-1) != null;
 
             case RIGHTDOWN:
-                return lookRightDown(p, word.length() - 1) != null ? true: false;
+                return lookRightDown(p, word.length() - 1) != null;
 
             case DOWN:
-                return lookDown(p, word.length()-1) != null ? true: false;
+                return lookDown(p, word.length()-1) != null;
 
             case LEFTDOWN:
-                return lookLeftDown(p, word.length() - 1) != null ? true: false;
+                return lookLeftDown(p, word.length() - 1) != null;
 
             case LEFT:
-                return lookLeft(p, word.length()-1) != null ? true: false;
+                return lookLeft(p, word.length()-1) != null;
 
             case LEFTUP:
-                return lookLeftUp(p, word.length() - 1) != null ? true: false;
+                return lookLeftUp(p, word.length() - 1) != null;
 
             case UP:
-                return lookUp(p, word.length() - 1) != null ? true: false;
+                return lookUp(p, word.length() - 1) != null;
 
             case RIGHTUP:
-                return lookRightUp(p, word.length() - 1) != null ? true: false;
+                return lookRightUp(p, word.length() - 1) != null;
 
             default:
                 return false;

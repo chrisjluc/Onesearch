@@ -3,6 +3,7 @@ package chrisjluc.funsearch.wordSearchGenerator.models; /**
  */
 public class Node {
     private char letter = '0';
+    private boolean highlighted = false;
 
     public Node(){}
 
@@ -10,6 +11,14 @@ public class Node {
         if(letter == '0')
             return true;
         return false;
+    }
+
+    public boolean isHighlighted(){
+        return highlighted;
+    }
+
+    public void setHighlighted(boolean highlighted) {
+        this.highlighted = highlighted;
     }
 
     public char getLetter(){

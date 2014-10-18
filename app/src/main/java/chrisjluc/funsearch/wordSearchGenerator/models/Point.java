@@ -9,4 +9,12 @@ public class Point {
         this.x = x;
         this.y = y;
     }
+
+    public boolean equals(Object o){
+        if(o == null) return false;
+        Point p = (Point) o;
+        if(x == p.x && y == p.y)
+            return true;
+        return false;
+    }
 }
