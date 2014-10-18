@@ -21,24 +21,29 @@ import chrisjluc.funsearch.wordSearchGenerator.models.Point;
  */
 public class WordSearchGridView extends GridView {
 
-    private int nRow = 5;
-    private int nCol = 5;
+    private int xLength;
+    private int yLength;
+    private String word;
     private Point p1, p2;
     private int dimension;
-
+    private int paddingLeft = 16;
     private List<Node> nodes;
     private List<Node> highlightedNodes;
     // the location of the word
     private List<Point> wordPoints;
     public boolean isFound = false;
+    private WordFoundListener listener;
 
     WordSearchGridAdapter adapter;
 
     public WordSearchGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        WordSearchGenerator generator = new WordSearchGenerator(nRow, nCol, "okay");
-        generator.build();
+        WordSearchManager manager = WordSearchManager.getInstance();
+        WordSearchGenerator generator = manager.getGenerator(MainActivity.currentItem);
+        xLength = generator.nCol;
+        yLength = generator.nRow;
+        word = generator.word;
         wordPoints = generator.getStartAndEndPointOfWord();
         nodes = generator.generateNodeList();
         highlightedNodes = new ArrayList<Node>();
@@ -50,6 +55,11 @@ public class WordSearchGridView extends GridView {
         adapter = new WordSearchGridAdapter(context, nodes, dimension);
         setAdapter(adapter);
     }
+
+    public void setWordFoundListener(WordFoundListener listener){
+        this.listener = listener;
+    }
+
 
     int x1, y1;
     int x2, y2;
@@ -68,14 +78,14 @@ public class WordSearchGridView extends GridView {
     }
 
     private void isWordFound(){
-        if(wordPoints.contains(p1) && wordPoints.contains(p2))
+        if(wordPoints.contains(p1) && wordPoints.contains(p2)) {
             isFound = true;
-        // notify some listener
-        System.out.println(isFound);
+            listener.notifyWordFound();
+        }
     }
 
     private void updateCurrentHighlightedNodes(Point p){
-        if(p.y < 0 || p.y >= nRow || p.x < 0 || p.x >= nCol) return;
+        if(p.y < 0 || p.y >= yLength || p.x < 0 || p.x >= xLength) return;
 
         if(p.equals(p2)) return;
 
@@ -124,7 +134,7 @@ public class WordSearchGridView extends GridView {
     }
 
     private void highlightNodeAt(Point p) throws Exception{
-        int index = p.y * nCol + p.x;
+        int index = p.y * xLength + p.x;
         if(index < 0 || index >= nodes.size()){
             throw new Exception("Invalid Row: " + p.y + " and col: " + p.x);
         }
