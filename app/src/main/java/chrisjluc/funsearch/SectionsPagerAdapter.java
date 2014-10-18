@@ -28,20 +28,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 3 total pages.
-        return 3;
+        return 100;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        Locale l = Locale.getDefault();
-        switch (position) {
-            case 0:
-                return "1";
-            case 1:
-                return "2";
-            case 2:
-                return "3";
-        }
-        return null;
+        return Integer.toString(position);
     }
 }

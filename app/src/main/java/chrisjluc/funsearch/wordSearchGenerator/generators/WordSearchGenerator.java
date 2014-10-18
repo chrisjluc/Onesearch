@@ -13,9 +13,9 @@ import java.util.Random;
 public class WordSearchGenerator {
     public List<Character> uniqueChars;
     int sizeOfUniqeChars;
-    private String word;
-    private int nRow;
-    private int nCol;
+    public String word;
+    public int nRow;
+    public int nCol;
     private Node[][] wordSearch;
     private Random r = new Random();
 
@@ -49,6 +49,7 @@ public class WordSearchGenerator {
 
         while(true) {
             try {
+                insertWord();
                 uniqueChars = getDistinctCharacters(word);
                 sizeOfUniqeChars = uniqueChars.size();
                 fillWordSearch();
@@ -72,12 +73,10 @@ public class WordSearchGenerator {
         for(int i = 0; i < nRow; i++)
             for (int j = 0; j < nCol; j++)
                 wordSearch[i][j] = new Node();
-        try {
-            insertWord();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
     }
+
+    //TODO: Guarantee one instance by checking if current node intersects with the inserted instance
+    // if it does and theres 1 empty space inbetween, restrict it from having the character to complete the word
 
     private void fillWordSearch() throws Exception{
         for(int i = 0; i < nRow; i++) {

@@ -8,8 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements WordFoundListener{
 
+    public static int currentItem;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -40,6 +41,8 @@ public class MainActivity extends Activity {
         mViewPager = (WordSearchViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        currentItem = 0;
+
     }
 
 
@@ -63,5 +66,10 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void notifyWordFound() {
+        mViewPager.setCurrentItem(++currentItem);
     }
 }

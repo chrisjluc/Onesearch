@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import chrisjluc.funsearch.wordSearchGenerator.generators.WordSearchGenerator;
 
 public class PlaceHolderFragment extends Fragment {
     /**
@@ -37,8 +40,12 @@ public class PlaceHolderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.main_fragment, container, false);
+        TextView tv = (TextView) rootView.findViewById(R.id.section_label);
+        WordSearchGenerator generator = WordSearchManager.getInstance().getGenerator(MainActivity.currentItem);
+        tv.setText(generator.word);
         activity = getActivity();
         grid = (WordSearchGridView) rootView.findViewById(R.id.gridView);
+        grid.setWordFoundListener((WordFoundListener)getActivity());
         return rootView;
     }
 }
