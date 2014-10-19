@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
+ * Returns a distinct element from a given array in random order
+ * until there is no elements left, it will then return null
+ *
  * Created by chrisjluc on 2014-10-17.
  */
 public class DistinctRandomGenerator<T> {
