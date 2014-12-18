@@ -1,4 +1,4 @@
-package chrisjluc.funsearch;
+package chrisjluc.funsearch.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -9,6 +9,9 @@ import android.widget.GridView;
 import java.util.ArrayList;
 import java.util.List;
 
+import chrisjluc.funsearch.WordFoundListener;
+import chrisjluc.funsearch.WordSearchManager;
+import chrisjluc.funsearch.adapters.WordSearchGridAdapter;
 import chrisjluc.funsearch.wordSearchGenerator.generators.WordSearchGenerator;
 import chrisjluc.funsearch.wordSearchGenerator.models.Node;
 import chrisjluc.funsearch.wordSearchGenerator.models.Point;

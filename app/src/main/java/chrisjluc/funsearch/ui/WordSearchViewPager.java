@@ -1,13 +1,10 @@
-package chrisjluc.funsearch;
+package chrisjluc.funsearch.ui;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-/**
- * Created by chrisjluc on 2014-10-17.
- */
 public class WordSearchViewPager extends ViewPager {
 
     private boolean enabled;

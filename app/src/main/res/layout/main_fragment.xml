@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <chrisjluc.funsearch.WordSearchGridView
+    <chrisjluc.funsearch.ui.WordSearchGridView
         android:layout_below="@id/section_label"
         android:id="@+id/gridView"
         android:layout_width="fill_parent"
@@ -23,5 +23,5 @@
         android:gravity="center"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth" >
-    </chrisjluc.funsearch.WordSearchGridView>
+    </chrisjluc.funsearch.ui.WordSearchGridView>
 </RelativeLayout>

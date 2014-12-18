@@ -1,9 +1,11 @@
-package chrisjluc.funsearch;
+package chrisjluc.funsearch.adapters;
 
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
+
+import chrisjluc.funsearch.ui.MainFragment;
 
 /**
  * A {@link android.support.v13.app.FragmentPagerAdapter} that returns a fragment corresponding to
@@ -25,8 +27,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
-        return 100;
+        return 3;
     }
 
     @Override

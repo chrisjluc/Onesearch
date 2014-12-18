@@ -1,4 +1,4 @@
-package chrisjluc.funsearch;
+package chrisjluc.funsearch.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import chrisjluc.funsearch.R;
 import chrisjluc.funsearch.wordSearchGenerator.models.Node;
 
 public class WordSearchGridAdapter extends BaseAdapter {

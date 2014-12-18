@@ -1,4 +1,4 @@
-package chrisjluc.funsearch;
+package chrisjluc.funsearch.ui;
 
 import android.app.Activity;
 import android.support.v13.app.FragmentPagerAdapter;
@@ -7,8 +7,12 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import chrisjluc.funsearch.R;
+import chrisjluc.funsearch.WordFoundListener;
+import chrisjluc.funsearch.adapters.SectionsPagerAdapter;
 
-public class MainActivity extends Activity implements WordFoundListener{
+
+public class MainActivity extends Activity implements WordFoundListener {
 
     public static int currentItem;
     /**

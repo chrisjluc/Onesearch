@@ -5,9 +5,6 @@ import java.util.List;
 
 import chrisjluc.funsearch.wordSearchGenerator.generators.WordSearchGenerator;
 
-/**
- * Created by chrisjluc on 2014-10-18.
- */
 public class WordSearchManager {
 
     private int xLength = 3;
