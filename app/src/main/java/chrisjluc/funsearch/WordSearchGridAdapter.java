@@ -12,9 +12,6 @@ import java.util.List;
 
 import chrisjluc.funsearch.wordSearchGenerator.models.Node;
 
-/**
- * Created by chrisjluc on 2014-10-17.
- */
 public class WordSearchGridAdapter extends BaseAdapter {
 
     private Context context;

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import chrisjluc.funsearch.wordSearchGenerator.generators.WordSearchGenerator;
 
-public class PlaceHolderFragment extends Fragment {
+public class MainFragment extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -24,15 +24,15 @@ public class PlaceHolderFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static PlaceHolderFragment newInstance(int sectionNumber) {
-        PlaceHolderFragment fragment = new PlaceHolderFragment();
+    public static MainFragment newInstance(int sectionNumber) {
+        MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public PlaceHolderFragment() {
+    public MainFragment() {
     }
 
 
