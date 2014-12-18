@@ -1,6 +1,5 @@
 package chrisjluc.funsearch.ui;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import chrisjluc.funsearch.R;
-import chrisjluc.funsearch.WordFoundListener;
+import chrisjluc.funsearch.interfaces.WordFoundListener;
 import chrisjluc.funsearch.WordSearchManager;
 import chrisjluc.funsearch.wordSearchGenerator.generators.WordSearchGenerator;
 
@@ -19,7 +18,6 @@ public class MainFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private Activity activity;
     private WordSearchGridView grid;
     private View rootView;
 
@@ -46,7 +44,6 @@ public class MainFragment extends Fragment {
         TextView tv = (TextView) rootView.findViewById(R.id.section_label);
         WordSearchGenerator generator = WordSearchManager.getInstance().getGenerator(MainActivity.currentItem);
         tv.setText(generator.word);
-        activity = getActivity();
         grid = (WordSearchGridView) rootView.findViewById(R.id.gridView);
         grid.setWordFoundListener((WordFoundListener)getActivity());
         return rootView;

@@ -9,7 +9,7 @@ import android.widget.GridView;
 import java.util.ArrayList;
 import java.util.List;
 
-import chrisjluc.funsearch.WordFoundListener;
+import chrisjluc.funsearch.interfaces.WordFoundListener;
 import chrisjluc.funsearch.WordSearchManager;
 import chrisjluc.funsearch.adapters.WordSearchGridAdapter;
 import chrisjluc.funsearch.wordSearchGenerator.generators.WordSearchGenerator;

@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import chrisjluc.funsearch.R;
-import chrisjluc.funsearch.WordFoundListener;
+import chrisjluc.funsearch.interfaces.WordFoundListener;
 import chrisjluc.funsearch.adapters.SectionsPagerAdapter;
 
 
