@@ -51,10 +51,15 @@ public class WordSearchManager {
     }
 
     private WordSearchGenerator buildWordSearch() {
-        String word = WORDS[mRandom.nextInt(WORDS.length)];
-        while (word.length() > MAX_DIMENSION) {
-            word = WORDS[mRandom.nextInt(WORDS.length)];
-            System.out.println("This word is too large");
+        String[] words = new String[WORDS.length];
+        System.arraycopy(WORDS, 0, words, 0, WORDS.length);
+        String word = "";
+        for (int i = 0; i < words.length; i++) {
+            int index = mRandom.nextInt(words.length - i);
+            word = words[index];
+            if(word.length() <= MAX_DIMENSION)
+                break;
+            words[index] = words[words.length - 1 - i];
         }
         int maxPossibleOffset = MAX_DIMENSION - word.length();
         int randomOffset = mRandom.nextInt(maxPossibleOffset + 1);
