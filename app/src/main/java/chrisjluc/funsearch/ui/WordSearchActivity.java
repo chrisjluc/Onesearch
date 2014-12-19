@@ -1,18 +1,18 @@
 package chrisjluc.funsearch.ui;
 
+import android.app.ActionBar;
 import android.app.Activity;
-import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 
 import chrisjluc.funsearch.R;
-import chrisjluc.funsearch.interfaces.WordFoundListener;
 import chrisjluc.funsearch.adapters.SectionsPagerAdapter;
+import chrisjluc.funsearch.interfaces.WordFoundListener;
 
 
-public class MainActivity extends Activity implements WordFoundListener {
+public class WordSearchActivity extends Activity implements WordFoundListener {
 
     public static int currentItem;
     /**
@@ -33,47 +33,38 @@ public class MainActivity extends Activity implements WordFoundListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.wordsearch_activity);
 
-
-
-        // Create the adapter that will return a fragment for each of the three
+        // Create the adapter that will return a fragment for each of the
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (WordSearchViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
         currentItem = 0;
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    protected void onResume() {
+        setFullscreen();
+        super.onResume();
     }
 
     @Override
     public void notifyWordFound() {
         mViewPager.setCurrentItem(++currentItem);
+    }
+
+    private void setFullscreen() {
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        decorView.setSystemUiVisibility(uiOptions);
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null)
+            actionBar.hide();
     }
 }

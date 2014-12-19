@@ -38,7 +38,7 @@ public class WordSearchGridView extends GridView {
         super(context, attrs);
 
         WordSearchManager manager = WordSearchManager.getInstance();
-        WordSearchGenerator generator = manager.getGenerator(MainActivity.currentItem);
+        WordSearchGenerator generator = manager.getGenerator(WordSearchActivity.currentItem);
         xLength = generator.nCol;
         yLength = generator.nRow;
         word = generator.word;
@@ -79,8 +79,8 @@ public class WordSearchGridView extends GridView {
 
         p2 = p;
 
-        //diagonal
         boolean isValid = false;
+        // diagonal
         if (Math.abs(p2.x - p1.x) == Math.abs(p2.y - p1.y)) {
             isValid = true;
             // horizontal
