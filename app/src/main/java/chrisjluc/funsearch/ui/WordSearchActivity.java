@@ -11,11 +11,11 @@ import android.widget.TextView;
 
 import chrisjluc.funsearch.R;
 import chrisjluc.funsearch.adapters.SectionsPagerAdapter;
-import chrisjluc.funsearch.interfaces.WordFoundListener;
 
 
-public class WordSearchActivity extends Activity implements WordFoundListener, View.OnClickListener {
+public class WordSearchActivity extends Activity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener {
 
+    private enum GameState {START, PLAY, PAUSE}
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -23,24 +23,29 @@ public class WordSearchActivity extends Activity implements WordFoundListener, V
     private TextView mTimerTextView;
     private TextView mScoreTextView;
     private CountDownTimer mCountDownTimer;
+    private final PauseDialogFragment mPauseDialogFragment = new PauseDialogFragment();
 
+
+    private GameState mGameState;
     public static int currentItem;
+    private final static int TIMER_GRANULARITY = 100;
+    private long mStartTime = 60000;
     private long mTimeRemaining;
     private int mScore;
-    private final static int TIMER_GRANULARITY = 100;
+    private int mSkipped;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wordsearch_activity);
 
+        mGameState = GameState.START;
         Button mSkipButton = (Button) findViewById(R.id.bSkip);
         Button mPauseButton = (Button) findViewById(R.id.bPause);
         mSkipButton.setOnClickListener(this);
         mPauseButton.setOnClickListener(this);
         mTimerTextView = (TextView) findViewById(R.id.tvTimer);
         mScoreTextView = (TextView) findViewById(R.id.tvScore);
-
         mScoreTextView.setText("0");
 
         // Create the adapter that will return a fragment for each of the
@@ -58,22 +63,21 @@ public class WordSearchActivity extends Activity implements WordFoundListener, V
         // Set up the ViewPager with the sections adapter.
         mViewPager = (WordSearchViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
         currentItem = 0;
         mScore = 0;
-        mTimeRemaining = 30000;
+        mSkipped = 0;
+        mTimeRemaining = mStartTime;
         setupCountDownTimer(mTimeRemaining);
         startCountDownTimer();
     }
 
-    private void resumeGameplay() {
-        setupCountDownTimer(mTimeRemaining);
-        startCountDownTimer();
-    }
 
     private void pauseGameplay() {
+        if (mGameState == GameState.PAUSE)
+            return;
+        mGameState = GameState.PAUSE;
         stopCountDownTimer();
-        // Show pause dialog
+        mPauseDialogFragment.show(getFragmentManager(), "dialog");
     }
 
     @Override
@@ -81,6 +85,7 @@ public class WordSearchActivity extends Activity implements WordFoundListener, V
         switch (view.getId()) {
             case R.id.bSkip:
                 mViewPager.setCurrentItem(++currentItem);
+                mSkipped++;
                 break;
             case R.id.bPause:
                 pauseGameplay();
@@ -109,15 +114,51 @@ public class WordSearchActivity extends Activity implements WordFoundListener, V
     }
 
     @Override
+    public void onDialogQuit() {
+        // Exit to the main menu
+    }
+
+    @Override
+    public void onDialogResume() {
+        mGameState = GameState.PLAY;
+        setupCountDownTimer(mTimeRemaining);
+        startCountDownTimer();
+        setFullscreen();
+    }
+
+    @Override
+    public void onDialogRestart() {
+        mGameState = GameState.PLAY;
+        mScore = 0;
+        mSkipped = 0;
+        mTimeRemaining = mStartTime;
+        setupCountDownTimer(mTimeRemaining);
+        startCountDownTimer();
+        setFullscreen();
+        mScoreTextView.setText("0");
+        mViewPager.setCurrentItem(++currentItem);
+    }
+
+    @Override
     protected void onResume() {
+        if (mGameState == GameState.START)
+            mGameState = GameState.PLAY;
+        else
+            pauseGameplay();
+
         setFullscreen();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        pauseGameplay();
+        stopCountDownTimer();
         super.onPause();
+    }
+
+    @Override
+    public void onBackPressed() {
+        pauseGameplay();
     }
 
     private void setupCountDownTimer(final long timeinMS) {

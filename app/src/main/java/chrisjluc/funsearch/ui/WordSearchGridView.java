@@ -9,7 +9,6 @@ import android.widget.GridView;
 import java.util.ArrayList;
 import java.util.List;
 
-import chrisjluc.funsearch.interfaces.WordFoundListener;
 import chrisjluc.funsearch.WordSearchManager;
 import chrisjluc.funsearch.adapters.WordSearchGridAdapter;
 import chrisjluc.funsearch.wordSearchGenerator.generators.WordSearchGenerator;
@@ -176,5 +175,9 @@ public class WordSearchGridView extends GridView {
 
     private int calcRelativeY(int d) {
         return (d - padding) / dimension;
+    }
+
+    public interface WordFoundListener {
+        public void notifyWordFound();
     }
 }

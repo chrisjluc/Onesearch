@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import chrisjluc.funsearch.R;
-import chrisjluc.funsearch.interfaces.WordFoundListener;
 import chrisjluc.funsearch.WordSearchManager;
 import chrisjluc.funsearch.wordSearchGenerator.generators.WordSearchGenerator;
 
@@ -36,7 +35,7 @@ public class WordSearchFragment extends Fragment {
         WordSearchGenerator generator = WordSearchManager.getInstance().getGenerator(WordSearchActivity.currentItem);
         tv.setText(generator.word);
         WordSearchGridView grid = (WordSearchGridView) rootView.findViewById(R.id.gridView);
-        grid.setWordFoundListener((WordFoundListener)getActivity());
+        grid.setWordFoundListener((WordSearchGridView.WordFoundListener)getActivity());
         return rootView;
     }
 }
