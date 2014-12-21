@@ -3,6 +3,7 @@ package chrisjluc.funsearch.ui;
 import android.os.Bundle;
 
 import chrisjluc.funsearch.R;
+import chrisjluc.funsearch.WordSearchManager;
 import chrisjluc.funsearch.base.BaseActivity;
 import chrisjluc.funsearch.models.GameMode;
 
@@ -24,9 +25,9 @@ public class ResultsActivity extends BaseActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mGameMode = (GameMode) extras.get("mode");
             mScore = extras.getInt("score");
             mSkipped = extras.getInt("skipped");
+            mGameMode = WordSearchManager.getInstance().getGameMode();
         }
     }
 }

@@ -9,12 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import chrisjluc.funsearch.R;
+import chrisjluc.funsearch.WordSearchManager;
 import chrisjluc.funsearch.adapters.SectionsPagerAdapter;
 import chrisjluc.funsearch.base.BaseActivity;
 import chrisjluc.funsearch.models.GameDifficulty;
 import chrisjluc.funsearch.models.GameMode;
 import chrisjluc.funsearch.models.GameType;
-
 
 public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener {
 
@@ -29,19 +29,23 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private CountDownTimer mCountDownTimer;
     private final PauseDialogFragment mPauseDialogFragment = new PauseDialogFragment();
 
-    private GameMode mGameMode;
     private GameState mGameState;
     public static int currentItem;
     private final static int TIMER_GRANULARITY = 50;
     private long mTimeRemaining;
+    private long mStartTime;
     private int mScore;
     private int mSkipped;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //TODO: DELETE WHEN MENUACTIVITY IS CREATED
+        WordSearchManager.getInstance().setGameMode(new GameMode(GameType.Timed, GameDifficulty.Easy, 30000));
+
         setContentView(R.layout.wordsearch_activity);
-        mGameMode = new GameMode(GameType.Timed, GameDifficulty.Easy, 30000);
+        mStartTime = WordSearchManager.getInstance().getGameMode().getTime();
         mGameState = GameState.START;
         Button mSkipButton = (Button) findViewById(R.id.bSkip);
         Button mPauseButton = (Button) findViewById(R.id.bPause);
@@ -69,7 +73,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         currentItem = 0;
         mScore = 0;
         mSkipped = 0;
-        mTimeRemaining = mGameMode.getTime();
+        mTimeRemaining = mStartTime;
         setupCountDownTimer(mTimeRemaining);
         startCountDownTimer();
     }
@@ -120,7 +124,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         mGameState = GameState.PLAY;
         mScore = 0;
         mSkipped = 0;
-        mTimeRemaining = mGameMode.getTime();
+        mTimeRemaining = mStartTime;
         setupCountDownTimer(mTimeRemaining);
         startCountDownTimer();
         setFullscreen();
@@ -158,7 +162,6 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
             public void onFinish() {
                 Intent i = new Intent(getApplicationContext(), ResultsActivity.class);
-                i.putExtra("mode", mGameMode);
                 i.putExtra("score", mScore);
                 i.putExtra("skipped", mSkipped);
                 startActivity(i);
