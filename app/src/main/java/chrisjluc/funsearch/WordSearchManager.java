@@ -11,11 +11,15 @@ public class WordSearchManager {
     private final static int SIZE = 3;
 
     private Random mRandom;
-    private static WordSearchManager mInstance = new WordSearchManager();
+    private static WordSearchManager mInstance;
 
     public static WordSearchManager getInstance() {
+        if (mInstance == null)
+            mInstance = new WordSearchManager();
         return mInstance;
     }
+
+    public static void nullify(){ mInstance = null;}
 
     private WordSearchGenerator[] mWordSearchArray;
 

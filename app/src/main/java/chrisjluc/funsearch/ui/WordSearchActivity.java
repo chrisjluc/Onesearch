@@ -1,7 +1,6 @@
 package chrisjluc.funsearch.ui;
 
-import android.app.ActionBar;
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
@@ -11,11 +10,16 @@ import android.widget.TextView;
 
 import chrisjluc.funsearch.R;
 import chrisjluc.funsearch.adapters.SectionsPagerAdapter;
+import chrisjluc.funsearch.base.BaseActivity;
+import chrisjluc.funsearch.models.GameDifficulty;
+import chrisjluc.funsearch.models.GameMode;
+import chrisjluc.funsearch.models.GameType;
 
 
-public class WordSearchActivity extends Activity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener {
+public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener {
 
     private enum GameState {START, PLAY, PAUSE}
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -25,11 +29,10 @@ public class WordSearchActivity extends Activity implements WordSearchGridView.W
     private CountDownTimer mCountDownTimer;
     private final PauseDialogFragment mPauseDialogFragment = new PauseDialogFragment();
 
-
+    private GameMode mGameMode;
     private GameState mGameState;
     public static int currentItem;
-    private final static int TIMER_GRANULARITY = 100;
-    private long mStartTime = 60000;
+    private final static int TIMER_GRANULARITY = 50;
     private long mTimeRemaining;
     private int mScore;
     private int mSkipped;
@@ -38,7 +41,7 @@ public class WordSearchActivity extends Activity implements WordSearchGridView.W
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wordsearch_activity);
-
+        mGameMode = new GameMode(GameType.Timed, GameDifficulty.Easy, 30000);
         mGameState = GameState.START;
         Button mSkipButton = (Button) findViewById(R.id.bSkip);
         Button mPauseButton = (Button) findViewById(R.id.bPause);
@@ -66,7 +69,7 @@ public class WordSearchActivity extends Activity implements WordSearchGridView.W
         currentItem = 0;
         mScore = 0;
         mSkipped = 0;
-        mTimeRemaining = mStartTime;
+        mTimeRemaining = mGameMode.getTime();
         setupCountDownTimer(mTimeRemaining);
         startCountDownTimer();
     }
@@ -99,20 +102,6 @@ public class WordSearchActivity extends Activity implements WordSearchGridView.W
         mScoreTextView.setText(Integer.toString(++mScore));
     }
 
-    private void setFullscreen() {
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        decorView.setSystemUiVisibility(uiOptions);
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null)
-            actionBar.hide();
-    }
-
     @Override
     public void onDialogQuit() {
         // Exit to the main menu
@@ -131,7 +120,7 @@ public class WordSearchActivity extends Activity implements WordSearchGridView.W
         mGameState = GameState.PLAY;
         mScore = 0;
         mSkipped = 0;
-        mTimeRemaining = mStartTime;
+        mTimeRemaining = mGameMode.getTime();
         setupCountDownTimer(mTimeRemaining);
         startCountDownTimer();
         setFullscreen();
@@ -145,8 +134,6 @@ public class WordSearchActivity extends Activity implements WordSearchGridView.W
             mGameState = GameState.PLAY;
         else
             pauseGameplay();
-
-        setFullscreen();
         super.onResume();
     }
 
@@ -165,12 +152,16 @@ public class WordSearchActivity extends Activity implements WordSearchGridView.W
         mCountDownTimer = new CountDownTimer(timeinMS, TIMER_GRANULARITY) {
 
             public void onTick(long millisUntilFinished) {
-                mTimerTextView.setText(Long.toString(millisUntilFinished / 1000));
+                mTimerTextView.setText(Long.toString(millisUntilFinished / 1000 + 1));
                 mTimeRemaining = millisUntilFinished;
             }
 
             public void onFinish() {
-                // Exit gameplay
+                Intent i = new Intent(getApplicationContext(), ResultsActivity.class);
+                i.putExtra("mode", mGameMode);
+                i.putExtra("score", mScore);
+                i.putExtra("skipped", mSkipped);
+                startActivity(i);
             }
         };
     }
