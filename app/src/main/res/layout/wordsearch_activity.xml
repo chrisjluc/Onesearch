@@ -31,7 +31,7 @@
             android:layout_margin="@dimen/activity_vertical_margin" />
     </LinearLayout>
 
-    <chrisjluc.funsearch.ui.WordSearchViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    <chrisjluc.funsearch.ui.gameplay.WordSearchViewPager xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/pager"
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package chrisjluc.funsearch.ui;
+package chrisjluc.funsearch.ui.gameplay;
 
 import android.app.Fragment;
 import android.os.Bundle;

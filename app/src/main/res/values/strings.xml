@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">One Search</string>
-    <string name="title_activity_results">results</string>
+    <string name="title_activity_results">Results</string>
+    <string name="title_activity_menu">menu</string>
+    <string name="menu_easy">Easy</string>
+    <string name="menu_medium">Medium</string>
+    <string name="menu_hard">Hard</string>
+    <string name="menu_advanced">Advanced</string>
+    <string name="results_return_menu">Return to Menu</string>
+    <string name="results_replay">Play Again</string>
+
 </resources>

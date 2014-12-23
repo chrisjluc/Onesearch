@@ -1,4 +1,4 @@
-package chrisjluc.funsearch.ui;
+package chrisjluc.funsearch.ui.gameplay;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -28,7 +28,7 @@ public class PauseDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 getDialog().dismiss();
-                mListener.onDialogResume();
+                mListener.onDialotResume();
             }
         });
         restartButton.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +54,7 @@ public class PauseDialogFragment extends DialogFragment {
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        mListener.onDialogResume();
+        mListener.onDialotResume();
         super.onCancel(dialog);
     }
 
@@ -78,7 +78,7 @@ public class PauseDialogFragment extends DialogFragment {
     public interface PauseDialogListener {
         public void onDialogQuit();
 
-        public void onDialogResume();
+        public void onDialotResume();
 
         public void onDialogRestart();
     }

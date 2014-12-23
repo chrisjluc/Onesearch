@@ -5,15 +5,15 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
-import chrisjluc.funsearch.ui.WordSearchFragment;
+import chrisjluc.funsearch.ui.gameplay.WordSearchFragment;
 
 /**
  * A {@link android.support.v13.app.FragmentPagerAdapter} that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class WordSearchPagerAdapter extends FragmentPagerAdapter {
 
-    public SectionsPagerAdapter(FragmentManager fm) {
+    public WordSearchPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

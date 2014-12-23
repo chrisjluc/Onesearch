@@ -1,5 +1,6 @@
-package chrisjluc.funsearch.ui;
+package chrisjluc.funsearch.ui.gameplay;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -10,15 +11,13 @@ import android.widget.TextView;
 
 import chrisjluc.funsearch.R;
 import chrisjluc.funsearch.WordSearchManager;
-import chrisjluc.funsearch.adapters.SectionsPagerAdapter;
+import chrisjluc.funsearch.adapters.WordSearchPagerAdapter;
 import chrisjluc.funsearch.base.BaseActivity;
-import chrisjluc.funsearch.models.GameDifficulty;
-import chrisjluc.funsearch.models.GameMode;
-import chrisjluc.funsearch.models.GameType;
+import chrisjluc.funsearch.ui.ResultsActivity;
 
 public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener {
 
-    private enum GameState {START, PLAY, PAUSE}
+    private enum GameState {START, PLAY, PAUSE, FINISHED}
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -41,16 +40,13 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO: DELETE WHEN MENUACTIVITY IS CREATED
-        WordSearchManager.getInstance().setGameMode(new GameMode(GameType.Timed, GameDifficulty.Easy, 30000));
-
         setContentView(R.layout.wordsearch_activity);
         mStartTime = WordSearchManager.getInstance().getGameMode().getTime();
         mGameState = GameState.START;
-        Button mSkipButton = (Button) findViewById(R.id.bSkip);
-        Button mPauseButton = (Button) findViewById(R.id.bPause);
-        mSkipButton.setOnClickListener(this);
-        mPauseButton.setOnClickListener(this);
+        Button skipButton = (Button) findViewById(R.id.bSkip);
+        Button pauseButton = (Button) findViewById(R.id.bPause);
+        skipButton.setOnClickListener(this);
+        pauseButton.setOnClickListener(this);
         mTimerTextView = (TextView) findViewById(R.id.tvTimer);
         mScoreTextView = (TextView) findViewById(R.id.tvScore);
         mScoreTextView.setText("0");
@@ -65,11 +61,11 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
           may be best to switch to a
           {@link android.support.v13.app.FragmentStatePagerAdapter}.
          */
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+        WordSearchPagerAdapter mWordSearchPagerAdapter = new WordSearchPagerAdapter(getFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (WordSearchViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setAdapter(mWordSearchPagerAdapter);
         currentItem = 0;
         mScore = 0;
         mSkipped = 0;
@@ -108,11 +104,11 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
     @Override
     public void onDialogQuit() {
-        // Exit to the main menu
+        finish();
     }
 
     @Override
-    public void onDialogResume() {
+    public void onDialotResume() {
         mGameState = GameState.PLAY;
         setupCountDownTimer(mTimeRemaining);
         startCountDownTimer();
@@ -122,6 +118,10 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     @Override
     public void onDialogRestart() {
         mGameState = GameState.PLAY;
+        restart();
+    }
+
+    private void restart() {
         mScore = 0;
         mSkipped = 0;
         mTimeRemaining = mStartTime;
@@ -134,7 +134,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
     @Override
     protected void onResume() {
-        if (mGameState == GameState.START)
+        if (mGameState == GameState.START || mGameState == GameState.FINISHED)
             mGameState = GameState.PLAY;
         else
             pauseGameplay();
@@ -145,6 +145,24 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     protected void onPause() {
         stopCountDownTimer();
         super.onPause();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK) {
+            System.out.println("Result not okay");
+            return;
+        }
+        switch (requestCode) {
+            case 0:
+                int action = data.getIntExtra(ResultsActivity.ACTION_IDENTIFIER, -1);
+                if (action == ResultsActivity.RESULT_REPLAY_GAME)
+                    restart();
+                else if (action == ResultsActivity.RESULT_EXIT_TO_MENU)
+                    finish();
+                break;
+        }
     }
 
     @Override
@@ -161,10 +179,11 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
             }
 
             public void onFinish() {
+                mGameState = GameState.FINISHED;
                 Intent i = new Intent(getApplicationContext(), ResultsActivity.class);
                 i.putExtra("score", mScore);
                 i.putExtra("skipped", mSkipped);
-                startActivity(i);
+                startActivityForResult(i, 0);
             }
         };
     }

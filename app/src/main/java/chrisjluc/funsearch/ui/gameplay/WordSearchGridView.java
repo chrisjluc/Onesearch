@@ -1,4 +1,4 @@
-package chrisjluc.funsearch.ui;
+package chrisjluc.funsearch.ui.gameplay;
 
 import android.content.Context;
 import android.util.AttributeSet;

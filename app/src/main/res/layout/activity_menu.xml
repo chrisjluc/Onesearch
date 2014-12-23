@@ -6,42 +6,43 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="chrisjluc.funsearch.ui.ResultsActivity">
+    tools:context="chrisjluc.funsearch.ui.MenuActivity">
 
     <TextView
         android:layout_centerHorizontal="true"
-        android:text="@string/title_activity_results"
+        android:text="@string/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <LinearLayout
         android:layout_centerInParent="true"
-        android:text="Score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvScoreResult"/>
-
-    <LinearLayout
-        android:layout_alignParentBottom="true"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:orientation="vertical">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/results_replay"
-            android:id="@+id/bReplay"
-            android:layout_weight="0.50" />
+            android:text="@string/menu_easy"
+            android:id="@+id/bMenuEasy" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/results_return_menu"
-            android:id="@+id/bReturnMenu"
-            android:layout_weight="0.50" />
+            android:text="@string/menu_medium"
+            android:id="@+id/bMenuMedium" />
 
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_hard"
+            android:id="@+id/bMenuHard" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_advanced"
+            android:id="@+id/bMenuAdvanced" />
     </LinearLayout>
 
 </RelativeLayout>
