@@ -32,10 +32,9 @@ public class WordSearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.wordsearch_fragment, container, false);
         TextView tv = (TextView) rootView.findViewById(R.id.section_label);
-        WordSearchGenerator generator = WordSearchManager.getInstance().getGenerator(WordSearchActivity.currentItem);
-        tv.setText(generator.word);
         WordSearchGridView grid = (WordSearchGridView) rootView.findViewById(R.id.gridView);
         grid.setWordFoundListener((WordSearchGridView.WordFoundListener)getActivity());
+        tv.setText(grid.getWord());
         return rootView;
     }
 }

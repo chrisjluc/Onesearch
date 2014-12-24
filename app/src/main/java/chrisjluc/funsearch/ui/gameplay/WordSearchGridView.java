@@ -9,6 +9,7 @@ import android.widget.GridView;
 import java.util.ArrayList;
 import java.util.List;
 
+import chrisjluc.funsearch.R;
 import chrisjluc.funsearch.WordSearchManager;
 import chrisjluc.funsearch.adapters.WordSearchGridAdapter;
 import chrisjluc.funsearch.wordSearchGenerator.generators.WordSearchGenerator;
@@ -17,84 +18,84 @@ import chrisjluc.funsearch.wordSearchGenerator.models.Point;
 
 public class WordSearchGridView extends GridView {
 
-    private int xLength;
-    private int yLength;
-    private String word;
-    private Point p1, p2;
-    private int dimension;
-    private int marginLeft = 64;
-    private int padding = 16;
-    private List<Node> nodes;
-    private List<Node> highlightedNodes;
-    private Point startWordPoint;
-    private Point endWordPoint;
-    public boolean isFound = false;
-    private WordFoundListener listener;
+    private int mXLength, mYLength;
+    private int mColumnWidth;
+    private int mHorizontalMargin, mVerticalMargin;
+    private Point mStartDrag, mEndDrag;
+    private List<Node> mWordSearchNodes;
+    private List<Node> mWordSearchHighlightedNodes;
+    private String mWord;
+    private Point mWordStart, mWordEnd;
+    public boolean mIsWordFound = false;
+    private WordFoundListener mListener;
+    private WordSearchGridAdapter mAdapter;
 
-    WordSearchGridAdapter adapter;
+    int x1, y1;
+    int x2, y2;
 
     public WordSearchGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         WordSearchManager manager = WordSearchManager.getInstance();
-        WordSearchGenerator generator = manager.getGenerator(WordSearchActivity.currentItem);
-        xLength = generator.nCol;
-        yLength = generator.nRow;
-        word = generator.word;
-        List<Point> points = generator.getStartAndEndPointOfWord();
-        startWordPoint = new Point(points.get(0).y, points.get(0).x);
-        endWordPoint = new Point(points.get(1).y, points.get(1).x);
-        nodes = generator.generateNodeList();
-        highlightedNodes = new ArrayList<Node>();
+        WordSearchGenerator wordSearch = manager.getWordSearch(WordSearchActivity.currentItem);
+        mXLength = wordSearch.nCol;
+        mYLength = wordSearch.nRow;
+        mWord = wordSearch.word;
+        List<Point> points = wordSearch.getStartAndEndPointOfWord();
+
+        // Convert cartesian from matrix coordinates
+        mWordStart = new Point(points.get(0).y, points.get(0).x);
+        mWordEnd = new Point(points.get(1).y, points.get(1).x);
+        mWordSearchNodes = wordSearch.generateNodeList();
+        mWordSearchHighlightedNodes = new ArrayList<Node>();
+        mHorizontalMargin = (int) getResources().getDimension(R.dimen.activity_horizontal_margin);
+        mVerticalMargin = (int) getResources().getDimension(R.dimen.activity_vertical_margin);
 
         // Calculate column dimensions
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         int width = displayMetrics.widthPixels;
-        dimension = (width - 2 * marginLeft) / (xLength);
-        setColumnWidth(dimension);
-        adapter = new WordSearchGridAdapter(context, nodes, dimension);
-        setAdapter(adapter);
+        mColumnWidth = (width - 2 * mHorizontalMargin / 3) / (mXLength);
+        setColumnWidth(mColumnWidth);
+        mAdapter = new WordSearchGridAdapter(context, mWordSearchNodes, mColumnWidth);
+        setAdapter(mAdapter);
     }
 
     public void setWordFoundListener(WordFoundListener listener) {
-        this.listener = listener;
+        this.mListener = listener;
     }
 
-    int x1, y1;
-    int x2, y2;
-
     private void isWordFound() {
-        if ((startWordPoint.equals(p1) && endWordPoint.equals(p2))
-                || (startWordPoint.equals(p2) && endWordPoint.equals(p1))) {
-            isFound = true;
-            listener.notifyWordFound();
+        if ((mWordStart.equals(mStartDrag) && mWordEnd.equals(mEndDrag))
+                || (mWordStart.equals(mEndDrag) && mWordEnd.equals(mStartDrag))) {
+            mIsWordFound = true;
+            mListener.notifyWordFound();
         }
     }
 
     private void updateCurrentHighlightedNodes(Point p) {
-        if (p.y < 0 || p.y >= yLength || p.x < 0 || p.x >= xLength) return;
+        if (p.y < 0 || p.y >= mYLength || p.x < 0 || p.x >= mXLength) return;
 
-        if (p.equals(p2)) return;
+        if (p.equals(mEndDrag)) return;
 
-        p2 = p;
+        mEndDrag = p;
 
         boolean isValid = false;
         // diagonal
-        if (Math.abs(p2.x - p1.x) == Math.abs(p2.y - p1.y)) {
+        if (Math.abs(mEndDrag.x - mStartDrag.x) == Math.abs(mEndDrag.y - mStartDrag.y)) {
             isValid = true;
             // horizontal
-        } else if (p2.x - p1.x == 0) {
+        } else if (mEndDrag.x - mStartDrag.x == 0) {
             isValid = true;
             // vertical
-        } else if (p2.y - p1.y == 0) {
+        } else if (mEndDrag.y - mStartDrag.y == 0) {
             isValid = true;
         }
 
         if (!isValid) return;
 
         clearHighlightedNodes();
-        int dX = p2.x - p1.x;
-        int dY = p2.y - p1.y;
+        int dX = mEndDrag.x - mStartDrag.x;
+        int dY = mEndDrag.y - mStartDrag.y;
 
         int length = 0;
 
@@ -105,7 +106,7 @@ public class WordSearchGridView extends GridView {
             length = Math.abs(dY);
 
         for (int i = 0; i < length + 1; i++) {
-            Point point = new Point(p1.x, p1.y);
+            Point point = new Point(mStartDrag.x, mStartDrag.y);
             if (dX != 0)
                 point.x += dX > 0 ? i : -i;
             if (dY != 0)
@@ -116,37 +117,37 @@ public class WordSearchGridView extends GridView {
                 System.out.println(e.getMessage());
             }
         }
-        adapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 
     private void highlightNodeAt(Point p) throws Exception {
-        int index = p.y * xLength + p.x;
-        if (index < 0 || index >= nodes.size()) {
+        int index = p.y * mXLength + p.x;
+        if (index < 0 || index >= mWordSearchNodes.size()) {
             throw new Exception("Invalid Row: " + p.y + " and col: " + p.x);
         }
-        Node n = nodes.get(index);
-        if (!highlightedNodes.contains(n)) {
-            highlightedNodes.add(n);
+        Node n = mWordSearchNodes.get(index);
+        if (!mWordSearchHighlightedNodes.contains(n)) {
+            mWordSearchHighlightedNodes.add(n);
             n.setHighlighted(true);
         }
     }
 
     private void clearHighlightedNodes() {
-        for (Node n : highlightedNodes)
+        for (Node n : mWordSearchHighlightedNodes)
             n.setHighlighted(false);
-        highlightedNodes.clear();
-        adapter.notifyDataSetChanged();
+        mWordSearchHighlightedNodes.clear();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         boolean result = false;
-        if (isFound) return false;
+        if (mIsWordFound) return false;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 x1 = x2 = (int) event.getX();
                 y1 = y2 = (int) event.getY();
-                p1 = new Point(calcRelativeX(x1), calcRelativeY(y1));
+                mStartDrag = new Point(calcRelativeX(x1), calcRelativeY(y1));
                 result = true;
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -159,7 +160,7 @@ public class WordSearchGridView extends GridView {
                 x2 = (int) event.getX();
                 y2 = (int) event.getY();
                 isWordFound();
-                if (!isFound)
+                if (!mIsWordFound)
                     clearHighlightedNodes();
                 result = true;
                 break;
@@ -170,14 +171,18 @@ public class WordSearchGridView extends GridView {
     }
 
     private int calcRelativeX(int d) {
-        return (d - padding) / dimension;
+        return (d - mHorizontalMargin) / mColumnWidth;
     }
 
     private int calcRelativeY(int d) {
-        return (d - padding) / dimension;
+        return (d - mVerticalMargin) / mColumnWidth;
     }
 
     public interface WordFoundListener {
         public void notifyWordFound();
+    }
+
+    public String getWord() {
+        return mWord;
     }
 }
