@@ -4,7 +4,6 @@ import java.util.Random;
 
 import chrisjluc.funsearch.models.GameDifficulty;
 import chrisjluc.funsearch.models.GameMode;
-import chrisjluc.funsearch.models.GameType;
 import chrisjluc.funsearch.wordSearchGenerator.generators.WordSearchGenerator;
 
 public class WordSearchManager {
@@ -30,7 +29,7 @@ public class WordSearchManager {
     private final static int ADVANCED_MAX_DIMENSION_OFFSET = 4;
 
     private final static String[] WORDS = {"alfred", "hello", "hey", "heat", "time", "steam", "elephant", "scissor", "point", "star", "tree", "bob", "airplane", "tail", "mouth", "chin", "phone", "jar", "ear", "drum", "room"};
-    private final static int SIZE = 4;
+    private final static int SIZE = 6;
     private static WordSearchManager mInstance;
 
     private int mMinWordLength;
@@ -58,6 +57,9 @@ public class WordSearchManager {
     private WordSearchManager() {
         mRandom = new Random();
         mWordSearchArray = new WordSearchGenerator[SIZE];
+    }
+
+    public void buildWordSearches() {
         mWordSearchArray[0] = buildWordSearch();
 
         Runnable r = new Runnable() {
@@ -71,19 +73,18 @@ public class WordSearchManager {
         new Thread(r).start();
     }
 
-    public WordSearchGenerator getGenerator(final int i) {
+    public WordSearchGenerator getWordSearch(final int i) {
         if (i < 0)
             return null;
-        if (i > 0) {
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    mWordSearchArray[(i - 1) % SIZE] = buildWordSearch();
-                }
-            };
-            new Thread(r).start();
-        }
-        return mWordSearchArray[i % SIZE];
+        WordSearchGenerator ret = mWordSearchArray[i % SIZE];
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                mWordSearchArray[i % SIZE] = buildWordSearch();
+            }
+        };
+        new Thread(r).start();
+        return ret;
     }
 
     private WordSearchGenerator buildWordSearch() {
@@ -129,7 +130,7 @@ public class WordSearchManager {
             mMaxWordLength = HARD_MAX_WORDLENGTH;
             mMinDimensionOffset = HARD_MIN_DIMENSION_OFFSET;
             mMaxDimensionOffset = HARD_MAX_DIMENSION_OFFSET;
-        } else if (mGameMode.getDifficulty() == GameDifficulty.Advanced){
+        } else if (mGameMode.getDifficulty() == GameDifficulty.Advanced) {
             mMinWordLength = ADVANCED_MIN_WORDLENGTH;
             mMaxWordLength = ADVANCED_MAX_WORDLENGTH;
             mMinDimensionOffset = ADVANCED_MIN_DIMENSION_OFFSET;
