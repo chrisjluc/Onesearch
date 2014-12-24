@@ -44,7 +44,7 @@ public class MenuActivity extends BaseActivity implements View.OnClickListener {
                 gd = GameDifficulty.Hard;
                 break;
             case R.id.bMenuAdvanced:
-                gd = GameDifficulty.Hard;
+                gd = GameDifficulty.Advanced;
                 break;
         }
         WordSearchManager.getInstance().setGameMode(new GameMode(GameType.Timed, gd, 60000));

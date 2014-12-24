@@ -10,21 +10,26 @@ import chrisjluc.funsearch.wordSearchGenerator.generators.WordSearchGenerator;
 public class WordSearchManager {
 
     private final static int EASY_MIN_WORDLENGTH = 3;
-    private final static int EASY_MAX_WORDLENGTH = 4;
+    private final static int EASY_MAX_WORDLENGTH = 3;
     private final static int EASY_MIN_DIMENSION_OFFSET = 0;
     private final static int EASY_MAX_DIMENSION_OFFSET = 0;
 
-    private final static int MEDIUM_MIN_WORDLENGTH = 4;
-    private final static int MEDIUM_MAX_WORDLENGTH = 6;
-    private final static int MEDIUM_MIN_DIMENSION_OFFSET = 1;
-    private final static int MEDIUM_MAX_DIMENSION_OFFSET = 2;
+    private final static int MEDIUM_MIN_WORDLENGTH = 3;
+    private final static int MEDIUM_MAX_WORDLENGTH = 4;
+    private final static int MEDIUM_MIN_DIMENSION_OFFSET = 0;
+    private final static int MEDIUM_MAX_DIMENSION_OFFSET = 1;
 
-    private final static int HARD_MIN_WORDLENGTH = 5;
-    private final static int HARD_MAX_WORDLENGTH = 8;
-    private final static int HARD_MIN_DIMENSION_OFFSET = 3;
-    private final static int HARD_MAX_DIMENSION_OFFSET = 5;
+    private final static int HARD_MIN_WORDLENGTH = 4;
+    private final static int HARD_MAX_WORDLENGTH = 6;
+    private final static int HARD_MIN_DIMENSION_OFFSET = 1;
+    private final static int HARD_MAX_DIMENSION_OFFSET = 2;
 
-    private final static String[] WORDS = {"alfred", "hello", "hey"};
+    private final static int ADVANCED_MIN_WORDLENGTH = 5;
+    private final static int ADVANCED_MAX_WORDLENGTH = 9;
+    private final static int ADVANCED_MIN_DIMENSION_OFFSET = 2;
+    private final static int ADVANCED_MAX_DIMENSION_OFFSET = 4;
+
+    private final static String[] WORDS = {"alfred", "hello", "hey", "heat", "time", "steam", "elephant", "scissor", "point", "star", "tree", "bob", "airplane", "tail", "mouth", "chin", "phone", "jar", "ear", "drum", "room"};
     private final static int SIZE = 4;
     private static WordSearchManager mInstance;
 
@@ -119,11 +124,16 @@ public class WordSearchManager {
             mMaxWordLength = MEDIUM_MAX_WORDLENGTH;
             mMinDimensionOffset = MEDIUM_MIN_DIMENSION_OFFSET;
             mMaxDimensionOffset = MEDIUM_MAX_DIMENSION_OFFSET;
-        } else {
+        } else if (mGameMode.getDifficulty() == GameDifficulty.Hard) {
             mMinWordLength = HARD_MIN_WORDLENGTH;
             mMaxWordLength = HARD_MAX_WORDLENGTH;
             mMinDimensionOffset = HARD_MIN_DIMENSION_OFFSET;
             mMaxDimensionOffset = HARD_MAX_DIMENSION_OFFSET;
+        } else if (mGameMode.getDifficulty() == GameDifficulty.Advanced){
+            mMinWordLength = ADVANCED_MIN_WORDLENGTH;
+            mMaxWordLength = ADVANCED_MAX_WORDLENGTH;
+            mMinDimensionOffset = ADVANCED_MIN_DIMENSION_OFFSET;
+            mMaxDimensionOffset = ADVANCED_MAX_DIMENSION_OFFSET;
         }
     }
 }
