@@ -28,7 +28,7 @@ public class PauseDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 getDialog().dismiss();
-                mListener.onDialotResume();
+                mListener.onDialogResume();
             }
         });
         restartButton.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +54,7 @@ public class PauseDialogFragment extends DialogFragment {
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        mListener.onDialotResume();
+        mListener.onDialogResume();
         super.onCancel(dialog);
     }
 
@@ -78,7 +78,7 @@ public class PauseDialogFragment extends DialogFragment {
     public interface PauseDialogListener {
         public void onDialogQuit();
 
-        public void onDialotResume();
+        public void onDialogResume();
 
         public void onDialogRestart();
     }

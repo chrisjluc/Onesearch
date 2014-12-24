@@ -108,7 +108,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     }
 
     @Override
-    public void onDialotResume() {
+    public void onDialogResume() {
         mGameState = GameState.PLAY;
         setupCountDownTimer(mTimeRemaining);
         startCountDownTimer();
