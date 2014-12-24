@@ -99,10 +99,10 @@ public class WordSearchManager {
             words[index] = words[words.length - 1 - i];
         }
 
-        int dimen = word.length();
+        int dimen = word.length() + mMinDimensionOffset;
         int offsetDifference = mMaxDimensionOffset - mMinDimensionOffset;
         if (offsetDifference > 0)
-            dimen += mRandom.nextInt(offsetDifference + 1) + mMinDimensionOffset;
+            dimen += mRandom.nextInt(offsetDifference + 1);
 
         WordSearchGenerator gen = new WordSearchGenerator(dimen, dimen, word);
         gen.build();
