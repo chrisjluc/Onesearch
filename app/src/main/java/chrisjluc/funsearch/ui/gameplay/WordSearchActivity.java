@@ -87,7 +87,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bSkip:
-                mViewPager.setCurrentItem(++currentItem);
+                mViewPager.setCurrentItem(currentItem);
                 mSkipped++;
                 break;
             case R.id.bPause:
@@ -98,7 +98,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
     @Override
     public void notifyWordFound() {
-        mViewPager.setCurrentItem(++currentItem);
+        mViewPager.setCurrentItem(currentItem);
         mScoreTextView.setText(Integer.toString(++mScore));
     }
 
@@ -129,7 +129,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         startCountDownTimer();
         setFullscreen();
         mScoreTextView.setText("0");
-        mViewPager.setCurrentItem(++currentItem);
+        mViewPager.setCurrentItem(currentItem);
     }
 
     @Override

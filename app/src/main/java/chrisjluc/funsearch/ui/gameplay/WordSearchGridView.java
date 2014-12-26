@@ -37,7 +37,7 @@ public class WordSearchGridView extends GridView {
         super(context, attrs);
 
         WordSearchManager manager = WordSearchManager.getInstance();
-        WordSearchGenerator wordSearch = manager.getWordSearch(WordSearchActivity.currentItem);
+        WordSearchGenerator wordSearch = manager.getWordSearch(WordSearchActivity.currentItem++);
         mXLength = wordSearch.nCol;
         mYLength = wordSearch.nRow;
         mWord = wordSearch.word;

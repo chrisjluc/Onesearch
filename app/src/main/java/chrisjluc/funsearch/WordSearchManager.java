@@ -1,5 +1,7 @@
 package chrisjluc.funsearch;
 
+import android.os.AsyncTask;
+
 import java.util.Random;
 
 import chrisjluc.funsearch.models.GameDifficulty;
@@ -60,30 +62,14 @@ public class WordSearchManager {
     }
 
     public void buildWordSearches() {
-        mWordSearchArray[0] = buildWordSearch();
-
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 1; i < SIZE; i++) {
-                    mWordSearchArray[i] = buildWordSearch();
-                }
-            }
-        };
-        new Thread(r).start();
+        new BuildWordSearchArrayTask().execute();
     }
 
     public WordSearchGenerator getWordSearch(final int i) {
         if (i < 0)
-            return null;
+            return buildWordSearch();
         WordSearchGenerator ret = mWordSearchArray[i % SIZE];
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                mWordSearchArray[i % SIZE] = buildWordSearch();
-            }
-        };
-        new Thread(r).start();
+        new BuildWordSearchTask(i % SIZE).execute();
         return ret;
     }
 
@@ -135,6 +121,31 @@ public class WordSearchManager {
             mMaxWordLength = ADVANCED_MAX_WORDLENGTH;
             mMinDimensionOffset = ADVANCED_MIN_DIMENSION_OFFSET;
             mMaxDimensionOffset = ADVANCED_MAX_DIMENSION_OFFSET;
+        }
+    }
+
+    private class BuildWordSearchArrayTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            for (int i = 0; i < SIZE; i++) {
+                mWordSearchArray[i] = buildWordSearch();
+            }
+            return null;
+        }
+    }
+
+    private class BuildWordSearchTask extends AsyncTask<Void, Void, Void> {
+
+        private int i;
+
+        public BuildWordSearchTask(int i) {
+            this.i = i;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mWordSearchArray[i] = buildWordSearch();
+            return null;
         }
     }
 }
