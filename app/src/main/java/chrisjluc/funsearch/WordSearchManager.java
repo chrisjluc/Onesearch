@@ -10,25 +10,25 @@ import chrisjluc.funsearch.wordSearchGenerator.generators.WordSearchGenerator;
 
 public class WordSearchManager {
 
-    private final static int EASY_MIN_WORDLENGTH = 3;
-    private final static int EASY_MAX_WORDLENGTH = 3;
-    private final static int EASY_MIN_DIMENSION_OFFSET = 0;
-    private final static int EASY_MAX_DIMENSION_OFFSET = 0;
+    public final static int EASY_MIN_WORDLENGTH = 3;
+    public final static int EASY_MAX_WORDLENGTH = 3;
+    public final static int EASY_MIN_DIMENSION_OFFSET = 0;
+    public final static int EASY_MAX_DIMENSION_OFFSET = 0;
 
-    private final static int MEDIUM_MIN_WORDLENGTH = 3;
-    private final static int MEDIUM_MAX_WORDLENGTH = 4;
-    private final static int MEDIUM_MIN_DIMENSION_OFFSET = 1;
-    private final static int MEDIUM_MAX_DIMENSION_OFFSET = 1;
+    public final static int MEDIUM_MIN_WORDLENGTH = 3;
+    public final static int MEDIUM_MAX_WORDLENGTH = 4;
+    public final static int MEDIUM_MIN_DIMENSION_OFFSET = 1;
+    public final static int MEDIUM_MAX_DIMENSION_OFFSET = 1;
 
-    private final static int HARD_MIN_WORDLENGTH = 5;
-    private final static int HARD_MAX_WORDLENGTH = 6;
-    private final static int HARD_MIN_DIMENSION_OFFSET = 2;
-    private final static int HARD_MAX_DIMENSION_OFFSET = 3;
+    public final static int HARD_MIN_WORDLENGTH = 5;
+    public final static int HARD_MAX_WORDLENGTH = 6;
+    public final static int HARD_MIN_DIMENSION_OFFSET = 2;
+    public final static int HARD_MAX_DIMENSION_OFFSET = 3;
 
-    private final static int ADVANCED_MIN_WORDLENGTH = 7;
-    private final static int ADVANCED_MAX_WORDLENGTH = 9;
-    private final static int ADVANCED_MIN_DIMENSION_OFFSET = 3;
-    private final static int ADVANCED_MAX_DIMENSION_OFFSET = 5;
+    public final static int ADVANCED_MIN_WORDLENGTH = 7;
+    public final static int ADVANCED_MAX_WORDLENGTH = 9;
+    public final static int ADVANCED_MIN_DIMENSION_OFFSET = 3;
+    public final static int ADVANCED_MAX_DIMENSION_OFFSET = 5;
 
     private final static String[] WORDS = {"alfred", "hello", "hey", "heat", "time", "steam", "elephant", "scissor", "point", "star", "tree", "bob", "airplane", "tail", "mouth", "chin", "phone", "jar", "ear", "drum", "room"};
     private final static int SIZE = 6;

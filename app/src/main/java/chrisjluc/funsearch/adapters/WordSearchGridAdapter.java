@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import chrisjluc.funsearch.R;
+import chrisjluc.funsearch.WordSearchManager;
 import chrisjluc.funsearch.wordSearchGenerator.models.Node;
 
 public class WordSearchGridAdapter extends BaseAdapter {
@@ -38,6 +39,15 @@ public class WordSearchGridAdapter extends BaseAdapter {
         TextView tv = (TextView) convertView;
         tv.setText("" + n.getLetter());
         tv.setHeight(dimension);
+
+        int difference = ((WordSearchManager.ADVANCED_MAX_WORDLENGTH + WordSearchManager.ADVANCED_MAX_DIMENSION_OFFSET - WordSearchManager.EASY_MIN_WORDLENGTH) / 3);
+        if (WordSearchManager.EASY_MIN_WORDLENGTH <= xLength && xLength < (WordSearchManager.EASY_MIN_WORDLENGTH + difference))
+            tv.setTextSize(22);
+        else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference) <= xLength && xLength < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 2))
+            tv.setTextSize(18);
+        else
+            tv.setTextSize(14);
+
         int color;
         if (n.isHighlighted())
             color = Color.BLUE;
