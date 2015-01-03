@@ -9,21 +9,24 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
-        <Button
+        <chrisjluc.funsearch.ui.components.GameButton
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/element_margin_separation"
             android:text="Resume"
             android:id="@+id/bResume" />
 
-        <Button
+        <chrisjluc.funsearch.ui.components.GameButton
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/element_margin_separation"
             android:text="Restart"
             android:id="@+id/bRestart" />
 
-        <Button
+        <chrisjluc.funsearch.ui.components.GameButton
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/element_margin_separation"
             android:text="Exit to Menu"
             android:id="@+id/bQuit" />
     </LinearLayout>

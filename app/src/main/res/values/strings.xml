@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">One Search</string>
+    <string name="app_name">Ctrl F</string>
     <string name="title_activity_results">Results</string>
     <string name="title_activity_menu">menu</string>
     <string name="menu_easy">Easy</string>

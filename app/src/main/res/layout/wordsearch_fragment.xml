@@ -8,13 +8,13 @@
     android:layout_marginBottom="@dimen/activity_vertical_margin"
     tools:context=".WordSearchActivity$WordSearchFragment">
 
-    <TextView
+    <chrisjluc.funsearch.ui.components.GameTextView
         android:id="@+id/section_label"
         android:layout_centerHorizontal="true"
         android:text="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_vertical_margin"/>
+        android:layout_margin="@dimen/activity_vertical_margin" />
 
     <chrisjluc.funsearch.ui.gameplay.WordSearchGridView
         android:layout_below="@id/section_label"
@@ -23,7 +23,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:numColumns="auto_fit"
-        android:stretchMode="columnWidth" >
-    </chrisjluc.funsearch.ui.gameplay.WordSearchGridView>
+        android:stretchMode="columnWidth"/>
 
 </RelativeLayout>
