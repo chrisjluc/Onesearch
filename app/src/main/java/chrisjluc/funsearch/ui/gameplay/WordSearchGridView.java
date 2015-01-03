@@ -56,7 +56,7 @@ public class WordSearchGridView extends GridView {
         int width = displayMetrics.widthPixels;
         mColumnWidth = (int) (width - 2 * mHorizontalMargin / displayMetrics.density) / (mXLength);
         setColumnWidth(mColumnWidth);
-        mAdapter = new WordSearchGridAdapter(context, mWordSearchNodes, mColumnWidth);
+        mAdapter = new WordSearchGridAdapter(context, mWordSearchNodes, mColumnWidth, mXLength);
         setAdapter(mAdapter);
     }
 
