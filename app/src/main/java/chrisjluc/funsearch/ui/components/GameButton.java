@@ -39,5 +39,6 @@ public class GameButton extends Button {
             typeface = Typeface.createFromAsset(context.getAssets(), "fonts/gothic.ttf");
         this.setTypeface(typeface);
         this.setTextColor(Color.WHITE);
+        this.setTextSize(24);
     }
 }

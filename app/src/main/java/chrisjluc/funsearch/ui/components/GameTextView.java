@@ -28,5 +28,6 @@ public class GameTextView extends TextView {
         if(typeface == null)
             typeface = Typeface.createFromAsset(context.getAssets(), "fonts/gothic.ttf");
         this.setTypeface(typeface);
+        this.setTextSize(18);
     }
 }

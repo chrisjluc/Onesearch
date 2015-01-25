@@ -1,7 +1,6 @@
 package chrisjluc.funsearch.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,20 +45,25 @@ public class WordSearchGridAdapter extends BaseAdapter {
         holder.textView.setHeight(mColumnWidth);
         int difference = ((WordSearchManager.ADVANCED_MAX_WORDLENGTH + WordSearchManager.ADVANCED_MAX_DIMENSION_OFFSET - WordSearchManager.EASY_MIN_WORDLENGTH) / 3);
         if (WordSearchManager.EASY_MIN_WORDLENGTH <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference))
-            holder.textView.setTextSize(22);
+            holder.textView.setTextSize(28);
         else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference) <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 2))
-            holder.textView.setTextSize(18);
+            holder.textView.setTextSize(24);
         else
-            holder.textView.setTextSize(14);
+            holder.textView.setTextSize(22);
 
         int color;
-        if (n.isHighlighted())
-            color = Color.BLUE;
-        else if ((pos / mWordSearchDimension) % 2 == 0)
+
+        if ((pos / mWordSearchDimension) % 2 == 0)
             color = mContext.getResources().getColor(pos % 2 == 0 ? R.color.blue : R.color.green);
         else
             color = mContext.getResources().getColor((pos - mWordSearchDimension) % 2 == 0 ? R.color.green : R.color.blue);
         holder.textView.setTextColor(color);
+
+        if (n.isHighlighted()) {
+            holder.textView.setBackgroundResource(R.drawable.grid_item_highlight);
+        }else{
+            holder.textView.setBackgroundResource(0);
+        }
 
         return convertView;
     }
