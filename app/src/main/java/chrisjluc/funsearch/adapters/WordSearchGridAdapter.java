@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.List;
-
 import chrisjluc.funsearch.R;
 import chrisjluc.funsearch.WordSearchManager;
 import chrisjluc.funsearch.wordSearchGenerator.models.Node;
@@ -17,36 +15,39 @@ import chrisjluc.funsearch.wordSearchGenerator.models.Node;
 public class WordSearchGridAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<Node> mNodes;
+    private Node[] mNodes;
     private int mColumnWidth;
     private int mWordSearchDimension;
     private LayoutInflater mInflater;
 
-    public WordSearchGridAdapter(Context context, List<Node> nodes, int columnWidth, int wordSearchDimension) {
+    public WordSearchGridAdapter(Context context, Node[] nodes, int columnWidth, int wordSearchDimension) {
         this.mContext = context;
         this.mNodes = nodes;
         this.mColumnWidth = columnWidth;
         this.mWordSearchDimension = wordSearchDimension;
-        this.mInflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public View getView(final int pos, View convertView, ViewGroup parent) {
 
+        TextView tv;
+        Node n = mNodes[pos];
+
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.grid_item, null);
+            tv = (TextView) convertView;
+            tv.setText("" + n.getLetter());
+            tv.setHeight(mColumnWidth);
+            int difference = ((WordSearchManager.ADVANCED_MAX_WORDLENGTH + WordSearchManager.ADVANCED_MAX_DIMENSION_OFFSET - WordSearchManager.EASY_MIN_WORDLENGTH) / 3);
+            if (WordSearchManager.EASY_MIN_WORDLENGTH <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference))
+                tv.setTextSize(22);
+            else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference) <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 2))
+                tv.setTextSize(18);
+            else
+                tv.setTextSize(14);
+        } else {
+            tv = (TextView) convertView;
         }
-        Node n = mNodes.get(pos);
-        TextView tv = (TextView) convertView;
-        tv.setText("" + n.getLetter());
-        tv.setHeight(mColumnWidth);
-
-        int difference = ((WordSearchManager.ADVANCED_MAX_WORDLENGTH + WordSearchManager.ADVANCED_MAX_DIMENSION_OFFSET - WordSearchManager.EASY_MIN_WORDLENGTH) / 3);
-        if (WordSearchManager.EASY_MIN_WORDLENGTH <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference))
-            tv.setTextSize(22);
-        else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference) <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 2))
-            tv.setTextSize(18);
-        else
-            tv.setTextSize(14);
 
         int color;
         if (n.isHighlighted())
@@ -62,12 +63,12 @@ public class WordSearchGridAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mNodes.size();
+        return mNodes.length;
     }
 
     @Override
-    public Object getItem(int pos) {
-        return mNodes.get(pos);
+    public Node getItem(int pos) {
+        return mNodes[pos];
     }
 
     @Override

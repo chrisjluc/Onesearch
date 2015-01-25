@@ -16,7 +16,7 @@ public class WordSearchGenerator {
     private int nRow;
     private int nCol;
     private Node[][] mWordSearchNodeMatrix;
-    private List<Node> mWordSearchNodeList;
+    private Node[] mWordSearchNodes;
     private Random mRandom = new Random();
     private Point mRandomPoint;
     private Integer mRandomOrientation;
@@ -33,7 +33,7 @@ public class WordSearchGenerator {
         this.mWord = mWord;
 
         this.mWordSearchNodeMatrix = new Node[nRow][nCol];
-        this.mWordSearchNodeList = new ArrayList<Node>(nRow * nCol);
+        this.mWordSearchNodes = new Node[nRow * nCol];
         if (type.equals(FillType.CharactersOfTheWord))
             this.mFillChars = StringUtils.getDistinctCharacters(mWord);
         else
@@ -53,7 +53,9 @@ public class WordSearchGenerator {
             }
         }
         for (int i = 0; i < nRow; i++) {
-            mWordSearchNodeList.addAll(Arrays.asList(mWordSearchNodeMatrix[i]).subList(0, nCol));
+            for ( int j = 0; j < nCol; j++){
+                mWordSearchNodes[i * nCol + j] = mWordSearchNodeMatrix[i][j];
+            }
         }
     }
 
@@ -472,7 +474,7 @@ public class WordSearchGenerator {
         return nCol;
     }
 
-    public List<Node> getWordSearchNodeList() {
-        return mWordSearchNodeList;
+    public Node[] getWordSearchNodes() {
+        return mWordSearchNodes;
     }
 }

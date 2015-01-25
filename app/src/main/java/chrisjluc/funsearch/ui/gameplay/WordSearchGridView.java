@@ -25,7 +25,7 @@ public class WordSearchGridView extends GridView {
     private int mColumnWidth;
     private int mHorizontalMargin, mVerticalMargin;
     private Point mStartDrag, mEndDrag;
-    private List<Node> mWordSearchNodes;
+    private Node[] mWordSearchNodes;
     private List<Node> mWordSearchHighlightedNodes;
     private String mWord;
     private Point mWordStart, mWordEnd;
@@ -45,7 +45,7 @@ public class WordSearchGridView extends GridView {
         // Convert cartesian from matrix coordinates
         mWordStart = new Point(points.get(0).y, points.get(0).x);
         mWordEnd = new Point(points.get(1).y, points.get(1).x);
-        mWordSearchNodes = wordSearch.getWordSearchNodeList();
+        mWordSearchNodes = wordSearch.getWordSearchNodes();
         // Init to max size of wordsearch
         mWordSearchHighlightedNodes = new ArrayList<Node>(mXLength);
         mHorizontalMargin = (int) getResources().getDimension(R.dimen.activity_horizontal_margin);
@@ -122,10 +122,10 @@ public class WordSearchGridView extends GridView {
 
     private void highlightNodeAt(Point p) throws Exception {
         int index = p.y * mXLength + p.x;
-        if (index < 0 || index >= mWordSearchNodes.size()) {
+        if (index < 0 || index >= mWordSearchNodes.length) {
             throw new Exception("Invalid Row: " + p.y + " and col: " + p.x);
         }
-        Node n = mWordSearchNodes.get(index);
+        Node n = mWordSearchNodes[index];
         if (!mWordSearchHighlightedNodes.contains(n)) {
             mWordSearchHighlightedNodes.add(n);
             n.setHighlighted(true);
