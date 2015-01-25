@@ -30,24 +30,27 @@ public class WordSearchGridAdapter extends BaseAdapter {
 
     public View getView(final int pos, View convertView, ViewGroup parent) {
 
-        TextView tv;
+        ViewHolder holder;
         Node n = mNodes[pos];
 
         if (convertView == null) {
+            holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.grid_item, null);
-            tv = (TextView) convertView;
-            tv.setText("" + n.getLetter());
-            tv.setHeight(mColumnWidth);
-            int difference = ((WordSearchManager.ADVANCED_MAX_WORDLENGTH + WordSearchManager.ADVANCED_MAX_DIMENSION_OFFSET - WordSearchManager.EASY_MIN_WORDLENGTH) / 3);
-            if (WordSearchManager.EASY_MIN_WORDLENGTH <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference))
-                tv.setTextSize(22);
-            else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference) <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 2))
-                tv.setTextSize(18);
-            else
-                tv.setTextSize(14);
+            holder.textView = (TextView) convertView;
+            convertView.setTag(holder);
         } else {
-            tv = (TextView) convertView;
+            holder = (ViewHolder) convertView.getTag();
         }
+
+        holder.textView.setText("" + n.getLetter());
+        holder.textView.setHeight(mColumnWidth);
+        int difference = ((WordSearchManager.ADVANCED_MAX_WORDLENGTH + WordSearchManager.ADVANCED_MAX_DIMENSION_OFFSET - WordSearchManager.EASY_MIN_WORDLENGTH) / 3);
+        if (WordSearchManager.EASY_MIN_WORDLENGTH <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference))
+            holder.textView.setTextSize(22);
+        else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference) <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 2))
+            holder.textView.setTextSize(18);
+        else
+            holder.textView.setTextSize(14);
 
         int color;
         if (n.isHighlighted())
@@ -56,7 +59,7 @@ public class WordSearchGridAdapter extends BaseAdapter {
             color = mContext.getResources().getColor(pos % 2 == 0 ? R.color.blue : R.color.green);
         else
             color = mContext.getResources().getColor((pos - mWordSearchDimension) % 2 == 0 ? R.color.green : R.color.blue);
-        tv.setTextColor(color);
+        holder.textView.setTextColor(color);
 
         return convertView;
     }
@@ -74,5 +77,9 @@ public class WordSearchGridAdapter extends BaseAdapter {
     @Override
     public long getItemId(int pos) {
         return pos;
+    }
+
+    static class ViewHolder {
+        TextView textView;
     }
 }
