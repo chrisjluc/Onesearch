@@ -17,7 +17,15 @@ import chrisjluc.funsearch.ui.ResultsActivity;
 
 public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener {
 
+    private final static boolean ON_SKIP_HIGHLIGHT_WORD = true;
+    private final static long ON_SKIP_HIGHLIGHT_WORD_DELAY_IN_MS = 500;
+
     private final static int TIMER_GRANULARITY_IN_MS = 50;
+
+    /**
+     * Current number of grid views that have been instantiated
+     * Actual fragment position is currentItem - 2
+     */
     public static int currentItem;
     private final PauseDialogFragment mPauseDialogFragment = new PauseDialogFragment();
     /**
@@ -32,6 +40,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private long mStartTime;
     private int mScore;
     private int mSkipped;
+    private WordSearchPagerAdapter mWordSearchPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +66,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
           may be best to switch to a
           {@link android.support.v13.app.FragmentStatePagerAdapter}.
          */
-        WordSearchPagerAdapter mWordSearchPagerAdapter = new WordSearchPagerAdapter(getFragmentManager());
+        mWordSearchPagerAdapter = new WordSearchPagerAdapter(getFragmentManager(), getApplicationContext());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (WordSearchViewPager) findViewById(R.id.pager);
@@ -82,8 +91,24 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bSkip:
-                mViewPager.setCurrentItem(currentItem);
-                mSkipped++;
+                if (ON_SKIP_HIGHLIGHT_WORD) {
+                    ((WordSearchFragment) mWordSearchPagerAdapter.getFragmentFromCurrentItem(currentItem)).highlightWord();
+                    (new CountDownTimer(ON_SKIP_HIGHLIGHT_WORD_DELAY_IN_MS, TIMER_GRANULARITY_IN_MS) {
+
+                        public void onTick(long millisUntilFinished) {
+                        }
+
+                        public void onFinish() {
+                            mViewPager.setCurrentItem(currentItem);
+                            mSkipped++;
+                        }
+                    }).start();
+                } else {
+                    mViewPager.setCurrentItem(currentItem);
+                    mSkipped++;
+                }
+
+
                 break;
             case R.id.bPause:
                 pauseGameplay();

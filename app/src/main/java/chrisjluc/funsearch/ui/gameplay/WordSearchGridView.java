@@ -27,7 +27,7 @@ public class WordSearchGridView extends GridView {
     private List<Node> mWordSearchHighlightedNodes;
     private String mWord;
     private Point mWordStart, mWordEnd;
-    private WordFoundListener mListener;
+    private WordFoundListener mWordFoundListener;
     private WordSearchGridAdapter mAdapter;
 
     public WordSearchGridView(Context context, AttributeSet attrs) {
@@ -59,15 +59,20 @@ public class WordSearchGridView extends GridView {
     }
 
     public void setWordFoundListener(WordFoundListener listener) {
-        this.mListener = listener;
+        this.mWordFoundListener = listener;
     }
 
     private void isWordFound() {
         if ((mWordStart.equals(mStartDrag) && mWordEnd.equals(mEndDrag))
                 || (mWordStart.equals(mEndDrag) && mWordEnd.equals(mStartDrag))) {
             mIsWordFound = true;
-            mListener.notifyWordFound();
+            mWordFoundListener.notifyWordFound();
         }
+    }
+
+    public void highlightWord() {
+        mStartDrag = mWordStart;
+        updateCurrentHighlightedNodes(mWordEnd);
     }
 
     private void updateCurrentHighlightedNodes(Point p) {

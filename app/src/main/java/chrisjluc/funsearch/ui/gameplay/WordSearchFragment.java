@@ -8,12 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import chrisjluc.funsearch.R;
-import chrisjluc.funsearch.WordSearchManager;
-import chrisjluc.funsearch.wordSearchGenerator.generators.WordSearchGenerator;
 
 public class WordSearchFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
+
+    private WordSearchGridView mGrid;
 
     public static WordSearchFragment newInstance(int sectionNumber) {
         WordSearchFragment fragment = new WordSearchFragment();
@@ -32,9 +32,13 @@ public class WordSearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.wordsearch_fragment, container, false);
         TextView tv = (TextView) rootView.findViewById(R.id.section_label);
-        WordSearchGridView grid = (WordSearchGridView) rootView.findViewById(R.id.gridView);
-        grid.setWordFoundListener((WordSearchGridView.WordFoundListener)getActivity());
-        tv.setText(grid.getWord());
+        mGrid = (WordSearchGridView) rootView.findViewById(R.id.gridView);
+        mGrid.setWordFoundListener((WordSearchGridView.WordFoundListener) getActivity());
+        tv.setText(mGrid.getWord());
         return rootView;
+    }
+
+    public void highlightWord() {
+        mGrid.highlightWord();
     }
 }
