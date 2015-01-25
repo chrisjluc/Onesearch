@@ -19,8 +19,6 @@ import chrisjluc.funsearch.wordSearchGenerator.models.Point;
 public class WordSearchGridView extends GridView {
 
     public boolean mIsWordFound = false;
-    int x1, y1;
-    int x2, y2;
     private int mXLength, mYLength;
     private int mColumnWidth;
     private int mHorizontalMargin, mVerticalMargin;
@@ -111,28 +109,24 @@ public class WordSearchGridView extends GridView {
                 point.x += dX > 0 ? i : -i;
             if (dY != 0)
                 point.y += dY > 0 ? i : -i;
-            try {
-                highlightNodeAt(point);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+
+            int index = point.y * mXLength + point.x;
+            if (index < 0 || index >= mWordSearchNodes.length)
+                continue;
+            Node n = mWordSearchNodes[index];
+            mWordSearchHighlightedNodes.add(n);
+            n.setHighlighted(true);
         }
         mAdapter.notifyDataSetChanged();
     }
 
-    private void highlightNodeAt(Point p) throws Exception {
-        int index = p.y * mXLength + p.x;
-        if (index < 0 || index >= mWordSearchNodes.length) {
-            throw new Exception("Invalid Row: " + p.y + " and col: " + p.x);
-        }
-        Node n = mWordSearchNodes[index];
-        if (!mWordSearchHighlightedNodes.contains(n)) {
-            mWordSearchHighlightedNodes.add(n);
-            n.setHighlighted(true);
-        }
+    private void clearHighlightedNodes() {
+        for (Node n : mWordSearchHighlightedNodes)
+            n.setHighlighted(false);
+        mWordSearchHighlightedNodes.clear();
     }
 
-    private void clearHighlightedNodes() {
+    private void clearHighlighedNodesAndNotifyAdapter() {
         for (Node n : mWordSearchHighlightedNodes)
             n.setHighlighted(false);
         mWordSearchHighlightedNodes.clear();
@@ -141,12 +135,13 @@ public class WordSearchGridView extends GridView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        int x1, x2, y1, y2;
         boolean result = false;
         if (mIsWordFound) return false;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                x1 = x2 = (int) event.getX();
-                y1 = y2 = (int) event.getY();
+                x1 = (int) event.getX();
+                y1 = (int) event.getY();
                 mStartDrag = new Point(calcRelativeX(x1), calcRelativeY(y1));
                 result = true;
                 break;
@@ -157,11 +152,9 @@ public class WordSearchGridView extends GridView {
                 updateCurrentHighlightedNodes(new Point(calcRelativeX(x2), calcRelativeY(y2)));
                 break;
             case MotionEvent.ACTION_UP:
-                x2 = (int) event.getX();
-                y2 = (int) event.getY();
                 isWordFound();
                 if (!mIsWordFound)
-                    clearHighlightedNodes();
+                    clearHighlighedNodesAndNotifyAdapter();
                 result = true;
                 break;
         }
