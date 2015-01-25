@@ -30,7 +30,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
     private GameState mGameState;
     public static int currentItem;
-    private final static int TIMER_GRANULARITY = 50;
+    private final static int TIMER_GRANULARITY_IN_MS = 50;
     private long mTimeRemaining;
     private long mStartTime;
     private int mScore;
@@ -171,7 +171,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     }
 
     private void setupCountDownTimer(final long timeinMS) {
-        mCountDownTimer = new CountDownTimer(timeinMS, TIMER_GRANULARITY) {
+        mCountDownTimer = new CountDownTimer(timeinMS, TIMER_GRANULARITY_IN_MS) {
 
             public void onTick(long millisUntilFinished) {
                 mTimerTextView.setText(Long.toString(millisUntilFinished / 1000 + 1));
@@ -196,5 +196,13 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private void stopCountDownTimer() {
         if (mCountDownTimer != null)
             mCountDownTimer.cancel();
+    }
+
+    public long getTimeRemaining() {
+        return mTimeRemaining;
+    }
+
+    public int getScore() {
+        return mScore;
     }
 }

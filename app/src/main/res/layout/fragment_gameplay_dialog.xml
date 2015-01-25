@@ -1,13 +1,40 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:minWidth="2000dp"
+    android:minHeight="2000dp"
     tools:context="chrisjluc.funsearch.ui.gameplay.PauseDialogFragment">
 
+
     <LinearLayout
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:weightSum="1">
+
+            <chrisjluc.funsearch.ui.components.GameTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:gravity="center_horizontal"
+                android:layout_weight="0.5"
+                android:id="@+id/tvTimePause" />
+
+            <chrisjluc.funsearch.ui.components.GameTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Score"
+                android:gravity="center_horizontal"
+                android:layout_weight="0.5"
+                android:id="@+id/tvScorePause" />
+
+        </LinearLayout>
 
         <chrisjluc.funsearch.ui.components.GameButton
             android:layout_width="fill_parent"
@@ -29,6 +56,8 @@
             android:layout_margin="@dimen/element_margin_separation"
             android:text="Exit to Menu"
             android:id="@+id/bQuit" />
+
     </LinearLayout>
 
-</FrameLayout>
+
+</RelativeLayout>

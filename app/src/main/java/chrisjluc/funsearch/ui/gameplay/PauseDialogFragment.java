@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import chrisjluc.funsearch.R;
 
@@ -18,7 +19,7 @@ public class PauseDialogFragment extends DialogFragment {
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        Activity activity = getActivity();
+        WordSearchActivity activity = (WordSearchActivity) getActivity();
         LayoutInflater inflater = activity.getLayoutInflater();
         View layout = inflater.inflate(R.layout.fragment_gameplay_dialog, null);
         Button resumeButton = (Button) layout.findViewById(R.id.bResume);
@@ -45,7 +46,10 @@ public class PauseDialogFragment extends DialogFragment {
                 mListener.onDialogQuit();
             }
         });
-
+        TextView scorePauseTextView = (TextView) layout.findViewById(R.id.tvScorePause);
+        scorePauseTextView.setText(Integer.toString(activity.getScore()));
+        TextView timerPauseTextView = (TextView) layout.findViewById(R.id.tvTimePause);
+        timerPauseTextView.setText(Long.toString(activity.getTimeRemaining() / 1000 + 1));
         builder.setView(layout);
         Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
