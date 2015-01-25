@@ -3,50 +3,48 @@ package chrisjluc.funsearch.wordSearchGenerator.models;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by chrisjluc on 2014-10-16.
- */
 public class Node {
+    /**
+     * '0' means letter hasn't been set
+     */
     private char letter = '0';
-    private boolean highlighted = false;
     private List<PossibleInstance> possibleInstances = null;
+    private boolean isHighlighted;
 
-    public Node(){}
+    public Node() {
+    }
 
-    public void addToPossibleInstances(PossibleInstance pi){
-        if(possibleInstances == null)
+    public void addToPossibleInstances(PossibleInstance pi) {
+        if (possibleInstances == null)
             possibleInstances = new ArrayList<PossibleInstance>();
         possibleInstances.add(pi);
     }
 
-    public List<PossibleInstance> getPossibleInstances(){
+    public List<PossibleInstance> getPossibleInstances() {
         return possibleInstances;
     }
 
-    public void clearPossibleInstances(){
+    public void clearPossibleInstances() {
         possibleInstances = null;
     }
 
-    public boolean isEmpty(){
-        if(letter == '0')
-            return true;
-        return false;
+    public boolean isEmpty() {
+        return letter == '0';
     }
 
-    public boolean isHighlighted(){
-        return highlighted;
-    }
-
-    public void setHighlighted(boolean highlighted) {
-        this.highlighted = highlighted;
-    }
-
-    public char getLetter(){
+    public char getLetter() {
         return letter;
     }
 
-    public void setLetter(char letter){
+    public void setLetter(char letter) {
         this.letter = letter;
     }
 
+    public boolean isHighlighted() {
+        return isHighlighted;
+    }
+
+    public void setHighlighted(boolean isHighlighted) {
+        this.isHighlighted = isHighlighted;
+    }
 }

@@ -18,6 +18,9 @@ import chrisjluc.funsearch.wordSearchGenerator.models.Point;
 
 public class WordSearchGridView extends GridView {
 
+    public boolean mIsWordFound = false;
+    int x1, y1;
+    int x2, y2;
     private int mXLength, mYLength;
     private int mColumnWidth;
     private int mHorizontalMargin, mVerticalMargin;
@@ -26,27 +29,23 @@ public class WordSearchGridView extends GridView {
     private List<Node> mWordSearchHighlightedNodes;
     private String mWord;
     private Point mWordStart, mWordEnd;
-    public boolean mIsWordFound = false;
     private WordFoundListener mListener;
     private WordSearchGridAdapter mAdapter;
-
-    int x1, y1;
-    int x2, y2;
 
     public WordSearchGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         WordSearchManager manager = WordSearchManager.getInstance();
         WordSearchGenerator wordSearch = manager.getWordSearch(WordSearchActivity.currentItem++);
-        mXLength = wordSearch.nCol;
-        mYLength = wordSearch.nRow;
-        mWord = wordSearch.word;
+        mXLength = wordSearch.getnCol();
+        mYLength = wordSearch.getnRow();
+        mWord = wordSearch.getWord();
         List<Point> points = wordSearch.getStartAndEndPointOfWord();
 
         // Convert cartesian from matrix coordinates
         mWordStart = new Point(points.get(0).y, points.get(0).x);
         mWordEnd = new Point(points.get(1).y, points.get(1).x);
-        mWordSearchNodes = wordSearch.generateNodeList();
+        mWordSearchNodes = wordSearch.getWordSearchNodeList();
         mWordSearchHighlightedNodes = new ArrayList<Node>();
         mHorizontalMargin = (int) getResources().getDimension(R.dimen.activity_horizontal_margin);
         mVerticalMargin = (int) getResources().getDimension(R.dimen.activity_vertical_margin);
@@ -178,11 +177,11 @@ public class WordSearchGridView extends GridView {
         return (d - mVerticalMargin) / mColumnWidth;
     }
 
-    public interface WordFoundListener {
-        public void notifyWordFound();
-    }
-
     public String getWord() {
         return mWord;
+    }
+
+    public interface WordFoundListener {
+        public void notifyWordFound();
     }
 }

@@ -7,6 +7,7 @@ import java.util.Random;
 import chrisjluc.funsearch.models.GameDifficulty;
 import chrisjluc.funsearch.models.GameMode;
 import chrisjluc.funsearch.wordSearchGenerator.generators.WordSearchGenerator;
+import chrisjluc.funsearch.wordSearchGenerator.models.FillType;
 
 public class WordSearchManager {
 
@@ -43,6 +44,12 @@ public class WordSearchManager {
     private int mMaxDimensionOffset;
     private Random mRandom;
     private GameMode mGameMode;
+    private WordSearchGenerator[] mWordSearchArray;
+
+    private WordSearchManager() {
+        mRandom = new Random();
+        mWordSearchArray = new WordSearchGenerator[SIZE];
+    }
 
     public static WordSearchManager getInstance() {
         if (mInstance == null)
@@ -52,13 +59,6 @@ public class WordSearchManager {
 
     public static void nullify() {
         mInstance = null;
-    }
-
-    private WordSearchGenerator[] mWordSearchArray;
-
-    private WordSearchManager() {
-        mRandom = new Random();
-        mWordSearchArray = new WordSearchGenerator[SIZE];
     }
 
     public void buildWordSearches() {
@@ -90,7 +90,7 @@ public class WordSearchManager {
         if (offsetDifference > 0)
             dimen += mRandom.nextInt(offsetDifference + 1);
 
-        WordSearchGenerator gen = new WordSearchGenerator(dimen, dimen, word);
+        WordSearchGenerator gen = new WordSearchGenerator(dimen, dimen, word, FillType.CharactersOfTheWord);
         gen.build();
         return gen;
     }

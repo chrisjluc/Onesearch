@@ -1,20 +1,18 @@
-package chrisjluc.funsearch.wordSearchGenerator.models; /**
- * Created by chrisjluc on 2014-10-16.
- */
+package chrisjluc.funsearch.wordSearchGenerator.models;
+
 public class Point {
     public int x;
     public int y;
 
-    public Point(int x, int y){
+    public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public boolean equals(Object o){
-        if(o == null) return false;
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof Point))
+            return false;
         Point p = (Point) o;
-        if(x == p.x && y == p.y)
-            return true;
-        return false;
+        return x == p.x && y == p.y;
     }
 }
