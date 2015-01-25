@@ -1,3 +1,6 @@
 package chrisjluc.funsearch.wordSearchGenerator.models;
 
-public enum FillType {RandomCharacters, CharactersOfTheWord}
+public class FillType {
+    public static final String RandomCharacters = "RC";
+    public static final String CharactersOfTheWord = "CW";
+}

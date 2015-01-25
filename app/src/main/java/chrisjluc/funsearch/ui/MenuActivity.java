@@ -19,20 +19,16 @@ public class MenuActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        Button easyButton = (Button) findViewById(R.id.bMenuEasy);
-        Button mediumButton = (Button) findViewById(R.id.bMenuMedium);
-        Button hardButton = (Button) findViewById(R.id.bMenuHard);
-        Button advancedButton = (Button) findViewById(R.id.bMenuAdvanced);
-        easyButton.setOnClickListener(this);
-        mediumButton.setOnClickListener(this);
-        hardButton.setOnClickListener(this);
-        advancedButton.setOnClickListener(this);
+        findViewById(R.id.bMenuEasy).setOnClickListener(this);
+        findViewById(R.id.bMenuMedium).setOnClickListener(this);
+        findViewById(R.id.bMenuHard).setOnClickListener(this);
+        findViewById(R.id.bMenuAdvanced).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         WordSearchManager.nullify();
-        GameDifficulty gd = null;
+        String gd = null;
         switch (view.getId()) {
             case R.id.bMenuEasy:
                 gd = GameDifficulty.Easy;

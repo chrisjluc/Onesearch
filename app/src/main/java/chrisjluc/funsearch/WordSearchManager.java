@@ -32,7 +32,7 @@ public class WordSearchManager {
     public final static int ADVANCED_MAX_DIMENSION_OFFSET = 5;
 
     private final static String[] WORDS = {"alfred", "hello", "hey", "heat", "time", "steam", "elephant", "scissor", "point", "star", "tree", "bob", "airplane", "tail", "mouth", "chin", "phone", "jar", "ear", "drum", "room"};
-    private final static int SIZE = 6;
+    private final static int SIZE = 3;
     private static WordSearchManager mInstance;
 
     private int mMinWordLength;
@@ -101,22 +101,22 @@ public class WordSearchManager {
 
     public void setGameMode(GameMode gameMode) {
         this.mGameMode = gameMode;
-        if (mGameMode.getDifficulty() == GameDifficulty.Easy) {
+        if (mGameMode.getDifficulty().equals(GameDifficulty.Easy)) {
             mMinWordLength = EASY_MIN_WORDLENGTH;
             mMaxWordLength = EASY_MAX_WORDLENGTH;
             mMinDimensionOffset = EASY_MIN_DIMENSION_OFFSET;
             mMaxDimensionOffset = EASY_MAX_DIMENSION_OFFSET;
-        } else if (mGameMode.getDifficulty() == GameDifficulty.Medium) {
+        } else if (mGameMode.getDifficulty().equals(GameDifficulty.Medium)) {
             mMinWordLength = MEDIUM_MIN_WORDLENGTH;
             mMaxWordLength = MEDIUM_MAX_WORDLENGTH;
             mMinDimensionOffset = MEDIUM_MIN_DIMENSION_OFFSET;
             mMaxDimensionOffset = MEDIUM_MAX_DIMENSION_OFFSET;
-        } else if (mGameMode.getDifficulty() == GameDifficulty.Hard) {
+        } else if (mGameMode.getDifficulty().equals(GameDifficulty.Hard)) {
             mMinWordLength = HARD_MIN_WORDLENGTH;
             mMaxWordLength = HARD_MAX_WORDLENGTH;
             mMinDimensionOffset = HARD_MIN_DIMENSION_OFFSET;
             mMaxDimensionOffset = HARD_MAX_DIMENSION_OFFSET;
-        } else if (mGameMode.getDifficulty() == GameDifficulty.Advanced) {
+        } else if (mGameMode.getDifficulty().equals(GameDifficulty.Advanced)) {
             mMinWordLength = ADVANCED_MIN_WORDLENGTH;
             mMaxWordLength = ADVANCED_MAX_WORDLENGTH;
             mMinDimensionOffset = ADVANCED_MIN_DIMENSION_OFFSET;

@@ -1,3 +1,5 @@
 package chrisjluc.funsearch.models;
 
-public enum GameDifficulty {Easy, Medium, Hard, Advanced}
+public class GameDifficulty {
+    public static final String Easy = "E", Medium = "M", Hard = "H", Advanced = "A";
+}

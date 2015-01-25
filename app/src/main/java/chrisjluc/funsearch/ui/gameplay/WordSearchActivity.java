@@ -17,8 +17,9 @@ import chrisjluc.funsearch.ui.ResultsActivity;
 
 public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener {
 
-    private enum GameState {START, PLAY, PAUSE, FINISHED}
-
+    private final static int TIMER_GRANULARITY_IN_MS = 50;
+    public static int currentItem;
+    private final PauseDialogFragment mPauseDialogFragment = new PauseDialogFragment();
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -26,11 +27,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private TextView mTimerTextView;
     private TextView mScoreTextView;
     private CountDownTimer mCountDownTimer;
-    private final PauseDialogFragment mPauseDialogFragment = new PauseDialogFragment();
-
-    private GameState mGameState;
-    public static int currentItem;
-    private final static int TIMER_GRANULARITY_IN_MS = 50;
+    private String mGameState;
     private long mTimeRemaining;
     private long mStartTime;
     private int mScore;
@@ -39,7 +36,6 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.wordsearch_activity);
         mStartTime = WordSearchManager.getInstance().getGameMode().getTime();
         mGameState = GameState.START;
@@ -74,9 +70,8 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         startCountDownTimer();
     }
 
-
     private void pauseGameplay() {
-        if (mGameState == GameState.PAUSE)
+        if (mGameState.equals(GameState.PAUSE))
             return;
         mGameState = GameState.PAUSE;
         stopCountDownTimer();
@@ -134,7 +129,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
     @Override
     protected void onResume() {
-        if (mGameState == GameState.START || mGameState == GameState.FINISHED)
+        if (mGameState.equals(GameState.START) || mGameState.equals(GameState.FINISHED))
             mGameState = GameState.PLAY;
         else
             pauseGameplay();
@@ -204,5 +199,9 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
     public int getScore() {
         return mScore;
+    }
+
+    private static class GameState {
+        public static final String START = "s", PLAY = "pl", PAUSE = "pa", FINISHED = "fi";
     }
 }

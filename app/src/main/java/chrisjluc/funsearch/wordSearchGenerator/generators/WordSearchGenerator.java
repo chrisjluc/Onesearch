@@ -27,14 +27,14 @@ public class WordSearchGenerator {
             {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
 
-    public WordSearchGenerator(int nRow, int nCol, String mWord, FillType type) {
+    public WordSearchGenerator(int nRow, int nCol, String mWord, String type) {
         this.nRow = nRow;
         this.nCol = nCol;
         this.mWord = mWord;
 
         this.mWordSearchNodeMatrix = new Node[nRow][nCol];
         this.mWordSearchNodeList = new ArrayList<Node>(nRow * nCol);
-        if (type == FillType.CharactersOfTheWord)
+        if (type.equals(FillType.CharactersOfTheWord))
             this.mFillChars = StringUtils.getDistinctCharacters(mWord);
         else
             this.mFillChars = alphabet;
@@ -58,7 +58,7 @@ public class WordSearchGenerator {
     }
 
     public List<Point> getStartAndEndPointOfWord() {
-        List<Point> points = new ArrayList<Point>();
+        List<Point> points = new ArrayList<Point>(2);
         points.add(mRandomPoint);
         Point endPoint = getRelativePoint(mRandomOrientation, mRandomPoint, mWord.length() - 1);
         points.add(endPoint);

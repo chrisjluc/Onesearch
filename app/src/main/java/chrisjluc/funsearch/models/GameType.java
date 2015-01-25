@@ -1,4 +1,6 @@
 package chrisjluc.funsearch.models;
 
-public enum GameType {Timed, Infinite}
+public class GameType {
+    public final static String Timed = "T", Infinite = "I";
+}
 

@@ -19,27 +19,21 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
     public final static int RESULT_EXIT_TO_MENU = 1;
     public final static String ACTION_IDENTIFIER = "action_identifier";
 
-    private GameMode mGameMode;
-    private int mScore;
-    private int mSkipped;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mScore = extras.getInt("score");
-            mSkipped = extras.getInt("skipped");
-            mGameMode = WordSearchManager.getInstance().getGameMode();
+            int skipped = extras.getInt("skipped");
+            GameMode gameMode = WordSearchManager.getInstance().getGameMode();
+
+            TextView scoreTextView = (TextView) findViewById(R.id.tvScoreResult);
+            scoreTextView.setText(Integer.toString(extras.getInt("score")));
+
         }
-        TextView scoreTextView = (TextView) findViewById(R.id.tvScoreResult);
-        scoreTextView.setText(Integer.toString(mScore));
-        Button replayButton = (Button) findViewById(R.id.bReplay);
-        Button returnMenuButton = (Button) findViewById(R.id.bReturnMenu);
-        replayButton.setOnClickListener(this);
-        returnMenuButton.setOnClickListener(this);
+        findViewById(R.id.bReplay).setOnClickListener(this);
+        findViewById(R.id.bReturnMenu).setOnClickListener(this);
     }
 
     @Override

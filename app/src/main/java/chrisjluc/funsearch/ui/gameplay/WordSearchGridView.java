@@ -46,7 +46,8 @@ public class WordSearchGridView extends GridView {
         mWordStart = new Point(points.get(0).y, points.get(0).x);
         mWordEnd = new Point(points.get(1).y, points.get(1).x);
         mWordSearchNodes = wordSearch.getWordSearchNodeList();
-        mWordSearchHighlightedNodes = new ArrayList<Node>();
+        // Init to max size of wordsearch
+        mWordSearchHighlightedNodes = new ArrayList<Node>(mXLength);
         mHorizontalMargin = (int) getResources().getDimension(R.dimen.activity_horizontal_margin);
         mVerticalMargin = (int) getResources().getDimension(R.dimen.activity_vertical_margin);
 
