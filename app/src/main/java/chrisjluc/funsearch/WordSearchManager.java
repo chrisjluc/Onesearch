@@ -16,20 +16,20 @@ public class WordSearchManager {
     public final static int EASY_MIN_DIMENSION_OFFSET = 0;
     public final static int EASY_MAX_DIMENSION_OFFSET = 0;
 
-    public final static int MEDIUM_MIN_WORDLENGTH = 3;
-    public final static int MEDIUM_MAX_WORDLENGTH = 4;
+    public final static int MEDIUM_MIN_WORDLENGTH = 4;
+    public final static int MEDIUM_MAX_WORDLENGTH = 5;
     public final static int MEDIUM_MIN_DIMENSION_OFFSET = 1;
     public final static int MEDIUM_MAX_DIMENSION_OFFSET = 1;
 
-    public final static int HARD_MIN_WORDLENGTH = 5;
-    public final static int HARD_MAX_WORDLENGTH = 6;
-    public final static int HARD_MIN_DIMENSION_OFFSET = 2;
-    public final static int HARD_MAX_DIMENSION_OFFSET = 3;
+    public final static int HARD_MIN_WORDLENGTH = 6;
+    public final static int HARD_MAX_WORDLENGTH = 8;
+    public final static int HARD_MIN_DIMENSION_OFFSET = 3;
+    public final static int HARD_MAX_DIMENSION_OFFSET = 4;
 
-    public final static int ADVANCED_MIN_WORDLENGTH = 7;
-    public final static int ADVANCED_MAX_WORDLENGTH = 9;
-    public final static int ADVANCED_MIN_DIMENSION_OFFSET = 3;
-    public final static int ADVANCED_MAX_DIMENSION_OFFSET = 5;
+    public final static int ADVANCED_MIN_WORDLENGTH = 9;
+    public final static int ADVANCED_MAX_WORDLENGTH = 11;
+    public final static int ADVANCED_MIN_DIMENSION_OFFSET = 6;
+    public final static int ADVANCED_MAX_DIMENSION_OFFSET = 7;
 
     private final static String[] WORDS = {"alfred", "hello", "hey", "heat", "time", "steam", "elephant", "scissor", "point", "star", "tree", "bob", "airplane", "tail", "mouth", "chin", "phone", "jar", "ear", "drum", "room"};
     private final static int SIZE = 3;

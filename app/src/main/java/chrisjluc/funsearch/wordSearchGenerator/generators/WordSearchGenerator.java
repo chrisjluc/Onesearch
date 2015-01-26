@@ -160,7 +160,7 @@ public class WordSearchGenerator {
         for (int i = 0; i < s.length(); i++)
             if (s.charAt(i) != mWord.charAt(i) && s.charAt(i) != '0')
                 return false;
-        int matches0 = org.apache.commons.lang3.StringUtils.countMatches(s, "0");
+        int matches0 = StringUtils.countMatches(s, '0');
         // if 1 '0' and it's at beginning or end areAllOrientationsValid will check it
         if (matches0 == 1 && (s.charAt(0) == '0' || s.charAt(mWord.length() - 1) == '0'))
             return false;

@@ -7,28 +7,28 @@ import android.widget.TextView;
 
 import chrisjluc.funsearch.utils.DeviceUtils;
 
-public class GameTextView extends TextView {
+public class GameBoldTextView extends TextView {
 
     private static Typeface typeface;
 
-    public GameTextView(Context context, AttributeSet attrs) {
+    public GameBoldTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setTypeFace(context);
     }
 
-    public GameTextView(Context context, AttributeSet attrs, int defStyle) {
+    public GameBoldTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setTypeFace(context);
     }
 
-    public GameTextView(Context context) {
+    public GameBoldTextView(Context context) {
         super(context);
         setTypeFace(context);
     }
 
     private void setTypeFace(Context context) {
-        if(typeface == null)
-            typeface = Typeface.createFromAsset(context.getAssets(), "fonts/gothic.ttf");
+        if (typeface == null)
+            typeface = Typeface.createFromAsset(context.getAssets(), "fonts/gothic_bold.otf");
         this.setTypeface(typeface);
         if (DeviceUtils.isTablet(context))
             this.setTextSize(24);

@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.widget.Button;
 
 import chrisjluc.funsearch.R;
+import chrisjluc.funsearch.utils.DeviceUtils;
 
 public class GameButton extends Button {
 
@@ -39,6 +40,9 @@ public class GameButton extends Button {
             typeface = Typeface.createFromAsset(context.getAssets(), "fonts/gothic.ttf");
         this.setTypeface(typeface);
         this.setTextColor(Color.WHITE);
-        this.setTextSize(24);
+        if (DeviceUtils.isTablet(context))
+            this.setTextSize(32);
+        else
+            this.setTextSize(22);
     }
 }

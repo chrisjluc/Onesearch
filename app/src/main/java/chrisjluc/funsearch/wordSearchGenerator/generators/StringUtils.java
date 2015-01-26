@@ -18,4 +18,12 @@ public class StringUtils {
             ret = s.charAt(i) + ret;
         return ret;
     }
+
+    public static int countMatches(String s, char test){
+        int count = 0;
+        for (char c: s.toCharArray())
+            if (c == test)
+                count ++;
+        return count;
+    }
 }

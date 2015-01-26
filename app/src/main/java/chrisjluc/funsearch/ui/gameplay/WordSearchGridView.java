@@ -46,13 +46,13 @@ public class WordSearchGridView extends GridView {
         mWordSearchNodes = wordSearch.getWordSearchNodes();
         // Init to max size of wordsearch
         mWordSearchHighlightedNodes = new ArrayList<Node>(mXLength);
-        mHorizontalMargin = (int) getResources().getDimension(R.dimen.activity_horizontal_margin);
+        mHorizontalMargin = (int) getResources().getDimension(R.dimen.grid_horizontal_margin);
         mVerticalMargin = (int) getResources().getDimension(R.dimen.activity_vertical_margin);
 
         // Calculate column dimensions
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int width = displayMetrics.widthPixels;
-        mColumnWidth = (int) (width - 2 * mHorizontalMargin / displayMetrics.density) / (mXLength);
+        mColumnWidth = (int) (width - 2 * mHorizontalMargin * displayMetrics.density) / (mXLength);
         setColumnWidth(mColumnWidth);
         mAdapter = new WordSearchGridAdapter(context, mWordSearchNodes, mColumnWidth, mXLength);
         setAdapter(mAdapter);

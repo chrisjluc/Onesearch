@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import chrisjluc.funsearch.R;
 import chrisjluc.funsearch.WordSearchManager;
@@ -19,6 +20,7 @@ public class MenuActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        ((TextView) findViewById(R.id.tvTitle)).setTextSize(36);
         findViewById(R.id.bMenuEasy).setOnClickListener(this);
         findViewById(R.id.bMenuMedium).setOnClickListener(this);
         findViewById(R.id.bMenuHard).setOnClickListener(this);

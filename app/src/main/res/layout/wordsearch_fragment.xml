@@ -19,6 +19,7 @@
     <chrisjluc.funsearch.ui.gameplay.WordSearchGridView
         android:layout_below="@id/section_label"
         android:id="@+id/gridView"
+        android:layout_margin="@dimen/grid_horizontal_margin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
