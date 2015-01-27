@@ -22,6 +22,7 @@ public class WordSearchGridView extends GridView {
     private int mXLength, mYLength;
     private int mColumnWidth;
     private int mHorizontalMargin, mVerticalMargin;
+    private float mDensity;
     private Point mStartDrag, mEndDrag;
     private Node[] mWordSearchNodes;
     private List<Node> mWordSearchHighlightedNodes;
@@ -47,12 +48,13 @@ public class WordSearchGridView extends GridView {
         // Init to max size of wordsearch
         mWordSearchHighlightedNodes = new ArrayList<Node>(mXLength);
         mHorizontalMargin = (int) getResources().getDimension(R.dimen.grid_horizontal_margin);
-        mVerticalMargin = (int) getResources().getDimension(R.dimen.activity_vertical_margin);
+        mVerticalMargin = (int) getResources().getDimension(R.dimen.grid_horizontal_margin);
 
         // Calculate column dimensions
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        mDensity = displayMetrics.density;
         int width = displayMetrics.widthPixels;
-        mColumnWidth = (int) (width - 2 * mHorizontalMargin * displayMetrics.density) / (mXLength);
+        mColumnWidth = (int) (width - 2 * mHorizontalMargin * mDensity) / (mXLength);
         setColumnWidth(mColumnWidth);
         mAdapter = new WordSearchGridAdapter(context, mWordSearchNodes, mColumnWidth, mXLength);
         setAdapter(mAdapter);
@@ -169,11 +171,11 @@ public class WordSearchGridView extends GridView {
     }
 
     private int calcRelativeX(int d) {
-        return (d - mHorizontalMargin) / mColumnWidth;
+        return (int) (d - mHorizontalMargin * mDensity) / mColumnWidth;
     }
 
     private int calcRelativeY(int d) {
-        return (d - mVerticalMargin) / mColumnWidth;
+        return (int) (d - mVerticalMargin * mDensity) / mColumnWidth;
     }
 
     public String getWord() {
