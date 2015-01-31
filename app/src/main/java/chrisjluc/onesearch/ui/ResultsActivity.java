@@ -24,7 +24,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     public final static String ACTION_IDENTIFIER = "action_identifier";
     public final static int REQUEST_LEADERBOARD = 2;
     private String leaderboardId;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
