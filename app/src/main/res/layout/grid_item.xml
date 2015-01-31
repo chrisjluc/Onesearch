@@ -1,4 +1,4 @@
-<chrisjluc.funsearch.ui.components.GameBoldTextView xmlns:android="http://schemas.android.com/apk/res/android"
+<chrisjluc.onesearch.ui.components.GameBoldTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/grid_item"
     android:text=" "
     android:gravity="center"

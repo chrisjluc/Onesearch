@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="sign_in_failed">Failed to sign in</string>
     <string name="app_name">Onesearch</string>
     <string name="title_activity_results">Results</string>
     <string name="title_activity_menu">menu</string>
@@ -8,7 +8,14 @@
     <string name="menu_medium">Medium</string>
     <string name="menu_hard">Hard</string>
     <string name="menu_advanced">Advanced</string>
+    <string name="sign_in">Sign in with G+</string>
     <string name="results_return_menu">Return to Menu</string>
     <string name="results_replay">Play Again</string>
+    <!-- Google Play -->
+    <string name="app_id">27965296756</string>
+    <string name="leaderboard_highest_scores__easy">CggI9KDylmgQAhAB</string>
+    <string name="leaderboard_highest_scores__medium">CggI9KDylmgQAhAC</string>
+    <string name="leaderboard_highest_scores__hard">CggI9KDylmgQAhAD</string>
+    <string name="leaderboard_highest_scores__advanced">CggI9KDylmgQAhAE</string>
 
 </resources>

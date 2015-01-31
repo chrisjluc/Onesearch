@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:minWidth="2000dp"
     android:minHeight="2000dp"
-    tools:context="chrisjluc.funsearch.ui.gameplay.PauseDialogFragment">
+    tools:context="chrisjluc.onesearch.ui.gameplay.PauseDialogFragment">
 
 
     <LinearLayout
@@ -18,7 +18,7 @@
             android:layout_height="48dp"
             android:weightSum="1">
 
-            <chrisjluc.funsearch.ui.components.GameTextView
+            <chrisjluc.onesearch.ui.components.GameTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time"
@@ -26,7 +26,7 @@
                 android:layout_weight="0.5"
                 android:id="@+id/tvTimePause" />
 
-            <chrisjluc.funsearch.ui.components.GameTextView
+            <chrisjluc.onesearch.ui.components.GameTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Score"
@@ -36,21 +36,21 @@
 
         </LinearLayout>
 
-        <chrisjluc.funsearch.ui.components.GameButton
+        <chrisjluc.onesearch.ui.components.GameButton
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/element_margin_separation"
             android:text="Resume"
             android:id="@+id/bResume" />
 
-        <chrisjluc.funsearch.ui.components.GameButton
+        <chrisjluc.onesearch.ui.components.GameButton
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/element_margin_separation"
             android:text="Restart"
             android:id="@+id/bRestart" />
 
-        <chrisjluc.funsearch.ui.components.GameButton
+        <chrisjluc.onesearch.ui.components.GameButton
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/element_margin_separation"
