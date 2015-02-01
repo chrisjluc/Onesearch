@@ -2,61 +2,94 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="chrisjluc.onesearch.ui.MenuActivity">
 
-    <chrisjluc.onesearch.ui.components.GameBoldTextView
-        android:id="@+id/tvTitle"
-        android:layout_centerHorizontal="true"
-        android:text="@string/app_name"
-        android:textColor="@color/blue"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/top_bar"
+        android:background="@color/blue"></FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin" />
+        android:layout_centerInParent="true">
 
-    <LinearLayout
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <chrisjluc.onesearch.ui.components.GameButton
+        <LinearLayout
+            android:id="@+id/title_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/element_margin_separation"
-            android:text="@string/menu_easy"
-            android:id="@+id/bMenuEasy" />
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
 
-        <chrisjluc.onesearch.ui.components.GameButton
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/element_margin_separation"
-            android:text="@string/menu_medium"
-            android:id="@+id/bMenuMedium" />
+            <chrisjluc.onesearch.ui.components.GameBoldTextView
+                android:id="@+id/first_app_title"
+                android:textSize="40sp"
+                android:text="ONE"
+                android:textColor="@color/green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <chrisjluc.onesearch.ui.components.GameButton
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/element_margin_separation"
-            android:text="@string/menu_hard"
-            android:id="@+id/bMenuHard" />
+            <chrisjluc.onesearch.ui.components.GameBoldTextView
+                android:id="@+id/second_app_title"
+                android:textSize="40sp"
+                android:text="SEARCH"
+                android:textColor="@color/blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-        <chrisjluc.onesearch.ui.components.GameButton
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_below="@+id/title_layout"
+            android:layout_marginTop="16dp"
+            android:id="@+id/button_layout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/element_margin_separation"
-            android:text="@string/menu_advanced"
-            android:id="@+id/bMenuAdvanced" />
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true">
 
-        <com.google.android.gms.common.SignInButton
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/element_margin_separation"
-            android:visibility="gone"
-            android:id="@+id/bMenuSignIn" />
-    </LinearLayout>
+
+            <chrisjluc.onesearch.ui.components.GameButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/element_margin_separation"
+                android:text="@string/menu_easy"
+                android:id="@+id/bMenuEasy" />
+
+            <chrisjluc.onesearch.ui.components.GameButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/element_margin_separation"
+                android:text="@string/menu_medium"
+                android:id="@+id/bMenuMedium" />
+
+            <chrisjluc.onesearch.ui.components.GameButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/element_margin_separation"
+                android:text="@string/menu_hard"
+                android:id="@+id/bMenuHard" />
+
+            <chrisjluc.onesearch.ui.components.GameButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/element_margin_separation"
+                android:text="@string/menu_advanced"
+                android:id="@+id/bMenuAdvanced" />
+
+            <com.google.android.gms.common.SignInButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/element_margin_separation"
+                android:visibility="gone"
+                android:id="@+id/bMenuSignIn" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="@dimen/bottom_bar"
+        android:background="@color/blue"
+        android:id="@+id/frameLayout"></FrameLayout>
 
 </RelativeLayout>

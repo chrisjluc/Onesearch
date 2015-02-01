@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.ConnectionResult;
 
 import chrisjluc.onesearch.R;
-import chrisjluc.onesearch.WordSearchManager;
+import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.base.BaseGooglePlayServicesActivity;
 import chrisjluc.onesearch.models.GameDifficulty;
 import chrisjluc.onesearch.models.GameMode;
@@ -23,13 +23,9 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        SignInButton signin = (SignInButton) findViewById(R.id.bMenuSignIn);
-        if (mGoogleApiClient != null && !mGoogleApiClient.isConnected()) {
-            signin.setOnClickListener(this);
-            signin.setVisibility(View.VISIBLE);
-        }
+        ((TextView)findViewById(R.id.first_app_title)).setTextSize(48);
+        ((TextView)findViewById(R.id.second_app_title)).setTextSize(48);
 
-        ((TextView) findViewById(R.id.tvTitle)).setTextSize(36);
         findViewById(R.id.bMenuEasy).setOnClickListener(this);
         findViewById(R.id.bMenuMedium).setOnClickListener(this);
         findViewById(R.id.bMenuHard).setOnClickListener(this);
@@ -70,5 +66,12 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     @Override
     public void onConnected(Bundle bundle) {
         findViewById(R.id.bMenuSignIn).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        super.onConnectionFailed(connectionResult);
+        findViewById(R.id.bMenuSignIn).setVisibility(View.VISIBLE);
+        findViewById(R.id.bMenuSignIn).setOnClickListener(this);
     }
 }

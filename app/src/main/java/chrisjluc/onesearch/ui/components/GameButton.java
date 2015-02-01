@@ -43,6 +43,6 @@ public class GameButton extends Button {
         if (DeviceUtils.isTablet(context))
             this.setTextSize(32);
         else
-            this.setTextSize(22);
+            this.setTextSize(24);
     }
 }

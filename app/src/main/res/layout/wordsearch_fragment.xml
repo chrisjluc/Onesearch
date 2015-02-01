@@ -8,7 +8,7 @@
     android:layout_marginBottom="@dimen/activity_vertical_margin"
     tools:context=".WordSearchActivity$WordSearchFragment">
 
-    <chrisjluc.onesearch.ui.components.GameTextView
+    <chrisjluc.onesearch.ui.components.GameBoldTextView
         android:id="@+id/section_label"
         android:layout_centerHorizontal="true"
         android:text="center"

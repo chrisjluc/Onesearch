@@ -4,4 +4,6 @@
     <dimen name="grid_horizontal_margin">4dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="element_margin_separation">4dp</dimen>
+    <dimen name="top_bar">80dp</dimen>
+    <dimen name="bottom_bar">40dp</dimen>
 </resources>

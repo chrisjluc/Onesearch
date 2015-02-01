@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.games.Games;
 
 import chrisjluc.onesearch.R;
-import chrisjluc.onesearch.WordSearchManager;
+import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.base.BaseGooglePlayServicesActivity;
 import chrisjluc.onesearch.models.GameDifficulty;
 import chrisjluc.onesearch.models.GameMode;
@@ -34,13 +35,6 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
 
         SignInButton signin = (SignInButton) findViewById(R.id.bResultSignIn);
         GameButton showLeaderBoard = (GameButton) findViewById(R.id.bShowLeaderBoards);
-        if (mGoogleApiClient != null && !mGoogleApiClient.isConnected()) {
-            signin.setOnClickListener(this);
-            signin.setVisibility(View.VISIBLE);
-        } else {
-            showLeaderBoard.setOnClickListener(this);
-            showLeaderBoard.setVisibility(View.VISIBLE);
-        }
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -122,5 +116,12 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
         findViewById(R.id.bResultSignIn).setVisibility(View.GONE);
         findViewById(R.id.bShowLeaderBoards).setVisibility(View.VISIBLE);
         findViewById(R.id.bShowLeaderBoards).setOnClickListener(this);
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        super.onConnectionFailed(connectionResult);
+        findViewById(R.id.bResultSignIn).setVisibility(View.VISIBLE);
+        findViewById(R.id.bResultSignIn).setOnClickListener(this);
     }
 }

@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import chrisjluc.onesearch.R;
-import chrisjluc.onesearch.WordSearchManager;
+import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.adapters.WordSearchPagerAdapter;
 import chrisjluc.onesearch.base.BaseActivity;
 import chrisjluc.onesearch.ui.ResultsActivity;

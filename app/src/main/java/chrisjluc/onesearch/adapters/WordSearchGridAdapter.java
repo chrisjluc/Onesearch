@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import chrisjluc.onesearch.R;
-import chrisjluc.onesearch.WordSearchManager;
+import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.utils.DeviceUtils;
 import chrisjluc.onesearch.wordSearchGenerator.models.Node;
 
@@ -48,9 +48,9 @@ public class WordSearchGridAdapter extends BaseAdapter {
             int size;
             int difference = ((WordSearchManager.ADVANCED_MAX_WORDLENGTH + WordSearchManager.ADVANCED_MAX_DIMENSION_OFFSET - WordSearchManager.EASY_MIN_WORDLENGTH) / 3);
             if (WordSearchManager.EASY_MIN_WORDLENGTH <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference))
-                size = 28;
+                size = 32;
             else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference) <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 2))
-                size = 24;
+                size = 28;
             else
                 size = 22;
 

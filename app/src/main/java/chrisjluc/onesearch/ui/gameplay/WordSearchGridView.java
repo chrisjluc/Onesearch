@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chrisjluc.onesearch.R;
-import chrisjluc.onesearch.WordSearchManager;
+import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.adapters.WordSearchGridAdapter;
 import chrisjluc.onesearch.wordSearchGenerator.generators.WordSearchGenerator;
 import chrisjluc.onesearch.wordSearchGenerator.models.Node;

@@ -1,4 +1,4 @@
-package chrisjluc.onesearch;
+package chrisjluc.onesearch.framework;
 
 import android.os.AsyncTask;
 

@@ -6,4 +6,6 @@
     <dimen name="grid_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">64dp</dimen>
     <dimen name="element_margin_separation">16dp</dimen>
+    <dimen name="top_bar">160dp</dimen>
+    <dimen name="bottom_bar">80dp</dimen>
 </resources>
