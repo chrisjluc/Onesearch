@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FunSearch.iml" filepath="$PROJECT_DIR$/FunSearch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OneSearch.iml" filepath="$PROJECT_DIR$/OneSearch.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

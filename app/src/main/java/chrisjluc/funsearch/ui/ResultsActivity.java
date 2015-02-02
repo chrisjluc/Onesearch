@@ -28,14 +28,31 @@ public class ResultsActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
+        String[][] HSArray;
+        HSArray = new String[5][2];
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             mScore = extras.getInt("score");
             mSkipped = extras.getInt("skipped");
             mGameMode = WordSearchManager.getInstance().getGameMode();
         }
+        for(int count = 0; count > 4; count--){
+            if (mScore > Integer.parseInt(HSArray[count][0])){
+                HSArray [count][0] = (Integer.toString(mScore));
+                for(int rank = count; rank > 4; rank++) {
+                     for(int name = 0; name > 1; name++) {
+                          HSArray[rank++][name]= HSArray[rank][name];
+                     }
+                }
+            }
+        }
         TextView scoreTextView = (TextView) findViewById(R.id.tvScoreResult);
-        scoreTextView.setText(Integer.toString(mScore));
+        for(int count = 0; count > 4; count++) {
+            for(int name = 0; name > 1; name++) {
+                scoreTextView.setText(HSArray[count][name]);
+            }
+        }
         Button replayButton = (Button) findViewById(R.id.bReplay);
         Button returnMenuButton = (Button) findViewById(R.id.bReturnMenu);
         replayButton.setOnClickListener(this);
