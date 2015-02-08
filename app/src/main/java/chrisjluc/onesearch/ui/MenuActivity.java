@@ -57,7 +57,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
                 break;
         }
         WordSearchManager wsm = WordSearchManager.getInstance();
-        wsm.setGameMode(new GameMode(GameType.Timed, gd, 60000));
+        wsm.Initialize(new GameMode(GameType.Timed, gd, 60000), getApplicationContext());
         wsm.buildWordSearches();
         Intent i = new Intent(getApplicationContext(), WordSearchActivity.class);
         startActivity(i);

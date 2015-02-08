@@ -1,5 +1,6 @@
 package chrisjluc.onesearch.framework;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import java.util.Random;
@@ -31,20 +32,18 @@ public class WordSearchManager {
     public final static int ADVANCED_MIN_DIMENSION_OFFSET = 6;
     public final static int ADVANCED_MAX_DIMENSION_OFFSET = 7;
 
-    private final static String[] WORDS = {"alfred", "hello", "hey", "heat", "time", "steam", "elephant", "scissor", "point", "star", "tree", "bob", "airplane", "tail", "mouth", "chin", "phone", "jar", "ear", "drum", "room"};
-    private final static int SIZE = 3;
+    private final static int SIZE = 2;
     private static WordSearchManager mInstance;
 
-    private int mMinWordLength;
-    private int mMaxWordLength;
     /**
      * Dimension offset is the size of the word search relative to the chosen word length
      */
     private int mMinDimensionOffset;
     private int mMaxDimensionOffset;
-    private Random mRandom;
     private GameMode mGameMode;
+    private Random mRandom;
     private WordSearchGenerator[] mWordSearchArray;
+    private WordProvider mWordProvider;
 
     private WordSearchManager() {
         mRandom = new Random();
@@ -74,17 +73,10 @@ public class WordSearchManager {
     }
 
     private WordSearchGenerator buildWordSearch() {
-        String[] words = new String[WORDS.length];
-        System.arraycopy(WORDS, 0, words, 0, WORDS.length);
-        String word = "";
-        for (int i = 0; i < words.length; i++) {
-            int index = mRandom.nextInt(words.length - i);
-            word = words[index];
-            if (word.length() >= mMinWordLength && word.length() <= mMaxWordLength)
-                break;
-            words[index] = words[words.length - 1 - i];
+        String word = null;
+        while (word == null) {
+            word = mWordProvider.getWord();
         }
-
         int dimen = word.length() + mMinDimensionOffset;
         int offsetDifference = mMaxDimensionOffset - mMinDimensionOffset;
         if (offsetDifference > 0)
@@ -99,26 +91,22 @@ public class WordSearchManager {
         return mGameMode;
     }
 
-    public void setGameMode(GameMode gameMode) {
+    public void Initialize(GameMode gameMode, Context context) {
         this.mGameMode = gameMode;
         if (mGameMode.getDifficulty().equals(GameDifficulty.Easy)) {
-            mMinWordLength = EASY_MIN_WORDLENGTH;
-            mMaxWordLength = EASY_MAX_WORDLENGTH;
+            mWordProvider = new WordProvider(context, EASY_MIN_WORDLENGTH, EASY_MAX_WORDLENGTH);
             mMinDimensionOffset = EASY_MIN_DIMENSION_OFFSET;
             mMaxDimensionOffset = EASY_MAX_DIMENSION_OFFSET;
         } else if (mGameMode.getDifficulty().equals(GameDifficulty.Medium)) {
-            mMinWordLength = MEDIUM_MIN_WORDLENGTH;
-            mMaxWordLength = MEDIUM_MAX_WORDLENGTH;
+            mWordProvider = new WordProvider(context, MEDIUM_MIN_WORDLENGTH, MEDIUM_MAX_WORDLENGTH);
             mMinDimensionOffset = MEDIUM_MIN_DIMENSION_OFFSET;
             mMaxDimensionOffset = MEDIUM_MAX_DIMENSION_OFFSET;
         } else if (mGameMode.getDifficulty().equals(GameDifficulty.Hard)) {
-            mMinWordLength = HARD_MIN_WORDLENGTH;
-            mMaxWordLength = HARD_MAX_WORDLENGTH;
+            mWordProvider = new WordProvider(context, HARD_MIN_WORDLENGTH, HARD_MAX_WORDLENGTH);
             mMinDimensionOffset = HARD_MIN_DIMENSION_OFFSET;
             mMaxDimensionOffset = HARD_MAX_DIMENSION_OFFSET;
         } else if (mGameMode.getDifficulty().equals(GameDifficulty.Advanced)) {
-            mMinWordLength = ADVANCED_MIN_WORDLENGTH;
-            mMaxWordLength = ADVANCED_MAX_WORDLENGTH;
+            mWordProvider = new WordProvider(context, ADVANCED_MIN_WORDLENGTH, ADVANCED_MAX_WORDLENGTH);
             mMinDimensionOffset = ADVANCED_MIN_DIMENSION_OFFSET;
             mMaxDimensionOffset = ADVANCED_MAX_DIMENSION_OFFSET;
         }
