@@ -46,13 +46,17 @@ public class WordSearchGridAdapter extends BaseAdapter {
             holder.textView.setText("" + n.getLetter());
             holder.textView.setHeight(mColumnWidth);
             int size;
-            int difference = ((WordSearchManager.ADVANCED_MAX_WORDLENGTH + WordSearchManager.ADVANCED_MAX_DIMENSION_OFFSET - WordSearchManager.EASY_MIN_WORDLENGTH) / 3);
+            int difference = ((WordSearchManager.ADVANCED_MAX_WORDLENGTH + WordSearchManager.ADVANCED_MAX_DIMENSION_OFFSET - WordSearchManager.EASY_MIN_WORDLENGTH) / 5);
             if (WordSearchManager.EASY_MIN_WORDLENGTH <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference))
-                size = 32;
+                size = 36;
             else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference) <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 2))
+                size = 32;
+            else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference * 2) <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 3))
                 size = 28;
+            else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference * 3) <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 4))
+                size = 24;
             else
-                size = 22;
+                size = 20;
 
             if (mIsTablet)
                 size *= 1.5;
