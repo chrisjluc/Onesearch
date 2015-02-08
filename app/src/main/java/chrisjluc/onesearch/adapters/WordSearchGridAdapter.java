@@ -22,6 +22,7 @@ public class WordSearchGridAdapter extends BaseAdapter {
     private int mWordSearchDimension;
     private LayoutInflater mInflater;
     private boolean mIsTablet;
+    private boolean mIsSmallScreen;
 
     public WordSearchGridAdapter(Context context, Node[] nodes, int columnWidth, int wordSearchDimension) {
         this.mContext = context;
@@ -30,6 +31,7 @@ public class WordSearchGridAdapter extends BaseAdapter {
         this.mWordSearchDimension = wordSearchDimension;
         this.mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mIsTablet = DeviceUtils.isTablet(context);
+        this.mIsSmallScreen = DeviceUtils.isSmallScreen(context);
     }
 
     public View getView(final int pos, View convertView, ViewGroup parent) {
@@ -46,20 +48,26 @@ public class WordSearchGridAdapter extends BaseAdapter {
             holder.textView.setText("" + n.getLetter());
             holder.textView.setHeight(mColumnWidth);
             int size;
-            int difference = ((WordSearchManager.ADVANCED_MAX_WORDLENGTH + WordSearchManager.ADVANCED_MAX_DIMENSION_OFFSET - WordSearchManager.EASY_MIN_WORDLENGTH) / 5);
+            int difference = ((WordSearchManager.ADVANCED_MAX_WORDLENGTH + WordSearchManager.ADVANCED_MAX_DIMENSION_OFFSET - WordSearchManager.EASY_MIN_WORDLENGTH) / 6);
             if (WordSearchManager.EASY_MIN_WORDLENGTH <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference))
                 size = 36;
             else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference) <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 2))
-                size = 32;
+                size = 34;
             else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference * 2) <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 3))
-                size = 28;
+                size = 30;
             else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference * 3) <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 4))
+                size = 28;
+            else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference * 4) <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 5))
                 size = 24;
-            else
+            else if (!mIsSmallScreen)
                 size = 20;
+            else
+                size = 18;
 
             if (mIsTablet)
                 size *= 1.5;
+            else if (mIsSmallScreen)
+                size /= 1.1;
 
             holder.textView.setTextSize(size);
         } else {
