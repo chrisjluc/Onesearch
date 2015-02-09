@@ -2,6 +2,7 @@ package chrisjluc.onesearch.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -24,6 +25,11 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     public final static int RESULT_EXIT_TO_MENU = 1;
     public final static String ACTION_IDENTIFIER = "action_identifier";
     public final static int REQUEST_LEADERBOARD = 2;
+
+    // Shared pref constants
+    private final static String PREF_NAME = "results_and_game_metrics";
+    private final static String SCORE_PREFIX = "score_in_mode_";
+
     private String leaderboardId;
 
     @Override
@@ -41,9 +47,6 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
             int score = extras.getInt("score");
             int skipped = extras.getInt("skipped");
 
-            TextView scoreTextView = (TextView) findViewById(R.id.tvScoreResult);
-            scoreTextView.setText(Integer.toString(score));
-
             GameMode gameMode = WordSearchManager.getInstance().getGameMode();
             switch(gameMode.getDifficulty()) {
                 case GameDifficulty.Easy:
@@ -59,13 +62,28 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                     leaderboardId = getResources().getString(R.string.leaderboard_highest_scores__advanced);
                     break;
             }
+            handleScore(gameMode, score);
             handleLeaderboard(gameMode, score);
-            handleAcheivements(gameMode, score);
         }
     }
 
-    private void handleAcheivements(GameMode gameMode, int score){
+    private void handleScore(GameMode gameMode, int score){
 
+        TextView scoreTextView = (TextView) findViewById(R.id.tvScoreResult);
+        scoreTextView.setText(Integer.toString(score));
+
+        SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        int bestScore = prefs.getInt(SCORE_PREFIX + gameMode.getDifficulty(), 0);
+        if (score > bestScore) {
+            SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
+            editor.putInt(SCORE_PREFIX + gameMode.getDifficulty(), score);
+            editor.commit();
+
+            findViewById(R.id.tvBestScoreResultNotify).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(score));
+        } else {
+            ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(bestScore));
+        }
     }
 
     private void handleLeaderboard(GameMode gameMode, int score) {
@@ -122,6 +140,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     public void onConnectionFailed(ConnectionResult connectionResult) {
         super.onConnectionFailed(connectionResult);
         findViewById(R.id.bResultSignIn).setVisibility(View.VISIBLE);
+        findViewById(R.id.bShowLeaderBoards).setVisibility(View.GONE);
         findViewById(R.id.bResultSignIn).setOnClickListener(this);
     }
 }

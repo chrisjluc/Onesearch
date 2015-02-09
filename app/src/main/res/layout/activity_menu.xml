@@ -22,16 +22,14 @@
             android:gravity="center_horizontal">
 
             <chrisjluc.onesearch.ui.components.GameBoldTextView
-                android:id="@+id/first_app_title"
-                android:textSize="40sp"
+                android:textSize="48sp"
                 android:text="ONE"
                 android:textColor="@color/green"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <chrisjluc.onesearch.ui.components.GameBoldTextView
-                android:id="@+id/second_app_title"
-                android:textSize="40sp"
+                android:textSize="48sp"
                 android:text="SEARCH"
                 android:textColor="@color/blue"
                 android:layout_width="wrap_content"

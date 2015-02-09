@@ -1,6 +1,7 @@
 package chrisjluc.onesearch.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -17,14 +18,26 @@ import chrisjluc.onesearch.ui.gameplay.WordSearchActivity;
 
 public class MenuActivity extends BaseGooglePlayServicesActivity implements View.OnClickListener {
 
+    private final static String MENU_PREF_NAME = "menu_prefs";
+    private final static String FIRST_TIME = "first_time";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
 
-        ((TextView)findViewById(R.id.first_app_title)).setTextSize(48);
-        ((TextView)findViewById(R.id.second_app_title)).setTextSize(48);
+        // Check if first time opening app, show splash screen
+        SharedPreferences prefs = getSharedPreferences(MENU_PREF_NAME, MODE_PRIVATE);
+        boolean isFirstTime = prefs.getBoolean(FIRST_TIME, true);
+        if (isFirstTime) {
+            SharedPreferences.Editor editor = getSharedPreferences(MENU_PREF_NAME, MODE_PRIVATE).edit();
+            editor.putBoolean(FIRST_TIME, false);
+            editor.commit();
+
+            Intent i = new Intent(getApplicationContext(), SplashActivity.class);
+            startActivity(i);
+        }
+
+        setContentView(R.layout.activity_menu);
 
         findViewById(R.id.bMenuEasy).setOnClickListener(this);
         findViewById(R.id.bMenuMedium).setOnClickListener(this);

@@ -60,9 +60,9 @@ public class WordSearchGridAdapter extends BaseAdapter {
             else if ((WordSearchManager.EASY_MIN_WORDLENGTH + difference * 4) <= mWordSearchDimension && mWordSearchDimension < (WordSearchManager.EASY_MIN_WORDLENGTH + difference * 5))
                 size = 24;
             else if (!mIsSmallScreen)
-                size = 20;
+                size = 21;
             else
-                size = 18;
+                size = 20;
 
             if (mIsTablet)
                 size *= 1.5;

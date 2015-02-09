@@ -31,18 +31,20 @@ public class GameButton extends Button {
         setAppearance();
     }
 
-    private void setAppearance(){
+    private void setAppearance() {
         this.setBackgroundResource(R.drawable.curved_button);
     }
 
     private void setTypeFace(Context context) {
-        if(typeface == null)
+        if (typeface == null)
             typeface = Typeface.createFromAsset(context.getAssets(), "fonts/gothic.ttf");
         this.setTypeface(typeface);
         this.setTextColor(Color.WHITE);
         if (DeviceUtils.isTablet(context))
             this.setTextSize(32);
-        else
+        else if (!DeviceUtils.isSmallScreen(context))
             this.setTextSize(24);
+        else
+            this.setTextSize(20);
     }
 }

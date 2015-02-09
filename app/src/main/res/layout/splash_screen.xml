@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/llTop"
+        android:layout_marginTop="16dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <chrisjluc.onesearch.ui.components.GameTextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue"
+            android:text="THIS IS A"
+            android:gravity="center"
+            android:textSize="36sp" />
+
+        <chrisjluc.onesearch.ui.components.GameBoldTextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue"
+            android:text="WORD SEARCH"
+            android:gravity="center"
+            android:textSize="36sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <chrisjluc.onesearch.ui.components.GameTextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:text="THE WORD ONLY"
+                android:gravity="center"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+
+                <chrisjluc.onesearch.ui.components.GameTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue"
+                    android:text="APPEARS"
+                    android:gravity="center"
+                    android:textSize="24sp" />
+
+                <chrisjluc.onesearch.ui.components.GameTextView
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/green"
+                    android:text="ONCE"
+                    android:gravity="center"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
+            <chrisjluc.onesearch.ui.components.GameTextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:text="IN THE GRID."
+                android:gravity="center"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="40dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <chrisjluc.onesearch.ui.components.GameBoldTextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:text="HORIZONTALLY,"
+                android:gravity="center"
+                android:textSize="32sp" />
+
+            <chrisjluc.onesearch.ui.components.GameBoldTextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:text="VERTICALLY,"
+                android:gravity="center"
+                android:textSize="32sp" />
+
+            <chrisjluc.onesearch.ui.components.GameBoldTextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:text="DIAGONALLY"
+                android:gravity="center"
+                android:textSize="32sp" />
+
+            <chrisjluc.onesearch.ui.components.GameTextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:text="and sometimes,"
+                android:gravity="center"
+                android:textSize="32sp" />
+
+            <chrisjluc.onesearch.ui.components.GameBoldTextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:text="BACKWARDS."
+                android:gravity="center"
+                android:textSize="32sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <chrisjluc.onesearch.ui.components.GameButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bReadySplash"
+        android:text="I'm Ready!"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

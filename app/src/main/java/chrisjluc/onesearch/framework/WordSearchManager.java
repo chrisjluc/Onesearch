@@ -24,13 +24,13 @@ public class WordSearchManager {
 
     public final static int HARD_MIN_WORDLENGTH = 6;
     public final static int HARD_MAX_WORDLENGTH = 8;
-    public final static int HARD_MIN_DIMENSION_OFFSET = 3;
-    public final static int HARD_MAX_DIMENSION_OFFSET = 4;
+    public final static int HARD_MIN_DIMENSION_OFFSET = 2;
+    public final static int HARD_MAX_DIMENSION_OFFSET = 3;
 
     public final static int ADVANCED_MIN_WORDLENGTH = 9;
     public final static int ADVANCED_MAX_WORDLENGTH = 11;
-    public final static int ADVANCED_MIN_DIMENSION_OFFSET = 6;
-    public final static int ADVANCED_MAX_DIMENSION_OFFSET = 7;
+    public final static int ADVANCED_MIN_DIMENSION_OFFSET = 4;
+    public final static int ADVANCED_MAX_DIMENSION_OFFSET = 5;
 
     private final static int SIZE = 2;
     private static WordSearchManager mInstance;

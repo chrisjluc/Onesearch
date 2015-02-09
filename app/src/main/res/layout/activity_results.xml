@@ -8,22 +8,86 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="chrisjluc.onesearch.ui.ResultsActivity">
 
-    <chrisjluc.onesearch.ui.components.GameTextView
+    <chrisjluc.onesearch.ui.components.GameBoldTextView
         android:layout_centerHorizontal="true"
         android:text="@string/title_activity_results"
+        android:textSize="24sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <chrisjluc.onesearch.ui.components.GameTextView
-        android:layout_centerInParent="true"
-        android:text="Score"
+    <chrisjluc.onesearch.ui.components.GameBoldTextView
+        android:text="New Best Score!"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvScoreResult" />
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tvBestScoreResultNotify"
+        android:layout_above="@+id/llScoreResult"
+        android:textColor="@color/green"
+        android:textSize="32sp"
+        android:visibility="gone"
+        android:layout_marginBottom="64dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/llScoreResult"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginRight="64dp">
+
+            <chrisjluc.onesearch.ui.components.GameTextView
+                android:text="Score"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:textSize="24sp"
+                android:layout_height="wrap_content" />
+
+            <chrisjluc.onesearch.ui.components.GameBoldTextView
+                android:layout_centerInParent="true"
+                android:text="Score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="32sp"
+                android:id="@+id/tvScoreResult" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <chrisjluc.onesearch.ui.components.GameTextView
+                android:text="Best Score"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:textSize="24sp"
+                android:layout_height="wrap_content" />
+
+            <chrisjluc.onesearch.ui.components.GameBoldTextView
+                android:layout_centerInParent="true"
+                android:text="Score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="32sp"
+                android:id="@+id/tvBestScoreResult" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <com.google.android.gms.common.SignInButton
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/tvScoreResult"
+        android:layout_below="@id/llScoreResult"
         android:id="@+id/bResultSignIn"
         android:visibility="gone"
         android:layout_width="wrap_content"
@@ -31,11 +95,11 @@
 
     <chrisjluc.onesearch.ui.components.GameButton
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/tvScoreResult"
+        android:layout_below="@id/llScoreResult"
         android:id="@+id/bShowLeaderBoards"
         android:text="See leaderboards"
-        android:layout_width="wrap_content"
         android:visibility="gone"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <LinearLayout
