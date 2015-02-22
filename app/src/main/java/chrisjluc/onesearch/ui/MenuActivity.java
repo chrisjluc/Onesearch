@@ -41,6 +41,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         findViewById(R.id.bMenuEasy).setOnClickListener(this);
         findViewById(R.id.bMenuMedium).setOnClickListener(this);
         findViewById(R.id.bMenuHard).setOnClickListener(this);
+        //TODO: Reimplement advanced after more efficient way of drawing out the grid
 //        findViewById(R.id.bMenuAdvanced).setOnClickListener(this);
     }
 

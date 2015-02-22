@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.games.Games;
 
 import chrisjluc.onesearch.R;
@@ -18,7 +17,6 @@ import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.models.GameAchievement;
 import chrisjluc.onesearch.models.GameDifficulty;
 import chrisjluc.onesearch.models.GameMode;
-import chrisjluc.onesearch.ui.components.GameButton;
 import chrisjluc.onesearch.ui.gameplay.WordSearchActivity;
 
 public class ResultsActivity extends BaseGooglePlayServicesActivity implements View.OnClickListener {
@@ -33,8 +31,13 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     public final static String PREF_NAME = "results_and_game_metrics";
     public final static String SCORE_PREFIX = "score_in_mode_";
     public final static String COMPLETED_ROUND_PREFIX = "completed_rounds_in_mode_";
+    public final static String HIGHEST_SCORE_FOR_ACHIEVEMENT_PREFIX = "highest_score_for_achievement_in_mode_";
 
-    private String leaderboardId;
+    private String mLeaderboardId;
+    private int mScore = -1;
+    private int mPreviousBestScore = -1;
+    private int mSkipped = -1;
+    private GameMode mGameMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,48 +46,45 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
         findViewById(R.id.bReplay).setOnClickListener(this);
         findViewById(R.id.bReturnMenu).setOnClickListener(this);
 
-        SignInButton signin = (SignInButton) findViewById(R.id.bResultSignIn);
-        GameButton showLeaderBoard = (GameButton) findViewById(R.id.bShowLeaderBoards);
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            int score = extras.getInt("score");
-            int skipped = extras.getInt("skipped");
+            mScore = extras.getInt("score");
+            mSkipped = extras.getInt("skipped");
 
-            GameMode gameMode = WordSearchManager.getInstance().getGameMode();
-            switch (gameMode.getDifficulty()) {
+            mGameMode = WordSearchManager.getInstance().getGameMode();
+            switch (mGameMode.getDifficulty()) {
                 case GameDifficulty.Easy:
-                    leaderboardId = getResources().getString(R.string.leaderboard_highest_scores__easy);
+                    mLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__easy);
                     break;
                 case GameDifficulty.Medium:
-                    leaderboardId = getResources().getString(R.string.leaderboard_highest_scores__medium);
+                    mLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__medium);
                     break;
                 case GameDifficulty.Hard:
-                    leaderboardId = getResources().getString(R.string.leaderboard_highest_scores__hard);
+                    mLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__hard);
                     break;
                 case GameDifficulty.Advanced:
-                    leaderboardId = getResources().getString(R.string.leaderboard_highest_scores__advanced);
+                    mLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__advanced);
                     break;
             }
 
             SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-            int numRounds = prefs.getInt(COMPLETED_ROUND_PREFIX + gameMode.getDifficulty(), 0);
+            int numRounds = prefs.getInt(COMPLETED_ROUND_PREFIX + mGameMode.getDifficulty(), 0);
             SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
-            editor.putInt(COMPLETED_ROUND_PREFIX + gameMode.getDifficulty(), ++numRounds);
+            editor.putInt(COMPLETED_ROUND_PREFIX + mGameMode.getDifficulty(), ++numRounds);
             editor.commit();
 
-            handleScore(gameMode, score);
-            handleLeaderboard(score);
+            updateSavedScoreAndRenderViews(mGameMode, mScore);
         }
     }
 
-    private void handleScore(GameMode gameMode, int score) {
+    private void updateSavedScoreAndRenderViews(GameMode gameMode, int score) {
 
         TextView scoreTextView = (TextView) findViewById(R.id.tvScoreResult);
         scoreTextView.setText(Integer.toString(score));
 
         SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         int bestScore = prefs.getInt(SCORE_PREFIX + gameMode.getDifficulty(), 0);
+        mPreviousBestScore = bestScore;
         if (score > bestScore) {
             SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
             editor.putInt(SCORE_PREFIX + gameMode.getDifficulty(), score);
@@ -95,19 +95,18 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
         } else {
             ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(bestScore));
         }
-
-        handleAchievement(gameMode, Math.max(score, bestScore));
     }
 
-    private void handleLeaderboard(int score) {
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            Games.Leaderboards.submitScore(mGoogleApiClient, leaderboardId, score);
+    private void updateLeaderboard() {
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected() && mScore > mPreviousBestScore) {
+            Games.Leaderboards.submitScore(mGoogleApiClient, mLeaderboardId, mScore);
         }
     }
 
-    private void handleAchievement(GameMode gameMode, int score) {
+    private void updateAchievements() {
+        int score = Math.max(mPreviousBestScore, mScore);
         SparseArray<String> achievementsMap = null;
-        switch (gameMode.getDifficulty()) {
+        switch (mGameMode.getDifficulty()) {
             case GameDifficulty.Easy:
                 achievementsMap = GameAchievement.EASYACHIEVEMENTSMAP;
                 break;
@@ -122,13 +121,22 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                 break;
         }
         if (achievementsMap == null) return;
+        // Remember the highest score associated with achievement unlocked, so we don't unlock it multiple times
+        SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        int highestScore = prefs.getInt(HIGHEST_SCORE_FOR_ACHIEVEMENT_PREFIX + mGameMode.getDifficulty(), 0);
+
         for (int i = 0; i < achievementsMap.size(); i++) {
             int key = achievementsMap.keyAt(i);
             if (key > score) break;
+            if (key <= highestScore) continue;
             if (mGoogleApiClient != null && mGoogleApiClient.isConnected())
                 Games.Achievements.unlock(mGoogleApiClient, achievementsMap.get(key, ""));
-            else
-                break;
+        }
+
+        if (score > highestScore) {
+            SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
+            editor.putInt(HIGHEST_SCORE_FOR_ACHIEVEMENT_PREFIX + mGameMode.getDifficulty(), score);
+            editor.commit();
         }
     }
 
@@ -141,13 +149,13 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                 mGoogleApiClient.connect();
                 return;
             case R.id.bShowLeaderBoards:
-                if (mGoogleApiClient != null && mGoogleApiClient.isConnected() && leaderboardId != null) {
+                if (mGoogleApiClient != null && mGoogleApiClient.isConnected() && mLeaderboardId != null) {
                     startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-                            leaderboardId), REQUEST_LEADERBOARD);
+                            mLeaderboardId), REQUEST_LEADERBOARD);
                 }
                 return;
             case R.id.bShowAchievements:
-                if (mGoogleApiClient != null && mGoogleApiClient.isConnected() && leaderboardId != null) {
+                if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
                     startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), REQUEST_ACHIEVEMENTS);
                 }
                 return;
@@ -176,11 +184,14 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
 
     @Override
     public void onConnected(Bundle bundle) {
+        super.onConnected(bundle);
         findViewById(R.id.bResultSignIn).setVisibility(View.GONE);
         findViewById(R.id.bShowLeaderBoards).setVisibility(View.VISIBLE);
         findViewById(R.id.bShowLeaderBoards).setOnClickListener(this);
         findViewById(R.id.bShowAchievements).setVisibility(View.VISIBLE);
         findViewById(R.id.bShowAchievements).setOnClickListener(this);
+        updateLeaderboard();
+        updateAchievements();
     }
 
     @Override
