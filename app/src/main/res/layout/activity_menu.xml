@@ -66,13 +66,14 @@
                 android:layout_margin="@dimen/element_margin_separation"
                 android:text="@string/menu_hard"
                 android:id="@+id/bMenuHard" />
-
+<!--
             <chrisjluc.onesearch.ui.components.GameButton
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/element_margin_separation"
                 android:text="@string/menu_advanced"
                 android:id="@+id/bMenuAdvanced" />
+                -->
 
             <com.google.android.gms.common.SignInButton
                 android:layout_width="fill_parent"

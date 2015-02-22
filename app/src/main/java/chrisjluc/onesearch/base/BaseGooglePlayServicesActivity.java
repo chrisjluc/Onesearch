@@ -1,6 +1,7 @@
 package chrisjluc.onesearch.base;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -9,6 +10,8 @@ import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.BaseGameUtils;
 
 import chrisjluc.onesearch.R;
+import chrisjluc.onesearch.models.GameDifficulty;
+import chrisjluc.onesearch.ui.ResultsActivity;
 
 public class BaseGooglePlayServicesActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -74,6 +77,23 @@ public class BaseGooglePlayServicesActivity extends BaseActivity implements Goog
 
     @Override
     public void onConnected(Bundle bundle) {
+        // Push high scores
+        SharedPreferences prefs = getSharedPreferences(ResultsActivity.PREF_NAME, MODE_PRIVATE);
+        String easyLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__easy);
+        String mediumLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__medium);
+        String hardLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__hard);
+        String advancedLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__advanced);
+
+        int easyScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Easy, 0);
+        int mediumScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Medium, 0);
+        int hardScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Hard, 0);
+        int advancedScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Advanced, 0);
+
+        Games.Leaderboards.submitScore(mGoogleApiClient, easyLeaderboardId, easyScore);
+        Games.Leaderboards.submitScore(mGoogleApiClient, mediumLeaderboardId, mediumScore);
+        Games.Leaderboards.submitScore(mGoogleApiClient, hardLeaderboardId, hardScore);
+        Games.Leaderboards.submitScore(mGoogleApiClient, advancedLeaderboardId, advancedScore);
+
     }
 
     @Override

@@ -97,7 +97,17 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/llScoreResult"
         android:id="@+id/bShowLeaderBoards"
-        android:text="See leaderboards"
+        android:text="Leaderboards"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <chrisjluc.onesearch.ui.components.GameButton
+        android:layout_marginTop="@dimen/element_margin_separation"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/bShowLeaderBoards"
+        android:id="@+id/bShowAchievements"
+        android:text="Achievements"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

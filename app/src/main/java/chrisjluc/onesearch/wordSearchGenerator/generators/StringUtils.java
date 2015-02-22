@@ -13,10 +13,8 @@ public class StringUtils {
     }
 
     public static String reverse(String s) {
-        String ret = "";
-        for (int i = 0; i < s.length(); i++)
-            ret = s.charAt(i) + ret;
-        return ret;
+        StringBuilder sb = new StringBuilder(s);
+        return sb.reverse().toString();
     }
 
     public static int countMatches(String s, char test){

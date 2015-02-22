@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 
 import chrisjluc.onesearch.R;
-import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.base.BaseGooglePlayServicesActivity;
+import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.models.GameDifficulty;
 import chrisjluc.onesearch.models.GameMode;
 import chrisjluc.onesearch.models.GameType;
@@ -42,7 +41,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         findViewById(R.id.bMenuEasy).setOnClickListener(this);
         findViewById(R.id.bMenuMedium).setOnClickListener(this);
         findViewById(R.id.bMenuHard).setOnClickListener(this);
-        findViewById(R.id.bMenuAdvanced).setOnClickListener(this);
+//        findViewById(R.id.bMenuAdvanced).setOnClickListener(this);
     }
 
     @Override
@@ -65,9 +64,9 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
             case R.id.bMenuHard:
                 gd = GameDifficulty.Hard;
                 break;
-            case R.id.bMenuAdvanced:
-                gd = GameDifficulty.Advanced;
-                break;
+//            case R.id.bMenuAdvanced:
+//                gd = GameDifficulty.Advanced;
+//                break;
         }
         WordSearchManager wsm = WordSearchManager.getInstance();
         wsm.Initialize(new GameMode(GameType.Timed, gd, 60000), getApplicationContext());

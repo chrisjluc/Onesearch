@@ -12,6 +12,7 @@ import java.util.List;
 import chrisjluc.onesearch.R;
 import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.adapters.WordSearchGridAdapter;
+import chrisjluc.onesearch.wordSearchGenerator.generators.StringUtils;
 import chrisjluc.onesearch.wordSearchGenerator.generators.WordSearchGenerator;
 import chrisjluc.onesearch.wordSearchGenerator.models.Node;
 import chrisjluc.onesearch.wordSearchGenerator.models.Point;
@@ -26,7 +27,7 @@ public class WordSearchGridView extends GridView {
     private Point mStartDrag, mEndDrag;
     private Node[] mWordSearchNodes;
     private List<Node> mWordSearchHighlightedNodes;
-    private String mWord;
+    private String mWord, mWordReverse;
     private Point mWordStart, mWordEnd;
     private WordFoundListener mWordFoundListener;
     private WordSearchGridAdapter mAdapter;
@@ -39,6 +40,7 @@ public class WordSearchGridView extends GridView {
         mXLength = wordSearch.getnCol();
         mYLength = wordSearch.getnRow();
         mWord = wordSearch.getWord();
+        mWordReverse = StringUtils.reverse(mWord);
         List<Point> points = wordSearch.getStartAndEndPointOfWord();
 
         // Convert cartesian from matrix coordinates
@@ -65,11 +67,43 @@ public class WordSearchGridView extends GridView {
     }
 
     private void isWordFound() {
-        if ((mWordStart.equals(mStartDrag) && mWordEnd.equals(mEndDrag))
-                || (mWordStart.equals(mEndDrag) && mWordEnd.equals(mStartDrag))) {
+        String selectedWord = getSelectedString();
+        if (selectedWord != null && mWord.equals(selectedWord)
+                || mWordReverse.equals(selectedWord)) {
             mIsWordFound = true;
             mWordFoundListener.notifyWordFound();
         }
+    }
+
+    private String getSelectedString() {
+        // No need for validation because updateCurrentHighlightedNodes validates
+        if(mEndDrag == null || mStartDrag == null) return null;
+        int dX = mEndDrag.x - mStartDrag.x;
+        int dY = mEndDrag.y - mStartDrag.y;
+
+        int length = 0;
+
+        if (dX != 0)
+            length = Math.abs(dX);
+
+        if (dY != 0)
+            length = Math.abs(dY);
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < length + 1; i++) {
+            Point point = new Point(mStartDrag.x, mStartDrag.y);
+            if (dX != 0)
+                point.x += dX > 0 ? i : -i;
+            if (dY != 0)
+                point.y += dY > 0 ? i : -i;
+
+            int index = point.y * mXLength + point.x;
+            if (index < 0 || index >= mWordSearchNodes.length)
+                continue;
+            sb.append(mWordSearchNodes[index].getLetter());
+        }
+        return sb.toString();
     }
 
     public void highlightWord() {
