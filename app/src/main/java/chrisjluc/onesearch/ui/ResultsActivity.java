@@ -52,48 +52,53 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
             mSkipped = extras.getInt("skipped");
 
             mGameMode = WordSearchManager.getInstance().getGameMode();
-            switch (mGameMode.getDifficulty()) {
-                case GameDifficulty.Easy:
-                    mLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__easy);
-                    break;
-                case GameDifficulty.Medium:
-                    mLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__medium);
-                    break;
-                case GameDifficulty.Hard:
-                    mLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__hard);
-                    break;
-                case GameDifficulty.Advanced:
-                    mLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__advanced);
-                    break;
+            if (mGameMode != null) {
+                switch (mGameMode.getDifficulty()) {
+                    case GameDifficulty.Easy:
+                        mLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__easy);
+                        break;
+                    case GameDifficulty.Medium:
+                        mLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__medium);
+                        break;
+                    case GameDifficulty.Hard:
+                        mLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__hard);
+                        break;
+                    case GameDifficulty.Advanced:
+                        mLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__advanced);
+                        break;
+                }
+
+                // Track number of played rounds
+                SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+                int numRounds = prefs.getInt(COMPLETED_ROUND_PREFIX + mGameMode.getDifficulty(), 0);
+                SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
+                editor.putInt(COMPLETED_ROUND_PREFIX + mGameMode.getDifficulty(), ++numRounds);
+                editor.commit();
             }
 
-            SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-            int numRounds = prefs.getInt(COMPLETED_ROUND_PREFIX + mGameMode.getDifficulty(), 0);
-            SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
-            editor.putInt(COMPLETED_ROUND_PREFIX + mGameMode.getDifficulty(), ++numRounds);
-            editor.commit();
-
-            updateSavedScoreAndRenderViews(mGameMode, mScore);
+            updateSavedScoreAndRenderViews(mScore);
         }
     }
 
-    private void updateSavedScoreAndRenderViews(GameMode gameMode, int score) {
+    private void updateSavedScoreAndRenderViews(int score) {
 
         TextView scoreTextView = (TextView) findViewById(R.id.tvScoreResult);
         scoreTextView.setText(Integer.toString(score));
 
-        SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        int bestScore = prefs.getInt(SCORE_PREFIX + gameMode.getDifficulty(), 0);
-        mPreviousBestScore = bestScore;
-        if (score > bestScore) {
-            SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
-            editor.putInt(SCORE_PREFIX + gameMode.getDifficulty(), score);
-            editor.commit();
+        if (mGameMode != null) {
+            SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+            int bestScore = prefs.getInt(SCORE_PREFIX + mGameMode.getDifficulty(), 0);
+            mPreviousBestScore = bestScore;
+            if (score > bestScore) {
+                SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
+                editor.putInt(SCORE_PREFIX + mGameMode.getDifficulty(), score);
+                editor.commit();
 
-            findViewById(R.id.tvBestScoreResultNotify).setVisibility(View.VISIBLE);
-            ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(score));
-        } else {
-            ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(bestScore));
+                findViewById(R.id.tvBestScoreResultNotify).setVisibility(View.VISIBLE);
+                ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(score));
+            } else {
+                ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(bestScore));
+            }
         }
     }
 
@@ -185,13 +190,15 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     @Override
     public void onConnected(Bundle bundle) {
         super.onConnected(bundle);
-        findViewById(R.id.bResultSignIn).setVisibility(View.GONE);
-        findViewById(R.id.bShowLeaderBoards).setVisibility(View.VISIBLE);
-        findViewById(R.id.bShowLeaderBoards).setOnClickListener(this);
-        findViewById(R.id.bShowAchievements).setVisibility(View.VISIBLE);
-        findViewById(R.id.bShowAchievements).setOnClickListener(this);
-        updateLeaderboard();
-        updateAchievements();
+        if (mGameMode != null) {
+            findViewById(R.id.bResultSignIn).setVisibility(View.GONE);
+            findViewById(R.id.bShowLeaderBoards).setVisibility(View.VISIBLE);
+            findViewById(R.id.bShowLeaderBoards).setOnClickListener(this);
+            findViewById(R.id.bShowAchievements).setVisibility(View.VISIBLE);
+            findViewById(R.id.bShowAchievements).setOnClickListener(this);
+            updateLeaderboard();
+            updateAchievements();
+        }
     }
 
     @Override

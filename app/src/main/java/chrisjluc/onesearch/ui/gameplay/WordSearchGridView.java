@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chrisjluc.onesearch.R;
-import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.adapters.WordSearchGridAdapter;
+import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.wordSearchGenerator.generators.StringUtils;
 import chrisjluc.onesearch.wordSearchGenerator.generators.WordSearchGenerator;
 import chrisjluc.onesearch.wordSearchGenerator.models.Node;
@@ -44,6 +44,9 @@ public class WordSearchGridView extends GridView {
 
         WordSearchManager manager = WordSearchManager.getInstance();
         WordSearchGenerator wordSearch = manager.getWordSearch(WordSearchActivity.currentItem++);
+        while (wordSearch == null) {
+            wordSearch = manager.getWordSearch(WordSearchActivity.currentItem++);
+        }
         mXLength = wordSearch.getnCol();
         mYLength = wordSearch.getnRow();
         mWord = wordSearch.getWord();
@@ -84,7 +87,7 @@ public class WordSearchGridView extends GridView {
 
     private String getSelectedString() {
         // No need for validation because updateCurrentHighlightedNodes validates
-        if(mEndDrag == null || mStartDrag == null) return null;
+        if (mEndDrag == null || mStartDrag == null) return null;
         int dX = mEndDrag.x - mStartDrag.x;
         int dY = mEndDrag.y - mStartDrag.y;
 

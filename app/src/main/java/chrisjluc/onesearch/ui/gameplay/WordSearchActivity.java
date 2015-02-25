@@ -11,9 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import chrisjluc.onesearch.R;
-import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.adapters.WordSearchPagerAdapter;
 import chrisjluc.onesearch.base.BaseActivity;
+import chrisjluc.onesearch.framework.WordSearchManager;
 import chrisjluc.onesearch.ui.ResultsActivity;
 
 public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener {
@@ -38,7 +38,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private CountDownTimer mCountDownTimer;
     private String mGameState;
     private long mTimeRemaining;
-    private long mStartTime;
+    private long mRoundTime;
     private int mScore;
     private int mSkipped;
     private WordSearchPagerAdapter mWordSearchPagerAdapter;
@@ -48,7 +48,6 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.wordsearch_activity);
-        mStartTime = WordSearchManager.getInstance().getGameMode().getTime();
         mGameState = GameState.START;
         Button skipButton = (Button) findViewById(R.id.bSkip);
         Button pauseButton = (Button) findViewById(R.id.bPause);
@@ -57,6 +56,9 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         mTimerTextView = (TextView) findViewById(R.id.tvTimer);
         mScoreTextView = (TextView) findViewById(R.id.tvScore);
         mScoreTextView.setText("0");
+        currentItem = 0;
+        mScore = 0;
+        mSkipped = 0;
 
         // Create the adapter that will return a fragment for each of the
         // primary sections of the activity.
@@ -73,10 +75,9 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         // Set up the ViewPager with the sections adapter.
         mViewPager = (WordSearchViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mWordSearchPagerAdapter);
-        currentItem = 0;
-        mScore = 0;
-        mSkipped = 0;
-        mTimeRemaining = mStartTime;
+
+        mRoundTime = WordSearchManager.getInstance().getGameMode().getTime();
+        mTimeRemaining = mRoundTime;
         setupCountDownTimer(mTimeRemaining);
         startCountDownTimer();
     }
@@ -146,7 +147,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private void restart() {
         mScore = 0;
         mSkipped = 0;
-        mTimeRemaining = mStartTime;
+        mTimeRemaining = mRoundTime;
         setupCountDownTimer(mTimeRemaining);
         startCountDownTimer();
         setFullscreen();

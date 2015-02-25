@@ -1,9 +1,7 @@
 package chrisjluc.onesearch.models;
 
-import java.io.Serializable;
 
-@SuppressWarnings("serial")
-public class GameMode implements Serializable {
+public class GameMode {
 
     private String type;
     private String difficulty;

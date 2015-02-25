@@ -53,7 +53,6 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
             mGoogleApiClient.connect();
             return;
         }
-        WordSearchManager.nullify();
         String gd = null;
         switch (view.getId()) {
             case R.id.bMenuEasy:
@@ -74,6 +73,12 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         wsm.buildWordSearches();
         Intent i = new Intent(getApplicationContext(), WordSearchActivity.class);
         startActivity(i);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        WordSearchManager.nullify();
     }
 
     @Override
