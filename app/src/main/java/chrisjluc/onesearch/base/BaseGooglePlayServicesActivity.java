@@ -25,12 +25,12 @@ public class BaseGooglePlayServicesActivity extends BaseActivity implements Goog
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
                 .build();
-        super.onCreate(savedInstanceState);
     }
 
     @Override

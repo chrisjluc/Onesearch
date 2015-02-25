@@ -156,17 +156,17 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
     @Override
     protected void onResume() {
+        super.onResume();
         if (mGameState.equals(GameState.START) || mGameState.equals(GameState.FINISHED))
             mGameState = GameState.PLAY;
         else
             pauseGameplay();
-        super.onResume();
     }
 
     @Override
     protected void onPause() {
-        stopCountDownTimer();
         super.onPause();
+        stopCountDownTimer();
     }
 
     @Override

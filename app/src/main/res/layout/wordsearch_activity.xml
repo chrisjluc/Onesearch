@@ -11,49 +11,54 @@
         android:id="@+id/llTop"
         android:layout_centerHorizontal="true"
         android:weightSum="1">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.50"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:layout_margin="@dimen/activity_vertical_margin" >
-            <chrisjluc.onesearch.ui.components.GameTextView
-                android:text="Time"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:layout_margin="@dimen/activity_vertical_margin">
 
             <chrisjluc.onesearch.ui.components.GameTextView
+                android:paddingRight="@dimen/wordsearchactivity_indicator_text_padding_left"
+                android:text="Time"
+                android:textSize="@dimen/wordsearchactivity_indicator_text_title_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <chrisjluc.onesearch.ui.components.GameBoldTextView
                 android:id="@+id/tvTimer"
                 android:text="@string/app_name"
                 android:gravity="center"
-                android:textSize="28sp"
+                android:textSize="@dimen/wordsearchactivity_indicator_text_size"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
-            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.50"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:layout_margin="@dimen/activity_vertical_margin" >
-            <chrisjluc.onesearch.ui.components.GameTextView
-                android:text="Score"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:layout_margin="@dimen/activity_vertical_margin">
 
             <chrisjluc.onesearch.ui.components.GameTextView
+                android:paddingRight="@dimen/wordsearchactivity_indicator_text_padding_left"
+                android:text="Score"
+                android:textSize="@dimen/wordsearchactivity_indicator_text_title_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <chrisjluc.onesearch.ui.components.GameBoldTextView
                 android:id="@+id/tvScore"
                 android:text="@string/app_name"
                 android:gravity="center"
-                android:textSize="28sp"
+                android:textSize="@dimen/wordsearchactivity_indicator_text_size"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

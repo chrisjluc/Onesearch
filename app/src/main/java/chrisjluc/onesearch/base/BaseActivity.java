@@ -25,8 +25,8 @@ public class BaseActivity extends Activity {
 
     @Override
     protected void onResume() {
-        setFullscreen();
         super.onResume();
+        setFullscreen();
     }
 
     protected void setFullscreen() {
