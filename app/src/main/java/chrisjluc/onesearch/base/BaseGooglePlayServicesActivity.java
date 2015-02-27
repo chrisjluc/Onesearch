@@ -19,7 +19,7 @@ public class BaseGooglePlayServicesActivity extends BaseActivity implements Goog
     protected static int RC_SIGN_IN = 9001;
     protected boolean mInSignInFlow = false;
     protected boolean mResolvingConnectionFailure = false;
-    protected boolean mAutoStartSignInflow = false;
+    protected boolean mAutoStartSignInflow = true;
     protected boolean mSignInClicked = false;
     protected GoogleApiClient mGoogleApiClient;
 
@@ -51,7 +51,10 @@ public class BaseGooglePlayServicesActivity extends BaseActivity implements Goog
 
     protected void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+        if (!mInSignInFlow) {
+            // auto sign in
+            mGoogleApiClient.connect();
+        }
     }
 
     protected void onStop() {
@@ -80,15 +83,15 @@ public class BaseGooglePlayServicesActivity extends BaseActivity implements Goog
         // Push high scores
         if (mSignInClicked) {
             SharedPreferences prefs = getSharedPreferences(ResultsActivity.PREF_NAME, MODE_PRIVATE);
-            String easyLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__easy);
-            String mediumLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__medium);
-            String hardLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__hard);
-            String advancedLeaderboardId = getResources().getString(R.string.leaderboard_highest_scores__advanced);
+            String easyLeaderboardId = getString(R.string.leaderboard_highest_scores__easy);
+            String mediumLeaderboardId = getString(R.string.leaderboard_highest_scores__medium);
+            String hardLeaderboardId = getString(R.string.leaderboard_highest_scores__hard);
+//            String advancedLeaderboardId = getString(R.string.leaderboard_highest_scores__advanced);
 
             int easyScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Easy, 0);
             int mediumScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Medium, 0);
             int hardScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Hard, 0);
-            int advancedScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Advanced, 0);
+//            int advancedScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Advanced, 0);
 
             if (easyScore > 0)
                 Games.Leaderboards.submitScore(mGoogleApiClient, easyLeaderboardId, easyScore);
@@ -96,8 +99,8 @@ public class BaseGooglePlayServicesActivity extends BaseActivity implements Goog
                 Games.Leaderboards.submitScore(mGoogleApiClient, mediumLeaderboardId, mediumScore);
             if (hardScore > 0)
                 Games.Leaderboards.submitScore(mGoogleApiClient, hardLeaderboardId, hardScore);
-            if (advancedScore > 0)
-                Games.Leaderboards.submitScore(mGoogleApiClient, advancedLeaderboardId, advancedScore);
+//            if (advancedScore > 0)
+//                Games.Leaderboards.submitScore(mGoogleApiClient, advancedLeaderboardId, advancedScore);
         }
     }
 

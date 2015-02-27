@@ -3,10 +3,12 @@
     package="chrisjluc.onesearch">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <application
+        android:name=".OnesearchApp"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"

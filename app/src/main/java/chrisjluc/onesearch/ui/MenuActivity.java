@@ -23,7 +23,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        categoryId = R.string.ga_menu;
         // Check if first time opening app, show splash screen
         SharedPreferences prefs = getSharedPreferences(MENU_PREF_NAME, MODE_PRIVATE);
         boolean isFirstTime = prefs.getBoolean(FIRST_TIME, true);
@@ -54,20 +54,25 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
             return;
         }
         String gd = null;
+        int ga_button_id = -1;
         switch (view.getId()) {
             case R.id.bMenuEasy:
                 gd = GameDifficulty.Easy;
+                ga_button_id = R.string.ga_click_easy;
                 break;
             case R.id.bMenuMedium:
                 gd = GameDifficulty.Medium;
+                ga_button_id = R.string.ga_click_medium;
                 break;
             case R.id.bMenuHard:
                 gd = GameDifficulty.Hard;
+                ga_button_id = R.string.ga_click_hard;
                 break;
 //            case R.id.bMenuAdvanced:
 //                gd = GameDifficulty.Advanced;
 //                break;
         }
+        analyticsTrackEvent(ga_button_id);
         WordSearchManager wsm = WordSearchManager.getInstance();
         wsm.Initialize(new GameMode(GameType.Timed, gd, 60000), getApplicationContext());
         wsm.buildWordSearches();
@@ -78,6 +83,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     @Override
     protected void onResume() {
         super.onResume();
+        analyticsTrackScreen(getString(categoryId));
         WordSearchManager.nullify();
     }
 

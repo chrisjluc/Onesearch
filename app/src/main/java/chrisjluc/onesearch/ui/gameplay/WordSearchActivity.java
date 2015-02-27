@@ -46,6 +46,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        categoryId = R.string.ga_gameplay;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.wordsearch_activity);
         mGameState = GameState.START;
@@ -94,6 +95,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bSkip:
+                analyticsTrackEvent(R.string.ga_click_skip);
                 if (ON_SKIP_HIGHLIGHT_WORD) {
                     ((WordSearchFragment) mWordSearchPagerAdapter.getFragmentFromCurrentItem(currentItem)).highlightWord();
                     (new CountDownTimer(ON_SKIP_HIGHLIGHT_WORD_DELAY_IN_MS, TIMER_GRANULARITY_IN_MS) {
@@ -114,6 +116,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
 
                 break;
             case R.id.bPause:
+                analyticsTrackEvent(R.string.ga_click_pause);
                 pauseGameplay();
                 break;
         }
@@ -158,6 +161,7 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     @Override
     protected void onResume() {
         super.onResume();
+        analyticsTrackScreen(getString(categoryId));
         if (mGameState.equals(GameState.START) || mGameState.equals(GameState.FINISHED))
             mGameState = GameState.PLAY;
         else
