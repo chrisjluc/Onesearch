@@ -5,8 +5,14 @@
     <dimen name="grid_horizontal_margin">16dp</dimen>
     <dimen name="results_title_padding">16dp</dimen>
     <dimen name="results_title_size">32sp</dimen>
+
+    <dimen name="splash_header_text">48sp</dimen>
+    <dimen name="splash_center_text">36sp</dimen>
+    <dimen name="splash_bottom_text">36sp</dimen>
+
     <dimen name="wordsearchactivity_indicator_text_title_size">24sp</dimen>
     <dimen name="wordsearchactivity_indicator_text_size">36sp</dimen>
+
     <dimen name="wordsearchfragment_word_size">44sp</dimen>
     <dimen name="top_bar">160dp</dimen>
     <dimen name="bottom_bar">80dp</dimen>

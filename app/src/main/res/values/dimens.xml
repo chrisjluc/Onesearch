@@ -6,10 +6,16 @@
     <dimen name="element_margin_separation">4dp</dimen>
     <dimen name="results_title_padding">0dp</dimen>
     <dimen name="results_title_size">24sp</dimen>
+
+    <dimen name="splash_header_text">36sp</dimen>
+    <dimen name="splash_center_text">28sp</dimen>
+    <dimen name="splash_bottom_text">28sp</dimen>
+
     <dimen name="wordsearchactivity_indicator_text_padding_left">8dp</dimen>
     <dimen name="wordsearchactivity_indicator_text_title_size">18sp</dimen>
     <dimen name="wordsearchactivity_indicator_text_size">28sp</dimen>
     <dimen name="wordsearchfragment_word_size">36sp</dimen>
+
     <dimen name="top_bar">80dp</dimen>
     <dimen name="bottom_bar">40dp</dimen>
 </resources>

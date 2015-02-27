@@ -17,7 +17,7 @@
             android:textColor="@color/blue"
             android:text="THIS IS A"
             android:gravity="center"
-            android:textSize="36sp" />
+            android:textSize="@dimen/splash_header_text" />
 
         <chrisjluc.onesearch.ui.components.GameBoldTextView
             android:layout_width="fill_parent"
@@ -25,7 +25,7 @@
             android:textColor="@color/blue"
             android:text="WORD SEARCH"
             android:gravity="center"
-            android:textSize="36sp" />
+            android:textSize="@dimen/splash_header_text" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,7 +45,7 @@
                 android:textColor="@color/blue"
                 android:text="THE WORD ONLY"
                 android:gravity="center"
-                android:textSize="24sp" />
+                android:textSize="@dimen/splash_center_text" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -59,7 +59,7 @@
                     android:textColor="@color/blue"
                     android:text="APPEARS"
                     android:gravity="center"
-                    android:textSize="24sp" />
+                    android:textSize="@dimen/splash_center_text" />
 
                 <chrisjluc.onesearch.ui.components.GameTextView
                     android:layout_marginLeft="8dp"
@@ -68,7 +68,7 @@
                     android:textColor="@color/green"
                     android:text="ONCE"
                     android:gravity="center"
-                    android:textSize="24sp" />
+                    android:textSize="@dimen/splash_center_text" />
 
             </LinearLayout>
 
@@ -78,7 +78,7 @@
                 android:textColor="@color/blue"
                 android:text="IN THE GRID."
                 android:gravity="center"
-                android:textSize="24sp" />
+                android:textSize="@dimen/splash_center_text" />
         </LinearLayout>
 
         <LinearLayout
@@ -93,7 +93,7 @@
                 android:textColor="@color/blue"
                 android:text="HORIZONTALLY,"
                 android:gravity="center"
-                android:textSize="32sp" />
+                android:textSize="@dimen/splash_bottom_text" />
 
             <chrisjluc.onesearch.ui.components.GameBoldTextView
                 android:layout_width="fill_parent"
@@ -101,7 +101,7 @@
                 android:textColor="@color/blue"
                 android:text="VERTICALLY,"
                 android:gravity="center"
-                android:textSize="32sp" />
+                android:textSize="@dimen/splash_bottom_text" />
 
             <chrisjluc.onesearch.ui.components.GameBoldTextView
                 android:layout_width="fill_parent"
@@ -109,7 +109,7 @@
                 android:textColor="@color/blue"
                 android:text="DIAGONALLY"
                 android:gravity="center"
-                android:textSize="32sp" />
+                android:textSize="@dimen/splash_bottom_text" />
 
             <chrisjluc.onesearch.ui.components.GameTextView
                 android:layout_width="fill_parent"
@@ -117,7 +117,7 @@
                 android:textColor="@color/blue"
                 android:text="and sometimes,"
                 android:gravity="center"
-                android:textSize="32sp" />
+                android:textSize="@dimen/splash_bottom_text" />
 
             <chrisjluc.onesearch.ui.components.GameBoldTextView
                 android:layout_width="fill_parent"
@@ -125,7 +125,7 @@
                 android:textColor="@color/blue"
                 android:text="BACKWARDS."
                 android:gravity="center"
-                android:textSize="32sp" />
+                android:textSize="@dimen/splash_bottom_text" />
         </LinearLayout>
     </LinearLayout>
 
