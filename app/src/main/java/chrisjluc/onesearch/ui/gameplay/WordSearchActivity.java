@@ -1,19 +1,19 @@
 package chrisjluc.onesearch.ui.gameplay;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 
 import chrisjluc.onesearch.R;
 import chrisjluc.onesearch.adapters.WordSearchPagerAdapter;
 import chrisjluc.onesearch.base.BaseActivity;
 import chrisjluc.onesearch.framework.WordSearchManager;
+import chrisjluc.onesearch.models.GameState;
 import chrisjluc.onesearch.ui.ResultsActivity;
 
 public class WordSearchActivity extends BaseActivity implements WordSearchGridView.WordFoundListener, PauseDialogFragment.PauseDialogListener, View.OnClickListener {
@@ -50,10 +50,8 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.wordsearch_activity);
         mGameState = GameState.START;
-        Button skipButton = (Button) findViewById(R.id.bSkip);
-        Button pauseButton = (Button) findViewById(R.id.bPause);
-        skipButton.setOnClickListener(this);
-        pauseButton.setOnClickListener(this);
+        findViewById(R.id.bSkip).setOnClickListener(this);
+        findViewById(R.id.bPause).setOnClickListener(this);
         mTimerTextView = (TextView) findViewById(R.id.tvTimer);
         mScoreTextView = (TextView) findViewById(R.id.tvScore);
         mScoreTextView.setText("0");
@@ -175,24 +173,6 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_OK) {
-            System.out.println("Result not okay");
-            return;
-        }
-        switch (requestCode) {
-            case 0:
-                int action = data.getIntExtra(ResultsActivity.ACTION_IDENTIFIER, -1);
-                if (action == ResultsActivity.RESULT_REPLAY_GAME)
-                    restart();
-                else if (action == ResultsActivity.RESULT_EXIT_TO_MENU)
-                    finish();
-                break;
-        }
-    }
-
-    @Override
     public void onBackPressed() {
         pauseGameplay();
     }
@@ -200,17 +180,36 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
     private void setupCountDownTimer(final long timeinMS) {
         mCountDownTimer = new CountDownTimer(timeinMS, TIMER_GRANULARITY_IN_MS) {
 
+
             public void onTick(long millisUntilFinished) {
-                mTimerTextView.setText(Long.toString(millisUntilFinished / 1000 + 1));
                 mTimeRemaining = millisUntilFinished;
+                long secondsRemaining = mTimeRemaining / 1000 + 1;
+                mTimerTextView.setText(Long.toString(secondsRemaining));
+                if (secondsRemaining <= 10) {
+                    mTimerTextView.setTextColor(getResources().getColor(R.color.red));
+                } else {
+                    mTimerTextView.setTextColor(Color.BLACK);
+
+                }
             }
 
             public void onFinish() {
                 mGameState = GameState.FINISHED;
-                Intent i = new Intent(getApplicationContext(), ResultsActivity.class);
-                i.putExtra("score", mScore);
-                i.putExtra("skipped", mSkipped);
-                startActivityForResult(i, 0);
+                mTimerTextView.setText("0");
+                ((WordSearchFragment) mWordSearchPagerAdapter.getFragmentFromCurrentItem(currentItem)).highlightWord();
+                (new CountDownTimer(ON_SKIP_HIGHLIGHT_WORD_DELAY_IN_MS, TIMER_GRANULARITY_IN_MS) {
+
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    public void onFinish() {
+                        Intent i = new Intent(getApplicationContext(), ResultsActivity.class);
+                        i.putExtra("score", mScore);
+                        i.putExtra("skipped", mSkipped);
+                        startActivity(i);
+                        finish();
+                    }
+                }).start();
             }
         };
     }
@@ -233,7 +232,4 @@ public class WordSearchActivity extends BaseActivity implements WordSearchGridVi
         return mScore;
     }
 
-    private static class GameState {
-        public static final String START = "s", PLAY = "pl", PAUSE = "pa", FINISHED = "fi";
-    }
 }

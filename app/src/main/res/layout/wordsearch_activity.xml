@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".WordSearchActivity">
 
     <LinearLayout
@@ -82,21 +83,38 @@
         android:layout_centerHorizontal="true"
         android:weightSum="1">
 
-        <chrisjluc.onesearch.ui.components.GameButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/element_margin_separation"
-            android:text="Pause"
-            android:id="@+id/bPause"
-            android:layout_weight="0.50" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/wordsearchactivity_image_button_size"
+            android:layout_weight="0.50">
 
-        <chrisjluc.onesearch.ui.components.GameButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/element_margin_separation"
-            android:text="Skip"
-            android:layout_weight="0.50"
-            android:id="@+id/bSkip" />
+            <ImageButton
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter"
+                android:layout_height="@dimen/wordsearchactivity_image_button_size"
+                android:layout_width="@dimen/wordsearchactivity_image_button_size"
+                android:background="@android:color/transparent"
+                android:layout_margin="@dimen/element_margin_separation"
+                android:src="@drawable/pause_button"
+                android:id="@+id/bPause" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/wordsearchactivity_image_button_size"
+            android:layout_weight="0.50">
+
+            <ImageButton
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter"
+                android:layout_height="@dimen/wordsearchactivity_image_button_size"
+                android:layout_width="@dimen/wordsearchactivity_image_button_size"
+                android:background="@android:color/transparent"
+                android:layout_margin="@dimen/element_margin_separation"
+                android:src="@drawable/skip_button"
+                android:id="@+id/bSkip" />
+        </RelativeLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

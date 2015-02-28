@@ -36,7 +36,11 @@ public class OnesearchApp extends Application {
         // Enabling Advertising Features in Google Analytics allows you to take advantage of
         // Remarketing, Demographics & Interests reports, and more.
         Tracker t = getTracker(TrackerName.APP_TRACKER);
-//        GoogleAnalytics.getInstance(this).getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
         t.enableAdvertisingIdCollection(true);
+
+        if(BuildConfig.DEBUG) {
+            GoogleAnalytics.getInstance(this).getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
+            GoogleAnalytics.getInstance(this).setDryRun(true);
+        }
     }
 }

@@ -20,6 +20,8 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     private final static String MENU_PREF_NAME = "menu_prefs";
     private final static String FIRST_TIME = "first_time";
 
+    private final static long ROUND_TIME_IN_MS = 60000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +76,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         }
         analyticsTrackEvent(ga_button_id);
         WordSearchManager wsm = WordSearchManager.getInstance();
-        wsm.Initialize(new GameMode(GameType.Timed, gd, 60000), getApplicationContext());
+        wsm.Initialize(new GameMode(GameType.Timed, gd, ROUND_TIME_IN_MS), getApplicationContext());
         wsm.buildWordSearches();
         Intent i = new Intent(getApplicationContext(), WordSearchActivity.class);
         startActivity(i);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="sign_in_failed">Failed to sign in</string>
     <string name="app_name">Onesearch</string>
     <string name="title_activity_results">Results</string>
@@ -19,17 +20,15 @@
     <string name="leaderboard_highest_scores__advanced">CggI9KDylmgQAhAE</string>
 
     <!-- Google Analytics -->
-    <string name="ga_menu_screen">MainMenuScreen</string>
-    <string name="ga_gameplay_screen">GameplayScreen</string>
-    <string name="ga_results_screen">ResultsScreen</string>
+    <string name="ga_menu_screen">Main Menu</string>
+    <string name="ga_gameplay_screen">Gameplay</string>
+    <string name="ga_results_screen">Results</string>
 
     <string name="ga_click_easy">Click Easy</string>
     <string name="ga_click_medium">Click Medium</string>
     <string name="ga_click_hard">Click Hard</string>
-
     <string name="ga_click_pause">Click Pause</string>
     <string name="ga_click_skip">Click Skip</string>
-
     <string name="ga_click_leaderboard">Click Leaderboard</string>
     <string name="ga_click_achievement">Click Achievement</string>
     <string name="ga_click_replay">Click Play Again</string>

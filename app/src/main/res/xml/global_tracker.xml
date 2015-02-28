@@ -7,13 +7,13 @@
 
     <!-- The screen names that will appear in reports -->
     <screenName name="chrisjluc.onesearch.ui.MenuActivity">
-        MainMenuScreen
+        Main Menu
     </screenName>
     <screenName name="chrisjluc.onesearch.ui.gameplay.WordSearchActivity">
-        GamePlayScreen
+        Gameplay
     </screenName>
     <screenName name="chrisjluc.onesearch.ui.ResultsActivity">
-        ResultsScreen
+        Results
     </screenName>
     <!--  The following value should be replaced with correct property id. -->
     <string name="ga_trackingId">UA-50321210-2</string>

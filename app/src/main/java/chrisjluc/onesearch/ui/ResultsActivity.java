@@ -1,6 +1,5 @@
 package chrisjluc.onesearch.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,9 +20,6 @@ import chrisjluc.onesearch.ui.gameplay.WordSearchActivity;
 
 public class ResultsActivity extends BaseGooglePlayServicesActivity implements View.OnClickListener {
 
-    public final static int RESULT_REPLAY_GAME = 0;
-    public final static int RESULT_EXIT_TO_MENU = 1;
-    public final static String ACTION_IDENTIFIER = "action_identifier";
     public final static int REQUEST_LEADERBOARD = 2;
     public final static int REQUEST_ACHIEVEMENTS = 3;
 
@@ -169,18 +165,16 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                 return;
 
         }
-        Intent resultIntent = new Intent(getApplicationContext(), WordSearchActivity.class);
         switch (view.getId()) {
             case R.id.bReplay:
                 analyticsTrackEvent(R.string.ga_click_replay);
-                resultIntent.putExtra(ACTION_IDENTIFIER, RESULT_REPLAY_GAME);
+                Intent intent = new Intent(getApplicationContext(), WordSearchActivity.class);
+                startActivity(intent);
                 break;
             case R.id.bReturnMenu:
                 analyticsTrackEvent(R.string.ga_click_return_to_menu);
-                resultIntent.putExtra(ACTION_IDENTIFIER, RESULT_EXIT_TO_MENU);
                 break;
         }
-        setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }
 
@@ -199,9 +193,6 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
 
     @Override
     public void onBackPressed() {
-        Intent resultIntent = new Intent(getApplicationContext(), WordSearchActivity.class);
-        resultIntent.putExtra(ACTION_IDENTIFIER, RESULT_EXIT_TO_MENU);
-        setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }
 

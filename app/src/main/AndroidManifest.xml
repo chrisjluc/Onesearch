@@ -14,16 +14,16 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="chrisjluc.onesearch.ui.gameplay.WordSearchActivity"
-            android:label="@string/app_name"></activity>
+            android:name=".ui.gameplay.WordSearchActivity"
+            android:label="@string/app_name" />
         <activity
-            android:name="chrisjluc.onesearch.ui.SplashActivity"
-            android:label="@string/app_name"></activity>
+            android:name=".ui.SplashActivity"
+            android:label="@string/app_name" />
         <activity
-            android:name="chrisjluc.onesearch.ui.ResultsActivity"
-            android:label="@string/title_activity_results"></activity>
+            android:name=".ui.ResultsActivity"
+            android:label="@string/title_activity_results" />
         <activity
-            android:name="chrisjluc.onesearch.ui.MenuActivity"
+            android:name=".ui.MenuActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
