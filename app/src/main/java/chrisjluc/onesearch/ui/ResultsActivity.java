@@ -185,6 +185,13 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     }
 
     @Override
+    protected void onStart() {
+        // Prevent from trying to force connection if they haven't signed in here
+        mAutoStartSignInflow = false;
+        super.onStart();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         analyticsTrackScreen(getString(categoryId));
