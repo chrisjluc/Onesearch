@@ -42,7 +42,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        categoryId = R.string.ga_results;
+        categoryId = R.string.ga_results_screen;
         setContentView(R.layout.activity_results);
         findViewById(R.id.bReplay).setOnClickListener(this);
         findViewById(R.id.bReturnMenu).setOnClickListener(this);

@@ -19,9 +19,9 @@
     <string name="leaderboard_highest_scores__advanced">CggI9KDylmgQAhAE</string>
 
     <!-- Google Analytics -->
-    <string name="ga_menu">Main Menu</string>
-    <string name="ga_gameplay">Gameplay</string>
-    <string name="ga_results">Results</string>
+    <string name="ga_menu_screen">MainMenuScreen</string>
+    <string name="ga_gameplay_screen">GameplayScreen</string>
+    <string name="ga_results_screen">ResultsScreen</string>
 
     <string name="ga_click_easy">Click Easy</string>
     <string name="ga_click_medium">Click Medium</string>

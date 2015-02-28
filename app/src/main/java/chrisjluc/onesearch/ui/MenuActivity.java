@@ -23,7 +23,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        categoryId = R.string.ga_menu;
+        categoryId = R.string.ga_menu_screen;
         // Check if first time opening app, show splash screen
         SharedPreferences prefs = getSharedPreferences(MENU_PREF_NAME, MODE_PRIVATE);
         boolean isFirstTime = prefs.getBoolean(FIRST_TIME, true);
