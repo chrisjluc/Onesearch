@@ -205,6 +205,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
             findViewById(R.id.bShowLeaderBoards).setOnClickListener(this);
             findViewById(R.id.bShowAchievements).setVisibility(View.VISIBLE);
             findViewById(R.id.bShowAchievements).setOnClickListener(this);
+            updateSavedScoreAndRenderViews(-1);
             updateLeaderboard();
             updateAchievements();
         }

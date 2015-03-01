@@ -6,7 +6,11 @@ import android.os.Bundle;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.GamesStatusCodes;
+import com.google.android.gms.games.leaderboard.LeaderboardVariant;
+import com.google.android.gms.games.leaderboard.Leaderboards;
 import com.google.example.games.basegameutils.BaseGameUtils;
 
 import chrisjluc.onesearch.R;
@@ -81,27 +85,50 @@ public class BaseGooglePlayServicesActivity extends BaseActivity implements Goog
     @Override
     public void onConnected(Bundle bundle) {
         // Push high scores
-        if (mSignInClicked) {
-            SharedPreferences prefs = getSharedPreferences(ResultsActivity.PREF_NAME, MODE_PRIVATE);
-            String easyLeaderboardId = getString(R.string.leaderboard_highest_scores__easy);
-            String mediumLeaderboardId = getString(R.string.leaderboard_highest_scores__medium);
-            String hardLeaderboardId = getString(R.string.leaderboard_highest_scores__hard);
+        SharedPreferences prefs = getSharedPreferences(ResultsActivity.PREF_NAME, MODE_PRIVATE);
+        String easyLeaderboardId = getString(R.string.leaderboard_highest_scores__easy);
+        String mediumLeaderboardId = getString(R.string.leaderboard_highest_scores__medium);
+        String hardLeaderboardId = getString(R.string.leaderboard_highest_scores__hard);
 //            String advancedLeaderboardId = getString(R.string.leaderboard_highest_scores__advanced);
 
-            int easyScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Easy, 0);
-            int mediumScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Medium, 0);
-            int hardScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Hard, 0);
+        int easyScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Easy, 0);
+        int mediumScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Medium, 0);
+        int hardScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Hard, 0);
 //            int advancedScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Advanced, 0);
 
-            if (easyScore > 0)
-                Games.Leaderboards.submitScore(mGoogleApiClient, easyLeaderboardId, easyScore);
-            if (mediumScore > 0)
-                Games.Leaderboards.submitScore(mGoogleApiClient, mediumLeaderboardId, mediumScore);
-            if (hardScore > 0)
-                Games.Leaderboards.submitScore(mGoogleApiClient, hardLeaderboardId, hardScore);
+        if (easyScore > 0)
+            Games.Leaderboards.submitScore(mGoogleApiClient, easyLeaderboardId, easyScore);
+        if (mediumScore > 0)
+            Games.Leaderboards.submitScore(mGoogleApiClient, mediumLeaderboardId, mediumScore);
+        if (hardScore > 0)
+            Games.Leaderboards.submitScore(mGoogleApiClient, hardLeaderboardId, hardScore);
 //            if (advancedScore > 0)
 //                Games.Leaderboards.submitScore(mGoogleApiClient, advancedLeaderboardId, advancedScore);
-        }
+
+        loadScoreOfLeaderBoardIfLarger(easyLeaderboardId, easyScore, GameDifficulty.Easy);
+        loadScoreOfLeaderBoardIfLarger(mediumLeaderboardId, mediumScore, GameDifficulty.Medium);
+        loadScoreOfLeaderBoardIfLarger(hardLeaderboardId, hardScore, GameDifficulty.Hard);
+    }
+
+    private void loadScoreOfLeaderBoardIfLarger(final String leaderboardId, final int currentScore, final String gameDifficulty) {
+        Games.Leaderboards.loadCurrentPlayerLeaderboardScore(mGoogleApiClient, leaderboardId, LeaderboardVariant.TIME_SPAN_ALL_TIME, LeaderboardVariant.COLLECTION_PUBLIC).setResultCallback(new ResultCallback<Leaderboards.LoadPlayerScoreResult>() {
+            @Override
+            public void onResult(final Leaderboards.LoadPlayerScoreResult scoreResult) {
+                if (isScoreResultValid(scoreResult)) {
+                    // here you can get the score like this
+                    int score = (int) scoreResult.getScore().getRawScore();
+                    if (score > currentScore) {
+                        SharedPreferences.Editor editor = getSharedPreferences(ResultsActivity.PREF_NAME, MODE_PRIVATE).edit();
+                        editor.putInt(ResultsActivity.SCORE_PREFIX + gameDifficulty, score);
+                        editor.commit();
+                    }
+                }
+            }
+        });
+    }
+
+    private boolean isScoreResultValid(final Leaderboards.LoadPlayerScoreResult scoreResult) {
+        return scoreResult != null && GamesStatusCodes.STATUS_OK == scoreResult.getStatus().getStatusCode() && scoreResult.getScore() != null;
     }
 
     @Override

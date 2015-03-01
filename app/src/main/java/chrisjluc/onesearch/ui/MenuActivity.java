@@ -91,6 +91,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
 
     @Override
     public void onConnected(Bundle bundle) {
+        super.onConnected(bundle);
         findViewById(R.id.bMenuSignIn).setVisibility(View.GONE);
     }
 
