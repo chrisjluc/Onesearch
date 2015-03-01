@@ -75,6 +75,7 @@
         android:layout_above="@+id/llBottom" />
 
     <LinearLayout
+        android:layout_marginBottom="@dimen/wordsearchactivity_button_margin_bottom"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -85,34 +86,27 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/wordsearchactivity_image_button_size"
+            android:layout_height="fill_parent"
             android:layout_weight="0.50">
 
-            <ImageButton
-                android:layout_centerInParent="true"
-                android:scaleType="fitCenter"
-                android:layout_height="@dimen/wordsearchactivity_image_button_size"
-                android:layout_width="@dimen/wordsearchactivity_image_button_size"
-                android:background="@android:color/transparent"
+            <chrisjluc.onesearch.ui.components.GameButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/element_margin_separation"
-                android:src="@drawable/pause_button"
+                android:text="Pause"
                 android:id="@+id/bPause" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_marginBottom="@dimen/wordsearchactivity_button_margin_bottom"
-            android:layout_height="@dimen/wordsearchactivity_image_button_size"
+            android:layout_height="fill_parent"
             android:layout_weight="0.50">
 
-            <ImageButton
-                android:layout_centerInParent="true"
-                android:scaleType="fitCenter"
-                android:layout_height="@dimen/wordsearchactivity_image_button_size"
-                android:layout_width="@dimen/wordsearchactivity_image_button_size"
-                android:background="@android:color/transparent"
+            <chrisjluc.onesearch.ui.components.GameButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/element_margin_separation"
-                android:src="@drawable/skip_button"
+                android:text="Skip"
                 android:id="@+id/bSkip" />
         </RelativeLayout>
 

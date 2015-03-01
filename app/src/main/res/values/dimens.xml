@@ -8,17 +8,17 @@
 
     <!--Gameplay-->
     <dimen name="grid_horizontal_margin">4dp</dimen>
-    <dimen name="wordsearchactivity_button_margin_bottom">16dp</dimen>
+    <dimen name="wordsearchactivity_button_margin_bottom">8dp</dimen>
     <dimen name="wordsearchactivity_indicator_text_padding_left">8dp</dimen>
     <dimen name="wordsearchactivity_indicator_text_title_size">18sp</dimen>
     <dimen name="wordsearchactivity_indicator_text_size">28sp</dimen>
-    <dimen name="wordsearchactivity_image_button_size">84dp</dimen>
+    <!--<dimen name="wordsearchactivity_image_button_size">84dp</dimen>-->
     <dimen name="wordsearchfragment_word_size">36sp</dimen>
 
     <!--Results-->
     <dimen name="results_title_padding">0dp</dimen>
     <dimen name="results_title_size">24sp</dimen>
-    <dimen name="results_image_button_size">60dp</dimen>
+    <!--<dimen name="results_image_button_size">60dp</dimen>-->
 
     <!--Splash screen-->
     <dimen name="splash_header_text">36sp</dimen>

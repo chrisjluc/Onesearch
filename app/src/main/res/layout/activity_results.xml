@@ -94,26 +94,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <ImageButton
+    <chrisjluc.onesearch.ui.components.GameButton
         android:layout_centerHorizontal="true"
         android:layout_below="@id/llScoreResult"
         android:id="@+id/bShowLeaderBoards"
-        android:src="@drawable/leaderboard"
-        android:scaleType="fitCenter"
-        android:background="@android:color/transparent"
-        android:layout_width="@dimen/results_image_button_size"
-        android:layout_height="@dimen/results_image_button_size" />
+        android:text="Leaderboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-    <ImageButton
+    <chrisjluc.onesearch.ui.components.GameButton
         android:layout_marginTop="@dimen/element_margin_separation"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/bShowLeaderBoards"
         android:id="@+id/bShowAchievements"
-        android:src="@drawable/achievement"
-        android:scaleType="fitCenter"
-        android:background="@android:color/transparent"
-        android:layout_width="@dimen/results_image_button_size"
-        android:layout_height="@dimen/results_image_button_size" />
+        android:text="Achievements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_alignParentBottom="true"
