@@ -101,6 +101,7 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
+            android:layout_marginBottom="@dimen/wordsearchactivity_button_margin_bottom"
             android:layout_height="@dimen/wordsearchactivity_image_button_size"
             android:layout_weight="0.50">
 

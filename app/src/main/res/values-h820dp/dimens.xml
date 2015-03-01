@@ -3,6 +3,9 @@
          (such as screen margins) for screens with more than 820dp of available width. This
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
     <dimen name="grid_horizontal_margin">16dp</dimen>
+     <!--For tablets where width is pretty wide too, decrease vertical margin or else wordsearch doesn't have enough space-->
+    <dimen name="activity_vertical_margin">8dp</dimen>
+
     <dimen name="results_title_padding">16dp</dimen>
     <dimen name="results_title_size">32sp</dimen>
 
@@ -12,6 +15,10 @@
 
     <dimen name="wordsearchactivity_indicator_text_title_size">24sp</dimen>
     <dimen name="wordsearchactivity_indicator_text_size">36sp</dimen>
+    <dimen name="wordsearchactivity_image_button_size">100dp</dimen>
+     <!--Same problem decrease margin-->
+    <dimen name="wordsearchactivity_button_margin_bottom">8dp</dimen>
+
 
     <dimen name="wordsearchfragment_word_size">44sp</dimen>
     <dimen name="top_bar">160dp</dimen>
