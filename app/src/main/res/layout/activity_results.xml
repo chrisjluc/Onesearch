@@ -11,8 +11,9 @@
     <chrisjluc.onesearch.ui.components.GameBoldTextView
         android:layout_centerHorizontal="true"
         android:padding="@dimen/results_title_padding"
-        android:text="@string/title_activity_results"
-        android:textSize="@dimen/results_title_size"
+        android:textSize="36sp"
+        android:text="RESULTS"
+        android:textColor="@color/blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

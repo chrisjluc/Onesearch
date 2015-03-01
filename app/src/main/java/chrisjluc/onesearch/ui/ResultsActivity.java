@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -92,6 +94,12 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                 editor.commit();
 
                 findViewById(R.id.tvBestScoreResultNotify).setVisibility(View.VISIBLE);
+                Animation anim = new AlphaAnimation(1.0f, 0.0f);
+                anim.setDuration(200);
+                anim.setStartOffset(0);
+                anim.setRepeatMode(Animation.REVERSE);
+                anim.setRepeatCount(6);
+                findViewById(R.id.tvBestScoreResultNotify).startAnimation(anim);
                 ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(mScore));
             } else {
                 ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(bestScore));
