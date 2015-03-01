@@ -19,8 +19,9 @@ import chrisjluc.onesearch.ui.ResultsActivity;
 
 public class BaseGooglePlayServicesActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
-
     protected static int RC_SIGN_IN = 9001;
+    private static String BGP_PREF_MAME = "base_google_play";
+    private static String FIRST_CONNECT = "first_connect";
     protected boolean mInSignInFlow = false;
     protected boolean mResolvingConnectionFailure = false;
     protected boolean mAutoStartSignInflow = true;
@@ -84,30 +85,39 @@ public class BaseGooglePlayServicesActivity extends BaseActivity implements Goog
 
     @Override
     public void onConnected(Bundle bundle) {
-        // Push high scores
-        SharedPreferences prefs = getSharedPreferences(ResultsActivity.PREF_NAME, MODE_PRIVATE);
-        String easyLeaderboardId = getString(R.string.leaderboard_highest_scores__easy);
-        String mediumLeaderboardId = getString(R.string.leaderboard_highest_scores__medium);
-        String hardLeaderboardId = getString(R.string.leaderboard_highest_scores__hard);
+
+        SharedPreferences prefs = getSharedPreferences(BGP_PREF_MAME, MODE_PRIVATE);
+        boolean isFirstTime = prefs.getBoolean(FIRST_CONNECT, true);
+        if (isFirstTime) {
+            SharedPreferences.Editor editor = getSharedPreferences(BGP_PREF_MAME, MODE_PRIVATE).edit();
+            editor.putBoolean(FIRST_CONNECT, false);
+            editor.commit();
+
+            // Push high scores
+            prefs = getSharedPreferences(ResultsActivity.PREF_NAME, MODE_PRIVATE);
+            String easyLeaderboardId = getString(R.string.leaderboard_highest_scores__easy);
+            String mediumLeaderboardId = getString(R.string.leaderboard_highest_scores__medium);
+            String hardLeaderboardId = getString(R.string.leaderboard_highest_scores__hard);
 //            String advancedLeaderboardId = getString(R.string.leaderboard_highest_scores__advanced);
 
-        int easyScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Easy, 0);
-        int mediumScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Medium, 0);
-        int hardScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Hard, 0);
+            int easyScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Easy, 0);
+            int mediumScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Medium, 0);
+            int hardScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Hard, 0);
 //            int advancedScore = prefs.getInt(ResultsActivity.SCORE_PREFIX + GameDifficulty.Advanced, 0);
 
-        if (easyScore > 0)
-            Games.Leaderboards.submitScore(mGoogleApiClient, easyLeaderboardId, easyScore);
-        if (mediumScore > 0)
-            Games.Leaderboards.submitScore(mGoogleApiClient, mediumLeaderboardId, mediumScore);
-        if (hardScore > 0)
-            Games.Leaderboards.submitScore(mGoogleApiClient, hardLeaderboardId, hardScore);
+            if (easyScore > 0)
+                Games.Leaderboards.submitScore(mGoogleApiClient, easyLeaderboardId, easyScore);
+            if (mediumScore > 0)
+                Games.Leaderboards.submitScore(mGoogleApiClient, mediumLeaderboardId, mediumScore);
+            if (hardScore > 0)
+                Games.Leaderboards.submitScore(mGoogleApiClient, hardLeaderboardId, hardScore);
 //            if (advancedScore > 0)
 //                Games.Leaderboards.submitScore(mGoogleApiClient, advancedLeaderboardId, advancedScore);
 
-        loadScoreOfLeaderBoardIfLarger(easyLeaderboardId, easyScore, GameDifficulty.Easy);
-        loadScoreOfLeaderBoardIfLarger(mediumLeaderboardId, mediumScore, GameDifficulty.Medium);
-        loadScoreOfLeaderBoardIfLarger(hardLeaderboardId, hardScore, GameDifficulty.Hard);
+            loadScoreOfLeaderBoardIfLarger(easyLeaderboardId, easyScore, GameDifficulty.Easy);
+            loadScoreOfLeaderBoardIfLarger(mediumLeaderboardId, mediumScore, GameDifficulty.Medium);
+            loadScoreOfLeaderBoardIfLarger(hardLeaderboardId, hardScore, GameDifficulty.Hard);
+        }
     }
 
     private void loadScoreOfLeaderBoardIfLarger(final String leaderboardId, final int currentScore, final String gameDifficulty) {

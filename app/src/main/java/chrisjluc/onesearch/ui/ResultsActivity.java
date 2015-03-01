@@ -73,26 +73,26 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                 editor.commit();
             }
 
-            updateSavedScoreAndRenderViews(mScore);
+            updateSavedScoreAndRenderViews();
         }
     }
 
-    private void updateSavedScoreAndRenderViews(int score) {
+    private void updateSavedScoreAndRenderViews() {
 
         TextView scoreTextView = (TextView) findViewById(R.id.tvScoreResult);
-        scoreTextView.setText(Integer.toString(score));
+        scoreTextView.setText(Integer.toString(mScore));
 
         if (mGameMode != null) {
             SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
             int bestScore = prefs.getInt(SCORE_PREFIX + mGameMode.getDifficulty(), 0);
             mPreviousBestScore = bestScore;
-            if (score > bestScore) {
+            if (mScore > bestScore) {
                 SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
-                editor.putInt(SCORE_PREFIX + mGameMode.getDifficulty(), score);
+                editor.putInt(SCORE_PREFIX + mGameMode.getDifficulty(), mScore);
                 editor.commit();
 
                 findViewById(R.id.tvBestScoreResultNotify).setVisibility(View.VISIBLE);
-                ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(score));
+                ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(mScore));
             } else {
                 ((TextView) findViewById(R.id.tvBestScoreResult)).setText(Integer.toString(bestScore));
             }
