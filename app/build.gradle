@@ -8,11 +8,14 @@ android {
         applicationId "chrisjluc.onesearch"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 5
-        versionName "1.0.1"
+        versionCode 7
+        versionName "1.0.2.1"
     }
     buildTypes {
         release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
