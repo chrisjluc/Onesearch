@@ -72,7 +72,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
                 int numRounds = prefs.getInt(COMPLETED_ROUND_PREFIX + mGameMode.getDifficulty(), 0);
                 SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
                 editor.putInt(COMPLETED_ROUND_PREFIX + mGameMode.getDifficulty(), ++numRounds);
-                editor.commit();
+                editor.apply();
             }
 
             updateSavedScoreAndRenderViews();
@@ -91,7 +91,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
             if (mScore > bestScore) {
                 SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
                 editor.putInt(SCORE_PREFIX + mGameMode.getDifficulty(), mScore);
-                editor.commit();
+                editor.apply();
 
                 findViewById(R.id.tvBestScoreResultNotify).setVisibility(View.VISIBLE);
                 Animation anim = new AlphaAnimation(1.0f, 0.0f);
@@ -108,7 +108,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
     }
 
     private void updateLeaderboard() {
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected() && mScore > mPreviousBestScore) {
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             Games.Leaderboards.submitScore(mGoogleApiClient, mLeaderboardId, mScore);
         }
     }
@@ -146,7 +146,7 @@ public class ResultsActivity extends BaseGooglePlayServicesActivity implements V
         if (score > highestScore) {
             SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
             editor.putInt(HIGHEST_SCORE_FOR_ACHIEVEMENT_PREFIX + mGameMode.getDifficulty(), score);
-            editor.commit();
+            editor.apply();
         }
     }
 

@@ -32,7 +32,7 @@ public class MenuActivity extends BaseGooglePlayServicesActivity implements View
         if (isFirstTime) {
             SharedPreferences.Editor editor = getSharedPreferences(MENU_PREF_NAME, MODE_PRIVATE).edit();
             editor.putBoolean(FIRST_TIME, false);
-            editor.commit();
+            editor.apply();
 
             Intent i = new Intent(getApplicationContext(), SplashActivity.class);
             startActivity(i);

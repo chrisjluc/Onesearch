@@ -50,7 +50,7 @@ public class BaseGooglePlayServicesActivity extends BaseActivity implements Goog
 
             mResolvingConnectionFailure = BaseGameUtils.resolveConnectionFailure(this,
                     mGoogleApiClient, connectionResult,
-                    RC_SIGN_IN, "Failed to sign in");
+                    RC_SIGN_IN, getString(R.string.sign_in_failed));
         }
     }
 
@@ -91,7 +91,7 @@ public class BaseGooglePlayServicesActivity extends BaseActivity implements Goog
         if (isFirstTime) {
             SharedPreferences.Editor editor = getSharedPreferences(BGP_PREF_MAME, MODE_PRIVATE).edit();
             editor.putBoolean(FIRST_CONNECT, false);
-            editor.commit();
+            editor.apply();
 
             // Push high scores
             prefs = getSharedPreferences(ResultsActivity.PREF_NAME, MODE_PRIVATE);
@@ -130,7 +130,7 @@ public class BaseGooglePlayServicesActivity extends BaseActivity implements Goog
                     if (score > currentScore) {
                         SharedPreferences.Editor editor = getSharedPreferences(ResultsActivity.PREF_NAME, MODE_PRIVATE).edit();
                         editor.putInt(ResultsActivity.SCORE_PREFIX + gameDifficulty, score);
-                        editor.commit();
+                        editor.apply();
                     }
                 }
             }

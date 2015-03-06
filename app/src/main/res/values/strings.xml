@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="sign_in_failed">Failed to sign in</string>
+    <string name="sign_in_failed">There was an issue with sign in, please try again later.</string>
     <string name="app_name">Onesearch</string>
     <string name="title_activity_results">Results</string>
     <string name="title_activity_menu">menu</string>
