@@ -5,6 +5,10 @@
 .DS_Store
 /build
 
+# Intellij files
+*.idea
+*.iml
+
 # Built application files
 *.apk
 *.ap_
