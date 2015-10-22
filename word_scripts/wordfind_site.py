@@ -1,4 +1,5 @@
 import requests
+import word_file_merger
 from bs4 import BeautifulSoup
 
 def extract(htmlList):
@@ -12,7 +13,7 @@ def extract(htmlList):
     return words
 
 def extract_from_word_find_site():
-    wordFind_dict = {}
+    wordfind_dict = {}
     for word_length in range(3,12):
         try:
             req = requests.get("http://www.wordfind.com/{0}-letter-words/".format(word_length))
@@ -21,6 +22,6 @@ def extract_from_word_find_site():
         except requests.exceptions.ConnectionError as e:
             print ("A connection error occurred.") 
         
-    return wordFind_dict  
+    return wordfind_dict  
 
-
+word_file_merger.word_merger(extract_from_word_find_site())
