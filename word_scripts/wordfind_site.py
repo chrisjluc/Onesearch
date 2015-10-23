@@ -1,15 +1,10 @@
 import requests
-import word_file_merger
+from word_file_merger import word_merger
 from bs4 import BeautifulSoup
 
 def extract(htmlList):
-    words = []
-    
-    finding_words = list(filter(lambda x: x.get('class') == ['defLink'], htmlList))
-    
-    for link in finding_words:
-        words.append(link.find('a').get('href')[6:-1])     
-        
+    finding_words = filter(lambda x: x.get('class') == ['defLink'], htmlList)
+    words = map(lambda x: x.find('a').get('href')[6:-1], finding_words)        
     return words
 
 def extract_from_word_find_site():
@@ -18,10 +13,10 @@ def extract_from_word_find_site():
         try:
             req = requests.get("http://www.wordfind.com/{0}-letter-words/".format(word_length))
             unextracted = BeautifulSoup(req.text, 'html.parser').find_all('li') 
-            wordFind_dict[word_length] = extract(unextracted)  
+            wordfind_dict[word_length] = extract(unextracted)  
         except requests.exceptions.ConnectionError as e:
             print ("A connection error occurred.") 
         
     return wordfind_dict  
 
-word_file_merger.word_merger(extract_from_word_find_site())
+word_merger(extract_from_word_find_site())
