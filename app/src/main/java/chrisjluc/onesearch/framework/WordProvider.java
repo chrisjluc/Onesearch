@@ -10,7 +10,7 @@ import java.util.Random;
 public class WordProvider {
 
     // Category is a group of words with the same length
-    private final static int[] WORDS_IN_EACH_CATEGORY = {0, 0, 0, 928, 3354, 5000, 3000, 3000, 1000, 800, 600, 300};
+    private final static int[] WORDS_IN_EACH_CATEGORY = {0, 0, 0, 419, 1300, 1100, 1000, 1000, 1000, 800, 600, 300};
     private final static int NUM_WORDS = 2;
 
     private Context mContext;
