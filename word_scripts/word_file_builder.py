@@ -9,7 +9,7 @@ initial_words = ['hello', 'bob', 'how','are','you','there','twitter','static','c
 wordsByLength = {}
 max_word_length = 11
 min_word_length = 3
-path_to_save = 'app/src/main/assets/words/'
+path_to_save = '../app/src/main/assets/words/'
 file_prefix = 'words-length-'
 lock = threading.Lock()
 

@@ -35,3 +35,6 @@ proguard/
 
 # Log Files
 *.log
+
+# Python Compiler files
+*.pyc
